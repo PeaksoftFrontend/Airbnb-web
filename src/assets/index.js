@@ -20,6 +20,7 @@ import ActionMenu from "../assets/icons/action-menu.svg?react";
 import Arrowright from "../assets/icons/arrow-right.svg?react";
 import Arrowleft from "../assets/icons/arrow-left.svg?react";
 import Google from "../assets/icons/google.svg?react";
+
 export const Icons = {
   Heart,
   Burger,
