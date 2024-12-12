@@ -22,7 +22,7 @@ export const Button = ({
 const StyledButton = styled.button(({ variant }) => ({
   with: "100%",
   padding: "10px 16px",
-
+  borderRadius: "2px",
   color: "#F7F7F7",
   border: "none",
   cursor: "pointer",
