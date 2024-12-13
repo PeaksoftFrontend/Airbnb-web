@@ -13,7 +13,7 @@ import Telegram from "../assets/icons/telegram.svg?react";
 import Arrow from "../assets/icons/arrow.svg?react";
 import Telephone from "../assets/icons/telephone.svg?react";
 import Location from "../assets/icons/location.svg?react";
-import Logo from "../assets/icons/logo.svg?react";
+import Logo  from "../assets/icons/logo.svg?react";
 import Photo from "../assets/icons/photo.svg?react";
 import Circle from "../assets/icons/circle.svg?react";
 import ActionMenu from "../assets/icons/action-menu.svg?react";
