@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, InputAdornment, IconButton, styled } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
- export const Input = (props) => {
+ export const Input = ({type, InputProps, ...props}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
@@ -15,13 +15,13 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 
   return (
     <StateTextField
-      type={props.type === 'password' && showPassword ? 'text' : props.type}
+      type={type === 'password' && showPassword ? 'text' :type}
       
       {...props}
       InputProps={{
-        ...props.InputProps,
+        ...InputProps,
         endAdornment:
-          props.type === 'password' ? (
+         type === 'password' ? (
             <InputAdornment position="end">
               <IconButton
                 aria-label="toggle password visibility"
