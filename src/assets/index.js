@@ -3,7 +3,7 @@ import Burger from "../assets/icons/burger.svg?react";
 import Search from "../assets/icons/search.svg?react";
 import Cancellation from "../assets/icons/cancellation.svg?react";
 import DisLike from "../assets/icons/dislike.svg?react";
-import ArrowDown from "../assets/icons/down-arrow.svg?react";
+import ArrowDown from  "../assets/icons/down-arrow.svg?react";
 import Instagram from "../assets/icons/instagram.svg?react";
 import Interaction from "../assets/icons/interaction.svg?react";
 import Korzina from "../assets/icons/korzina.svg?react";
