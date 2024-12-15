@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { TextField, InputAdornment, IconButton, styled } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React, { useState } from "react";
+import { TextField, InputAdornment, IconButton, styled } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
- export const Input = ({type, InputProps, ...props}) => {
+export const Input = ({ type, InputProps, ...props }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
@@ -15,13 +15,12 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 
   return (
     <StateTextField
-      type={type === 'password' && showPassword ? 'text' :type}
-      
+      type={type === "password" && showPassword ? "text" : type}
       {...props}
       InputProps={{
         ...InputProps,
         endAdornment:
-         type === 'password' ? (
+          type === "password" ? (
             <InputAdornment position="end">
               <IconButton
                 aria-label="toggle password visibility"
@@ -32,31 +31,28 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
                 {showPassword ? <VisibilityOff /> : <Visibility />}
               </IconButton>
             </InputAdornment>
-          ) : null
+          ) : null,
       }}
     />
   );
 };
 
-
-
 const StateTextField = styled(TextField)(({ variant }) => ({
   width: "100%",
   borderRadius: "2px",
   cursor: "pointer",
-  border:"none",
-  padding:"20px",
-  
+  border: "none",
+  padding: "20px",
+
   ...(variant === "outlined" && {
-    "hover": {
-      border:"1px solid #828282",
+    hover: {
+      border: "1px solid #828282",
     },
     "&:active": {
-      border:"1px solid #828282",
-  
+      border: "1px solid #828282",
     },
     "&:default": {
-      border:"1px solid #C4C4C4", 
+      border: "1px solid #C4C4C4",
     },
   }),
 }));
