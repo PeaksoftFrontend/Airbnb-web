@@ -9,7 +9,7 @@ import {
   FormLabel,
   FormGroup,
   Box,
-  styled,
+  Checkboxstyled,
 } from "@mui/material";
 
 function CheckboxRadio() {
@@ -22,9 +22,6 @@ function CheckboxRadio() {
 
   const handleChangeRadio = (event) => {
     setSelectedRadio(event.target.value);
-    if (selectedRadio === value) {
-      setSelectedRadio(undefined);
-    }
   };
 
   return (
