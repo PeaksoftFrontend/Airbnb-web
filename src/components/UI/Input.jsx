@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { TextField, InputAdornment, IconButton, styled } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import RemoveRedEyeOutlined from "@mui/icons-material/RemoveRedEyeOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 export const Input = ({
   type,
-  InputProps,
   value,
   onChange,
   placeholder,
@@ -21,9 +21,11 @@ export const Input = ({
   return (
     <StateTextField
       type={type === "password" && showPassword ? "text" : type}
+      placeholder={placeholder}
+      name="name"
+      fullWidth
       {...props}
       InputProps={{
-        ...InputProps,
         endAdornment:
           type === "password" ? (
             <InputAdornment position="end">
@@ -32,7 +34,11 @@ export const Input = ({
                 onClick={handleClickShowPassword}
                 edge="end"
               >
-                {showPassword ? <Visibility /> : <VisibilityOff />}
+                {showPassword ? (
+                  <RemoveRedEyeOutlined />
+                ) : (
+                  <VisibilityOffOutlinedIcon />
+                )}
               </IconButton>
             </InputAdornment>
           ) : null,
@@ -42,14 +48,14 @@ export const Input = ({
 };
 
 const StateTextField = styled(TextField)(({ variant }) => ({
-  width: "100%",
   borderRadius: "2px",
   cursor: "pointer",
   border: "none",
-  padding: "20px",
+  fontSize: "16px",
+  fontWeight: "400",
 
   ...(variant === "outlined" && {
-    hover: {
+    "&:hover": {
       border: "1px solid #828282",
     },
     "&:active": {
