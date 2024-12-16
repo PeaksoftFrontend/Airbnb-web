@@ -6,11 +6,10 @@ import {
   Radio,
   RadioGroup,
   FormControl,
-
   Box,
 } from "@mui/material";
 
-function CheckboxRadio() {
+export const CheckboxRadio = () => {
   const [checkbox, setCheckbox] = useState(false);
   const [selectedRadio, setSelectedRadio] = useState();
 
@@ -49,6 +48,6 @@ function CheckboxRadio() {
       </FormControl>
     </Box>
   );
-}
+};
 
 export default CheckboxRadio;
