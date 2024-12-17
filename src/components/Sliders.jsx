@@ -1,5 +1,11 @@
-const Sliders = () => {
-  return <div></div>;
-};
+import React from 'react'
 
-export default Sliders;
+const Sliders = () => {
+  return (
+    <div>
+      
+    </div>
+  )
+}
+
+export default Sliders
