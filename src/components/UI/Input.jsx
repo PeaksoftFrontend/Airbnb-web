@@ -22,7 +22,7 @@ export const Input = ({
     <StateTextField
       type={type === "password" && showPassword ? "text" : type}
       placeholder={placeholder}
-      name="name"
+      name={name}
       fullWidth
       {...props}
       InputProps={{
