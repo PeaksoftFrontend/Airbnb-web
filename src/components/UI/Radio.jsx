@@ -8,7 +8,7 @@ import {
 import { orange } from "@mui/material/colors";
 import { useState } from "react";
 
-export const RadioComponents = () => {
+export const Radio = () => {
   const [selectedRadio, setSelectedRadio] = useState();
 
   const handleChangeRadio = (event) => {
