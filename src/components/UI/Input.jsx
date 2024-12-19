@@ -1,68 +1,72 @@
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import { TextField, InputAdornment, IconButton, styled } from "@mui/material";
 import RemoveRedEyeOutlined from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
-export const Input = ({
-  type,
-  value,
-  onChange,
-  placeholder,
-  name,
-  required,
-  ...props
-}) => {
-  const [showPassword, setShowPassword] = useState(false);
+export const Input = forwardRef(
+  ({ type, value, onChange, placeholder, name, required, ...props }, ref) => {
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+    const handleTogglePasswordVisibility = () => {
+      setIsPasswordVisible(!isPasswordVisible);
+    };
 
-  return (
-    <StateTextField
-      type={type === "password" && showPassword ? "text" : type}
-      placeholder={placeholder}
-      name={name}
-      fullWidth
-      {...props}
-      InputProps={{
-        endAdornment:
-          type === "password" ? (
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                edge="end"
-              >
-                {showPassword ? (
-                  <RemoveRedEyeOutlined />
-                ) : (
-                  <VisibilityOffOutlinedIcon />
-                )}
-              </IconButton>
-            </InputAdornment>
-          ) : null,
-      }}
-    />
-  );
-};
+    return (
+      <StyledTextField
+        type={type === "password" && isPasswordVisible ? "text" : type}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        name={name}
+        required={required}
+        fullWidth
+        ref={ref}
+        {...props}
+        InputProps={{
+          endAdornment:
+            type === "password" ? (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleTogglePasswordVisibility}
+                  edge="end"
+                >
+                  {isPasswordVisible ? (
+                    <RemoveRedEyeOutlined />
+                  ) : (
+                    <VisibilityOffOutlinedIcon />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            ) : null,
+        }}
+      />
+    );
+  }
+);
 
-const StateTextField = styled(TextField)(({ variant }) => ({
+const StyledTextField = styled(TextField)(({ theme }) => ({
   borderRadius: "2px",
   cursor: "pointer",
-  border: "none",
-  fontSize: "16px",
-  fontWeight: "400",
 
-  ...(variant === "outlined" && {
-    "&:hover": {
-      border: "1px solid #828282",
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: theme.palette.grey[400],
     },
-    "&:active": {
-      border: "1px solid #828282",
+    "&:hover fieldset": {
+      borderColor: theme.palette.grey[600],
     },
-    "&:default": {
-      border: "1px solid #C4C4C4",
+    "&.Mui-focused fieldset": {
+      borderColor: theme.palette.primary.main,
     },
-  }),
+  },
+
+  "& input": {
+    fontSize: "16px",
+    fontWeight: "400",
+
+    "&::placeholder": {
+      color: theme.palette.text.secondary,
+    },
+  },
 }));
