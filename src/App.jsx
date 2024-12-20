@@ -1,3 +1,9 @@
+import { FeedbackList } from "./components/UI/FeedbackList";
+
 export const App = () => {
-  return <div>App</div>;
+  return (
+    <div>
+      <FeedbackList />
+    </div>
+  );
 };

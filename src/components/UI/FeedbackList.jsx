@@ -1,5 +1,7 @@
 import { Box, Container, styled } from "@mui/material";
 import { useState } from "react";
+import Star from "./../../assets/icons/star-icon.svg";
+import { Icons } from "../../assets";
 
 const feedbacks = [
   {
@@ -10,14 +12,20 @@ const feedbacks = [
     likes: 4,
     dislikes: 2,
     comments: 2,
+    image: [
+      "https://encrypted-tbn0.gstatic.comimages?q=tbn:ANd9GcQVKZhCti6KfNKywzvjmroRlxKfbqkZB_MCLw&s",
+    ],
   },
   {
     userName: "Anna Annova",
     date: "28.04.22",
-    rating: 4,
+    rating: 5,
     text: `Great location, really pleasant and clean rooms, but the thing that makes this such a good place to stay are the staff. All of the people are incredibly helpful and generous with their time and advice. We travelled with two six year olds and lots of luggage and despite the stairs up to the elevator this was one of the nicest places we stayed in the four weeks.`,
     likes: 4,
     dislikes: 2,
+    image: [
+      "https://encrypted-tbn0.gstatic.comq=tbn:ANd9GcQVKZhCti6KfNKywzvjmroRlxKfbqkZB_MCLw&s",
+    ],
   },
 ];
 
@@ -39,13 +47,32 @@ const FeedbackCard = ({
 
   const displayedText = isExpanded ? text : `${text.substring(0, 100)}...`;
 
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <svg
+          key={i}
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="20px"
+          height="20px"
+          fill={i <= rating ? "#FFD700" : "#CCCCCC"}
+        >
+          <path d="M12 17.27L18.18 21 16.54 13.97 22 9.24 14.81 8.62 12 2 9.19 8.63 2 9.24 7.46 13.97 5.82 21z" />
+        </svg>
+      );
+    }
+    return stars;
+  };
+
   return (
     <StyledCard>
       <StyleBox>
         <StyleUserInfo>
           <StyleSpan>{userName}</StyleSpan>
         </StyleUserInfo>
-        <StyleRating>{"⭐".repeat(rating)}</StyleRating>
+        <StyleRating>{renderStars(rating)}</StyleRating>
       </StyleBox>
       <StyledText>
         {displayedText}
@@ -56,24 +83,27 @@ const FeedbackCard = ({
         )}
       </StyledText>
 
-      {image && (
-        <StyledImageContainer>
-          <StyleImage src={image} alt="Uploaded" />
-        </StyledImageContainer>
-      )}
+      <StyleImage src={image} alt="cat-photo-2024.png..." />
 
       <StyleFooter>
         <StyleDate>{date}</StyleDate>
         <div>
-          <StyleLikes>👍 {likes}</StyleLikes>
-          <StyleDislike>👎 {dislikes}</StyleDislike>
+          <StyleLikes>
+            <div>
+              <Icons.Like /> {likes}
+            </div>
+
+            <div>
+              <Icons.DisLike /> {dislikes}
+            </div>
+          </StyleLikes>
         </div>
       </StyleFooter>
     </StyledCard>
   );
 };
 
-const FeedbackList = () => {
+export const FeedbackList = () => {
   return (
     <StyleList>
       {feedbacks.map((feedback, id) => (
@@ -84,11 +114,8 @@ const FeedbackList = () => {
 };
 
 const StyledCard = styled(Container)({
-  border: "1px solid #ddd",
-  borderRadius: "8px",
-  padding: "1rem",
-  boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-  backgroundColor: "#fff",
+  display: "flex",
+  flexDirection: "column",
 });
 
 const StyleBox = styled(Box)({
@@ -109,6 +136,9 @@ const StyleSpan = styled("div")({
 const StyleRating = styled("div")({
   fontSize: "1rem",
   color: "#FFD700",
+  "&  img": {
+    fill: "#FFD700",
+  },
 });
 
 const StyledText = styled("div")({
@@ -119,19 +149,13 @@ const StyledText = styled("div")({
 const StyleToggleText = styled("span")({
   color: "#007BFF",
   cursor: "pointer",
-  fontWeight: "bold",
+  fontSize: "16px",
+  fontWeight: "16px",
 });
 
-const StyledImageContainer = styled("div")({
-  marginTop: "1rem",
-  textAlign: "center",
-});
-
-const StyleImage = styled("div")({
-  maxWidth: "100%",
-  maxHeight: "300px",
-  borderRadius: "8px",
-  objectFit: "cover",
+const StyleImage = styled("img")({
+  cursor: "pointer",
+  color: "blue",
 });
 
 const StyleFooter = styled("div")({
@@ -149,10 +173,10 @@ const StyleDate = styled("span")({
 
 const StyleLikes = styled("span")({
   cursor: "pointer",
-});
-
-const StyleDislike = styled("span")({
-  cursor: "pointer",
+  display: "flex",
+  gap: "15px",
+  fontSize: "16px",
+  fontWeight: 400,
 });
 
 const StyleList = styled("div")({
@@ -161,5 +185,3 @@ const StyleList = styled("div")({
   gap: "1rem",
   padding: "1rem",
 });
-
-export default FeedbackList;
