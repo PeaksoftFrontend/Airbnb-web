@@ -1,3 +1,9 @@
+import { UserCard } from "./components/UI/UserCard";
+
 export const App = () => {
-  return <div>App</div>;
+  return (
+    <div>
+      <UserCard />
+    </div>
+  );
 };
