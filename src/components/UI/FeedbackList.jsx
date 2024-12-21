@@ -1,10 +1,11 @@
 import { Box, Container, styled } from "@mui/material";
 import { useState } from "react";
-import Star from "./../../assets/icons/star-icon.svg";
 import { Icons } from "../../assets";
+import circle from "../../assets/icons/circle-icon.svg";
 
 const feedbacks = [
   {
+    avatar: circle,
     userName: "Anna Annova",
     date: "28.04.22",
     rating: 5,
@@ -12,20 +13,20 @@ const feedbacks = [
     likes: 4,
     dislikes: 2,
     comments: 2,
-    image: [
+    images:
       "https://encrypted-tbn0.gstatic.comimages?q=tbn:ANd9GcQVKZhCti6KfNKywzvjmroRlxKfbqkZB_MCLw&s",
-    ],
   },
   {
+    avatar: circle,
+    url: "",
     userName: "Anna Annova",
     date: "28.04.22",
     rating: 5,
     text: `Great location, really pleasant and clean rooms, but the thing that makes this such a good place to stay are the staff. All of the people are incredibly helpful and generous with their time and advice. We travelled with two six year olds and lots of luggage and despite the stairs up to the elevator this was one of the nicest places we stayed in the four weeks.`,
     likes: 4,
     dislikes: 2,
-    image: [
+    images:
       "https://encrypted-tbn0.gstatic.comq=tbn:ANd9GcQVKZhCti6KfNKywzvjmroRlxKfbqkZB_MCLw&s",
-    ],
   },
 ];
 
@@ -36,8 +37,8 @@ const FeedbackCard = ({
   text,
   likes,
   dislikes,
-
-  image,
+  avatar,
+  images,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -59,6 +60,7 @@ const FeedbackCard = ({
           height="20px"
           fill={i <= rating ? "#FFD700" : "#CCCCCC"}
         >
+          {" "}
           <path d="M12 17.27L18.18 21 16.54 13.97 22 9.24 14.81 8.62 12 2 9.19 8.63 2 9.24 7.46 13.97 5.82 21z" />
         </svg>
       );
@@ -70,6 +72,7 @@ const FeedbackCard = ({
     <StyledCard>
       <StyleBox>
         <StyleUserInfo>
+          <img src={avatar} alt={`${userName}'s avatar`} />
           <StyleSpan>{userName}</StyleSpan>
         </StyleUserInfo>
         <StyleRating>{renderStars(rating)}</StyleRating>
@@ -83,7 +86,7 @@ const FeedbackCard = ({
         )}
       </StyledText>
 
-      <StyleImage src={image} alt="cat-photo-2024.png..." />
+      <StyleImage src={images} alt="cat-photo-2024.png..." />
 
       <StyleFooter>
         <StyleDate>{date}</StyleDate>
@@ -126,11 +129,13 @@ const StyleBox = styled(Box)({
 
 const StyleUserInfo = styled("div")({
   display: "flex",
-  flexDirection: "column",
+  gap: "10px",
+  alignItems: "center",
 });
 
 const StyleSpan = styled("div")({
-  fontWeight: "bold",
+  fontSize: "18px",
+  fontWeight: 500,
 });
 
 const StyleRating = styled("div")({
@@ -148,9 +153,9 @@ const StyledText = styled("div")({
 
 const StyleToggleText = styled("span")({
   color: "#007BFF",
-  cursor: "pointer",
   fontSize: "16px",
   fontWeight: "16px",
+  borderBottom: "1.5px solid #266BD3",
 });
 
 const StyleImage = styled("img")({
