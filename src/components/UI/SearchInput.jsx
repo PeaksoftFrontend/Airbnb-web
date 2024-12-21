@@ -6,11 +6,13 @@ export const SearchInput = ({
   value,
   placeholder,
   variant,
+  ref,
   ...props
 }) => {
   return (
     <SearchTextField
       type={type}
+      ref={ref}
       placeholder={placeholder}
       value={value}
       variant={variant}
