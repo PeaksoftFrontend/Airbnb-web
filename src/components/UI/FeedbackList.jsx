@@ -1,11 +1,11 @@
 import { Box, Container, styled } from "@mui/material";
 import { useState } from "react";
 import { Icons } from "../../assets";
-import circle from "../../assets/icons/circle-icon.svg";
+// import circle from "../../assets/icons/circle-icon.svg";
 
 const feedbacks = [
   {
-    avatar: circle,
+    avatar: "https://shorturl.at/1jDff",
     userName: "Anna Annova",
     date: "28.04.22",
     rating: 5,
@@ -13,20 +13,21 @@ const feedbacks = [
     likes: 4,
     dislikes: 2,
     comments: 2,
-    images:
+    images: [
       "https://encrypted-tbn0.gstatic.comimages?q=tbn:ANd9GcQVKZhCti6KfNKywzvjmroRlxKfbqkZB_MCLw&s",
+    ],
   },
   {
-    avatar: circle,
-    url: "",
+    avatar: "https://shorturl.at/1jDff",
     userName: "Anna Annova",
     date: "28.04.22",
     rating: 5,
     text: `Great location, really pleasant and clean rooms, but the thing that makes this such a good place to stay are the staff. All of the people are incredibly helpful and generous with their time and advice. We travelled with two six year olds and lots of luggage and despite the stairs up to the elevator this was one of the nicest places we stayed in the four weeks.`,
     likes: 4,
     dislikes: 2,
-    images:
+    images: [
       "https://encrypted-tbn0.gstatic.comq=tbn:ANd9GcQVKZhCti6KfNKywzvjmroRlxKfbqkZB_MCLw&s",
+    ],
   },
 ];
 
@@ -72,7 +73,7 @@ const FeedbackCard = ({
     <StyledCard>
       <StyleBox>
         <StyleUserInfo>
-          <img src={avatar} alt={`${userName}'s avatar`} />
+          <StyleAvatar src={avatar} alt={`${userName}'s avatar`} />
           <StyleSpan>{userName}</StyleSpan>
         </StyleUserInfo>
         <StyleRating>{renderStars(rating)}</StyleRating>
@@ -85,7 +86,9 @@ const FeedbackCard = ({
           </StyleToggleText>
         )}
       </StyledText>
-
+      {images.map((item) => (
+        <div key={item.id} {...item}></div>
+      ))}
       <StyleImage src={images} alt="cat-photo-2024.png..." />
 
       <StyleFooter>
@@ -152,6 +155,7 @@ const StyledText = styled("div")({
 });
 
 const StyleToggleText = styled("span")({
+  cursor: "pointer",
   color: "#007BFF",
   fontSize: "16px",
   fontWeight: "16px",
@@ -189,4 +193,9 @@ const StyleList = styled("div")({
   flexDirection: "column",
   gap: "1rem",
   padding: "1rem",
+});
+
+const StyleAvatar = styled("img")({
+  width: "28px",
+  height: "28px",
 });
