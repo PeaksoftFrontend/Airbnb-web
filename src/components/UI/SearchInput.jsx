@@ -1,52 +1,49 @@
+import React, { forwardRef } from "react";
 import { InputAdornment, styled, TextField } from "@mui/material";
 import { Icons } from "../../assets";
 
-export const SearchInput = ({
-  type,
-  value,
-  placeholder,
-  variant,
-  ref,
-  ...props
-}) => {
-  return (
-    <SearchTextField
-      type={type}
-      ref={ref}
-      placeholder={placeholder}
-      value={value}
-      variant={variant}
-      fullWidth
-      {...props}
-      InputProps={{
-        startAdornment: (
-          <StyledDiv position="start">
-            <Icons.Search />
-          </StyledDiv>
-        ),
-      }}
-    />
-  );
-};
+export const SearchInput = forwardRef(
+  ({ type, value, placeholder, variant, ...props }, ref) => {
+    return (
+      <SearchTextField
+        type={type}
+        ref={ref}
+        placeholder={placeholder}
+        value={value}
+        variant={variant}
+        fullWidth
+        {...props}
+        InputProps={{
+          startAdornment: (
+            <StyledDiv position="start">
+              <Icons.Search />
+            </StyledDiv>
+          ),
+        }}
+      />
+    );
+  }
+);
 
 const SearchTextField = styled(TextField)(() => ({
   border: "1px solid #C4C4C4",
   borderRadius: "2px",
-  color: "#C4C4C4",
   fontSize: "16px",
   fontWeight: "400",
-  backgroundColor: "#FFFFF",
-  "& .MuiOutlinedInput-root": {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+  "& .MuiInputBase-root": {
+    backgroundColor: "#FFF",
+    "&:focus": {
+      backgroundColor: "#fff",
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#C4C4C4",
+    },
+    "&:hover .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#C4C4C4",
+    },
   },
-  "& .MuiInputBase-input": {
-    padding: "10px 0",
-  },
-  "& .MuiInputAdornment-root": {
-    display: "flex",
-    alignItems: "center",
+  "& input": {
+    color: "#939292",
   },
 }));
 
