@@ -5,10 +5,9 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import React from "react";
 import { Icons } from "../../assets";
 
-const StarRating = [
+const STAR_RATING = [
   {
     star: 5,
     percentage: 50,
@@ -39,25 +38,18 @@ export const Reviews = () => {
         <Icons.Star />
       </StyleStar>
       <StyleLiner>
-        {StarRating.map((item) => (
-          <StyleCardStar key={item.star}>
+        {STAR_RATING.map((item) => (
+          <StyleCardStar key={item.star} {...item}>
             <StyleStarNum>{item.star}</StyleStarNum>
-            <LinearProgress
-              variant="determinate"
-              value={item.percentage}
-              sx={{
-                height: "3px",
-                flex: 1,
-                backgroundColor: "#C4C4C4",
-                border: "1px solid #C4C4C4",
-                "& .MuiLinearProgress-bar": {
-                  border: "3px solid #4F7755",
-                },
-              }}
-            />
-            <Typography variant="p" sx={{ fontSize: "16px", fontWeight: 500 }}>
-              {item.percentage}%
-            </Typography>
+            <StyledLinerProgresParent>
+              <StyleLinearProgress
+                variant="determinate"
+                value={item.percentage}
+              />
+            </StyledLinerProgresParent>
+            <Stylepers>
+              <StylePersenges variant="p">{item.percentage}%</StylePersenges>
+            </Stylepers>
           </StyleCardStar>
         ))}
       </StyleLiner>
@@ -65,11 +57,31 @@ export const Reviews = () => {
   );
 };
 
+const Stylepers = styled("div")({
+  minWidth: "35px",
+  textAlign: "center",
+  justifyContent: "center",
+});
+
+const StyleLinearProgress = styled(LinearProgress)({
+  flex: 1,
+  backgroundColor: "#C4C4C4",
+
+  "& .MuiLinearProgress-bar": {
+    height: "8px",
+    backgroundColor: "#4F7755",
+  },
+});
+
+const StyledLinerProgresParent = styled("div")({
+  width: "274px",
+});
+
 const StyleStar = styled("p")({
   padding: "10px 40px",
   fontSize: "28px",
   display: "flex",
-  gap: "10PX",
+  gap: "10px",
   "& svg path": {
     fill: "#F7D212",
   },
@@ -80,11 +92,10 @@ const StyleStar = styled("p")({
 });
 
 const StyleConteiner = styled(Container)({
-  border: " 1px solid #C4C4C4",
+  border: "1px solid #C4C4C4",
   borderRadius: "16px",
   width: "424px",
   height: "232px",
-
   display: "flex",
   flexDirection: "column",
   gap: "15px",
@@ -93,17 +104,25 @@ const StyleConteiner = styled(Container)({
 const StyleCardStar = styled(Box)({
   display: "flex",
   alignItems: "center",
-  gap: "4px",
+  gap: "10px",
+  width: "100%",
 });
 
 const StyleLiner = styled("div")({
   display: "flex",
   flexDirection: "column",
   gap: "12px",
-  padding: "0px 40px 0px 40px ",
+  padding: "0px 30px 0 40px  ",
 });
 
 const StyleStarNum = styled("p")({
   fontSize: "16px",
   fontWeight: 500,
+});
+
+const StylePersenges = styled(Typography)({
+  fontSize: "16px",
+  fontWeight: 500,
+  textAlign: "center",
+  justifyContent: "center",
 });
