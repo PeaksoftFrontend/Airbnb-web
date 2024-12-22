@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import { FormControl, MenuItem, styled } from "@mui/material";
 import { Select as MuiSelect } from "@mui/material";
+import { Icons } from "../../assets";
 
 export const Select = forwardRef(
   ({ options = [], placeholder, value, label, onChange, ...props }, ref) => {
@@ -9,7 +10,9 @@ export const Select = forwardRef(
         <MuiSelect
           ref={ref}
           value={value}
+          displayEmpty
           onChange={onChange}
+          IconComponent={Icons.ArrowDown}
           sx={{
             color: "#828282",
             fontSize: "16px",
@@ -19,7 +22,7 @@ export const Select = forwardRef(
           {...props}
           renderValue={(selected) => {
             if (!selected) {
-              return placeholder;
+              return <Placeholder>{placeholder}</Placeholder>;
             }
             const selectedOption = options.find(
               (option) => option.value === selected
@@ -27,14 +30,14 @@ export const Select = forwardRef(
             return selectedOption ? selectedOption.label : "";
           }}
         >
-          {options.length > 0 ? (
+          {options.length === 0 ? (
+            <MenuItem disabled>Здесь пока что нету данных.</MenuItem>
+          ) : (
             options.map((option) => (
               <StyledMenuItem key={option.value} value={option.value}>
                 {option.label}
               </StyledMenuItem>
             ))
-          ) : (
-            <StyledMenuItem disabled>{placeholder}</StyledMenuItem>
           )}
         </MuiSelect>
       </FormControl>
@@ -43,8 +46,17 @@ export const Select = forwardRef(
 );
 
 const StyledMenuItem = styled(MenuItem)({
-  color: "#828282",
+  color: "#5D5D5D",
   fontSize: "16px",
   fontWeight: "400",
   padding: "12px auto",
+  "&:hover": {
+    background: "#F3F3F3",
+  },
+});
+
+const Placeholder = styled("p")({
+  color: "#828282",
+  fontSize: "16px",
+  fontWeight: "400",
 });
