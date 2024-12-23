@@ -18,7 +18,7 @@ const STAR_RATING = [
   },
   {
     star: 3,
-    percentage: 0,
+    percentage: 70,
   },
   {
     star: 2,
@@ -78,14 +78,17 @@ const StyledLinerProgresParent = styled("div")({
 });
 
 const StyleStar = styled("p")({
-  padding: "10px 40px",
-  fontSize: "28px",
+  padding: "21px 16px 0px 16px",
+  fontSize: "24px",
+  fontWeight: "500",
   display: "flex",
   gap: "10px",
+  alignItems: "center",
   "& svg path": {
     fill: "#F7D212",
   },
-  "& svg ": {
+
+  "& svg": {
     width: "31px",
     height: "31px",
   },
@@ -95,10 +98,10 @@ const StyleConteiner = styled(Container)({
   border: "1px solid #C4C4C4",
   borderRadius: "16px",
   width: "424px",
-  height: "232px",
   display: "flex",
   flexDirection: "column",
-  gap: "15px",
+  gap: "19px",
+  paddingBottom: "20px",
 });
 
 const StyleCardStar = styled(Box)({
@@ -112,7 +115,7 @@ const StyleLiner = styled("div")({
   display: "flex",
   flexDirection: "column",
   gap: "12px",
-  padding: "0px 30px 0 40px  ",
+  padding: "0px 16px 0 16px",
 });
 
 const StyleStarNum = styled("p")({
