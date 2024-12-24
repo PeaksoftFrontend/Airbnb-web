@@ -11,21 +11,21 @@ import { styled } from "@mui/material";
 export const Regions = () => {
   return (
     <StyledBox>
-      <div>
+      <StyledDiv>
         <img src={Chui} alt="" />
-      </div>
+      </StyledDiv>
       <StyledAside>
-        <div>
+        <StyledDivs>
           <img src={Batken} alt="" />
-        </div>
-        <div>
+        </StyledDivs>
+        <StyledDiv1>
           <img src={Jalalabad} alt="" />
-        </div>
+        </StyledDiv1>
       </StyledAside>
 
-      <div>
+      <StyledDiv2>
         <img src={Osh} alt="" />
-      </div>
+      </StyledDiv2>
       <div>
         <img src={Naryn} alt="" />
       </div>
@@ -52,4 +52,23 @@ const StyledBox = styled("div")({
   width: "1240px",
   height: "1262px",
   marginLeft: "100px",
+});
+
+const StyledDiv = styled("div")({
+  width: "505px",
+  height: "621px",
+});
+const StyledDivs = styled("div")({
+  width: "347px",
+  height: "302px",
+});
+
+const StyledDiv1 = styled("div")({
+  width: "347px",
+  height: "302px",
+});
+
+const StyledDiv2 = styled("div ")({
+  width: "505px",
+  height: "621px",
 });
