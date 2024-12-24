@@ -1,3 +1,8 @@
+import { Regions } from "./components/user/Regions";
+
 export const App = () => {
-  return <div> </div>;
+  return (
+    <div>      <Regions />
+    </div>
+  );
 };
