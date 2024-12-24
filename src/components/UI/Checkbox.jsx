@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { orange } from "@mui/material/colors";
-import { FormControlLabel, Checkbox, styled } from "@mui/material";
+import { Checkbox as MuiCheckbox, FormControlLabel } from "@mui/material";
 
-export function Checkbox() {
+export const Checkbox = () => {
   const [checkbox, setCheckbox] = useState(false);
 
   const handleChangeCheckbox = (event) => {
@@ -12,7 +12,7 @@ export function Checkbox() {
   return (
     <FormControlLabel
       control={
-        <Checkbox
+        <MuiCheckbox
           checked={checkbox}
           onChange={handleChangeCheckbox}
           name="checkbox"
@@ -25,4 +25,4 @@ export function Checkbox() {
       }
     />
   );
-}
+};
