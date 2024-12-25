@@ -1,9 +1,9 @@
 import { Icons } from "../../assets";
-import { Checkbox, styled } from "@mui/material";
+import { Checkbox } from "../UI/Checkbox";
+import { styled } from "@mui/material";
 import { SearchInput } from "../UI/SearchInput";
 
 export const Header = () => {
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
   return (
     <StyledHeader>
       <StyledLogo>
@@ -11,7 +11,9 @@ export const Header = () => {
       </StyledLogo>
       <StyledP>leave an ad</StyledP>
       <StyledArticle>
-        <Checkbox {...label} defaultChecked />
+        <StyledCheckbox>
+          <Checkbox />
+        </StyledCheckbox>
         <p>Search nearby</p>
       </StyledArticle>
       <StyledSearchInput>
@@ -36,16 +38,21 @@ const StyledLogo = styled("div")({
 const StyledSearchInput = styled("div")({
   height: "37px",
   width: "414px",
-  left: "900px",
   gap: "10px",
   borderRadius: "2px 0px 0px 0px",
   border: "1px 0px 0px 0px",
+  position: "relative",
+  left: "10px",
+});
+const StyledCheckbox = styled("span")({
+  position: "relative",
+  left: "20px",
 });
 const StyledArticle = styled("article")({
   display: "flex",
   alignItems: "center",
   position: "relative",
-  left: "50px",
+  left: "60px",
 });
 const StyledP = styled("p")({
   color: "#FFBE58",
