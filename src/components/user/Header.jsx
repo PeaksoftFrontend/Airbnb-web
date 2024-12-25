@@ -1,9 +1,8 @@
-import React from "react";
 import { Icons } from "../../assets";
 import { Checkbox, styled } from "@mui/material";
 import { SearchInput } from "../UI/SearchInput";
 
-const Header = () => {
+export const Header = () => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   return (
     <StyledHeader>
@@ -22,8 +21,6 @@ const Header = () => {
     </StyledHeader>
   );
 };
-
-export default Header;
 
 const StyledHeader = styled("header")({
   display: "flex",

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Icons } from "../../assets";
 import { styled } from "@mui/material";
-const Header = () => {
+export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleText = () => {
+  const ToggleText = () => {
     setIsOpen(!isOpen);
   };
   return (
@@ -19,7 +19,7 @@ const Header = () => {
       </StyledLiTogether>
       <StyleEnd>
         <StyledArrow>
-          <StyledText onClick={toggleText}>
+          <StyledText onClick={ToggleText}>
             Administator
             <StyleDropDown>
               <Icons.ArrowDown />
@@ -37,8 +37,6 @@ const Header = () => {
     </StyledHeader>
   );
 };
-
-export default Header;
 
 const StyledHeader = styled("header")({
   display: "flex",
