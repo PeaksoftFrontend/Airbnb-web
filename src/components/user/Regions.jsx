@@ -7,68 +7,150 @@ import Issykkol from "../../assets/image/issykkol-img.png";
 import Chui from "../../assets/image/chui-img.png";
 import Bishkek from "../../assets/image/bishkek-img.png";
 
-import { styled } from "@mui/material";
+import { styled, Typography } from "@mui/material";
 export const Regions = () => {
   return (
-    <StyledBox>
-      <StyledDiv>
-        <img src={Chui} alt="" />
-      </StyledDiv>
-      <StyledAside>
-        <StyledDivs>
-          <img src={Batken} alt="" />
-        </StyledDivs>
-        <StyledDiv1>
-          <img src={Jalalabad} alt="" />
-        </StyledDiv1>
-      </StyledAside>
+    <StyledContainer>
+      <Typography
+        variant="h4"
+        sx={{ fontFamily: "sans-serif", paddingLeft: "20px" }}
+      >
+        REGION IN KYRGYZSTAN
+      </Typography>
+      <Typography variant="h6" sx={{ paddingLeft: "20px", paddingTop: "14px" }}>
+        You can visit the site any day and be sure that you will find everything
+        for a great vacation.
+      </Typography>
 
-      <StyledDiv2>
-        <img src={Osh} alt="" />
-      </StyledDiv2>
-      <div>
-        <img src={Naryn} alt="" />
-      </div>
-      <div>
-        <img src={Bishkek} alt="" />
-      </div>
-      <div>
-        <img src={Issykkol} alt="" />
-      </div>
-      <div>
-        <img src={Talas} alt="" />
-      </div>
-    </StyledBox>
+      <StyledBox>
+        <StyledDiv>
+          <img src={Chui} alt="" />
+          <OverlayText>CHUI</OverlayText>
+        </StyledDiv>
+        <StyledAside>
+          <StyledDiv>
+            <img src={Naryn} alt="" />
+            <H1>NARYN</H1>
+          </StyledDiv>
+          <StyledDiv>
+            <img src={Batken} alt="" />
+            <Text>BATKEN</Text>
+          </StyledDiv>
+          <StyledDiv>
+            <img src={Jalalabad} alt="" />
+            <Text>JALAL-ABAD</Text>
+          </StyledDiv>
+        </StyledAside>
+      </StyledBox>
+      <Styledsection>
+        <StyledAssets>
+          <StyledDiv>
+            <img src={Issykkol} alt="" />
+            <Text>ISSYK-KOL</Text>
+          </StyledDiv>
+
+          <StyledDiv>
+            <img src={Talas} alt="" />
+            <Text>TALAS</Text>
+          </StyledDiv>
+          <StyledDiv
+            style={{
+              display: "flex",
+              flexWrap: "wrap-reverse",
+            }}
+          >
+            <img src={Bishkek} alt="" />
+            <H1>BISHKEK</H1>
+          </StyledDiv>
+        </StyledAssets>
+        <StyledDiv
+          style={{
+            width: "505px",
+            height: "621px",
+            marginTop: "10px",
+            marginLeft: "20px",
+          }}
+        >
+          <img src={Osh} alt="" />
+          <OverlayText>OSH</OverlayText>
+        </StyledDiv>
+      </Styledsection>
+    </StyledContainer>
   );
 };
-
-const StyledAside = styled("aside")({
-  display: "flex",
-  // justifyContent: "space-evenly",
-  position: "relative",
+const StyledContainer = styled("div")({
+  marginLeft: "100px",
+  marginTop: "100px",
 });
 
 const StyledBox = styled("div")({
+  display: "flex",
+  gap: "20px",
   width: "1240px",
-  height: "1262px",
-  marginLeft: "100px",
+  padding: "20px",
+  marginTop: "60px",
 });
 
+const Styledsection = styled("div")({
+  display: "flex",
+  marginRight: "70em",
+});
 const StyledDiv = styled("div")({
-  width: "505px",
-  height: "621px",
-});
-const StyledDivs = styled("div")({
-  width: "347px",
-  height: "302px",
+  display: "flex",
+  position: "relative",
+  cursor: "pointer",
 });
 
-const StyledDiv1 = styled("div")({
-  width: "347px",
-  height: "302px",
+const StyledAside = styled("div")({
+  display: "flex",
+  gap: "20px",
+  flexWrap: "wrap-reverse",
 });
 
-const StyledDiv2 = styled("div ")({
-  width: "505px",
-  height: "621px",
+const StyledAssets = styled("div")({
+  display: "flex",
+  gap: "20px",
+  flexWrap: "wrap",
+  paddingTop: "10px",
+  paddingLeft: "20px",
+  width: "1240px",
+});
+
+const OverlayText = styled("h1")({
+  position: "absolute",
+  top: "95%",
+  left: "2%",
+  color: "white",
+  fontSize: "16px",
+  fontFamily: "san-serif",
+  fontWeight: "500",
+  textShadow: "2px 2px 4px rgba(0, 0, 0, 0.7)",
+  pointerEvents: "none",
+  margin: 0,
+});
+
+const Text = styled("h1")({
+  position: "absolute",
+  top: "90%",
+  left: "2%",
+  color: "white",
+  fontSize: "16px",
+  fontFamily: "san-serif",
+  fontWeight: "500",
+  textShadow: "2px 2px 4px rgba(0, 0, 0, 0.7)",
+  pointerEvents: "none",
+  margin: 0,
+});
+
+const H1 = styled("h1")({
+  position: "absolute",
+  top: "90%",
+  left: "3%",
+  color: "white",
+  fontSize: "16px",
+  fontFamily: "san-serif",
+  fontWeight: "500",
+  textShadow: "2px 2px 4px rgba(0, 0, 0, 0.7)",
+  pointerEvents: "none",
+  margin: 0,
 });
