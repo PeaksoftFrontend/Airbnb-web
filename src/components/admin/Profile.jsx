@@ -95,6 +95,5 @@ const Styledh1 = styled("h1")({
   fontSize: "20px",
   color: "#363636",
   fontWeight: "500",
-  // marginTop: "122px",
   marginLeft: "100px",
 });
