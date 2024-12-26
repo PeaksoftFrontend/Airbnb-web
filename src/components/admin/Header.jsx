@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { Icons } from "../../assets";
 import { styled } from "@mui/material";
 export const Header = () => {
@@ -64,15 +64,24 @@ const StyleEnd = styled("div")({
 });
 const StyledA = styled("li")({
   textDecoration: "none",
+  fontSize: "18px",
+  fontWeight: "400",
+  lineHeight: "21.78px",
+  textAlign: "left",
+  textUnderlinePosition: "from-font",
   ":hover": {
     color: "#FF4B4B",
   },
 });
 const StyleLogo = styled("div")({
-  width: "72px",
   height: "54px",
+  width: "72px",
   marginLeft: "40px",
   cursor: "pointer",
+  "& svg": {
+    width: "72px",
+    height: "54px",
+  },
 });
 const StyledArrow = styled("div")({
   position: "relative",
@@ -96,7 +105,7 @@ const StyledNav = styled("nav")({
   height: "59px",
   top: "36px",
   borderRadius: "2px",
-  border: "1px solid #F3F3F3",
+  border: "1px solid #C4C4C4",
   paddingTop: "20px",
   zIndex: 1,
 });
@@ -109,4 +118,5 @@ const StyledHoverText = styled("div")({
 const StyledDropDownText = styled("a")({
   color: "#5D5D5D",
   textDecoration: "none",
+  paddingLeft: "12px",
 });
