@@ -22,6 +22,7 @@ import ArrowLeft from "../assets/icons/arrow-left-icon.svg?react";
 import Google from "../assets/icons/google-icon.svg?react";
 import HeartColorless from "../assets/icons/heart-colorless-icon.svg?react";
 import HeardFor from "../assets/icons/Btns.svg?react";
+import MIniMenu from "../assets/icons/mini-menu-icon.svg?react";
 
 export const Icons = {
   Heart,
@@ -48,4 +49,5 @@ export const Icons = {
   Google,
   HeartColorless,
   HeardFor,
+  MIniMenu,
 };
