@@ -100,14 +100,14 @@ const StyleDropDown = styled("span")({
 });
 const StyledNav = styled("nav")({
   position: "absolute",
-  left: "0",
+  left: "-45px",
   backgroundColor: "#FFFFFF",
-  width: "110px",
-  height: "59px",
-  top: "36px",
-  borderRadius: "2px",
   border: "1px solid #C4C4C4",
+  top: "36px",
   paddingTop: "20px",
+  width: '180px',
+  height: '59px',
+  borderRadius: '2px 0px 0px 0px',
   zIndex: 1,
 });
 const StyledHoverText = styled("div")({
@@ -119,5 +119,5 @@ const StyledHoverText = styled("div")({
 const StyledDropDownText = styled("a")({
   color: "#5D5D5D",
   textDecoration: "none",
-  paddingLeft: "12px"
+  paddingLeft: "20px"
 });
