@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
+import { styled } from "@mui/material";
 
 const image = [
   "https://s3-alpha-sig.figma.com/img/d191/5c46/b81941212a948a76824c21edd9c509af?Expires=1734912000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=CGqtCqJZLSufP6vEHRMOnrmmMntYUC2tNKTf~crxCdZArRa3raiwPfdb8jOhmUk9JFvC-i1yTUWbGCNyNsASD4IeVlZKelhTO6dhaKjDzDYUd2yC7FY1B0X4PqMgYDh4gMdWk6Ogo3m8XOOrchfObSGriN~Vf9YEymyYdinXv2oiM1IztvTLYyH6i8gAastbsopTZsnRJYPVtbNJ6r6dkXvFhx9PSictabDi3If4yT1idza-9SdOuYopwOc0NiPlNai7ruU0KkJ99evCebJf7VkpFn96J~uYRlj9PfZxJEIU~c2Wj~mI-AaILWwzkW82da4VQG1VUOiD--rP6ArvQg__",
@@ -21,16 +22,14 @@ const images = [
 ];
 
 export const Sliders = () => {
-  const swiperRef = useRef();
+  const swiperRef = useRef(null);
 
   const handleButtonClick = (index) => {
-    if (swiperRef.current && swiperRef.current.swiper) {
-      swiperRef.current.swiper.slideTo(index);
-    }
+    swiperRef.current?.swiper?.slideTo(index, 0, false);
   };
 
   return (
-    <div>
+    <>
       <Swiper
         ref={swiperRef}
         modules={[Navigation]}
@@ -41,27 +40,11 @@ export const Sliders = () => {
       >
         {image.map((image, index) => (
           <SwiperSlide key={index}>
-            <img
-              src={image}
-              alt={"Slide ${index + 1}"}
-              style={{
-                width: "630px",
-                height: "507px",
-                marginLeft: "40px",
-                marginTop: "239px",
-              }}
-            />
+            <StyledImg src={image} alt={`Slide ${index + 1}`} />
           </SwiperSlide>
         ))}
       </Swiper>
-      <div
-        style={{
-          display: "flex",
-          marginLeft: "40px",
-          marginTop: "20px",
-          gap: "17px",
-        }}
-      >
+      <StyledDiv>
         {images.map((image, index) => (
           <button
             key={index}
@@ -73,14 +56,29 @@ export const Sliders = () => {
               cursor: "pointer",
             }}
           >
-            <img
-              src={image}
-              alt={"Button ${index }"}
-              style={{ width: "196px", height: "137px" }}
-            />
+            <Styledimage src={image} alt={`Button ${index}`} />
           </button>
         ))}
-      </div>
-    </div>
+      </StyledDiv>
+    </>
   );
 };
+
+const StyledImg = styled("img")({
+  width: "630px",
+  height: "507px",
+  marginLeft: "40px",
+  marginTop: "159px",
+});
+
+const StyledDiv = styled("div")({
+  display: "flex",
+  marginLeft: "40px",
+  marginTop: "20px",
+  gap: "17px",
+});
+
+const Styledimage = styled("img")({
+  width: "196px",
+  height: "137px",
+});
