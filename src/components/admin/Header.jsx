@@ -1,4 +1,4 @@
-import { useState } from "react";
+import  { useState } from "react";
 import { Icons } from "../../assets";
 import { styled } from "@mui/material";
 export const Header = () => {
@@ -38,14 +38,15 @@ export const Header = () => {
   );
 };
 
-const StyledHeader = styled("header")({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  background: "#0B0B0B",
-  width: "100%",
-  height: "82px",
-});
+  const StyledHeader = styled("header")({ 
+    display: "flex", 
+    justifyContent: "space-between", 
+    alignItems: "center", 
+    background: "#0B0B0B", 
+    width: "100%", 
+    height: "82px", 
+    padding: "0px 40px 0px 40px ", 
+  });
 const StyledLiTogether = styled("nav")({
   display: "flex",
   listStyle: "none",
@@ -64,25 +65,25 @@ const StyleEnd = styled("div")({
 });
 const StyledA = styled("li")({
   textDecoration: "none",
-  fontSize: "18px",
-  fontWeight: "400",
-  lineHeight: "21.78px",
-  textAlign: "left",
-  textUnderlinePosition: "from-font",
+fontSize: '18px',
+fontWeight: '400',
+lineHeight: '21.78px',
+textAlign: 'left',
+textUnderlinePosition: 'from-font',
   ":hover": {
     color: "#FF4B4B",
   },
 });
 const StyleLogo = styled("div")({
-  height: "54px",
-  width: "72px",
-  marginLeft: "40px",
-  cursor: "pointer",
-  "& svg": {
-    width: "72px",
-    height: "54px",
-  },
-});
+  height: "54px", 
+  width: "72px", 
+  marginLeft: "40px", 
+    cursor: "pointer", 
+    "& svg": { 
+      width: "72px", 
+      height: "54px", 
+    }, 
+  });
 const StyledArrow = styled("div")({
   position: "relative",
   display: "inline-block",
@@ -118,5 +119,5 @@ const StyledHoverText = styled("div")({
 const StyledDropDownText = styled("a")({
   color: "#5D5D5D",
   textDecoration: "none",
-  paddingLeft: "12px",
+  paddingLeft: "12px"
 });
