@@ -1,9 +1,8 @@
 import { Box, Container, styled } from "@mui/material";
 import { useState } from "react";
 import { Icons } from "../../assets";
-// import circle from "../../assets/icons/circle-icon.svg";
 
-const feedbacks = [
+export const feedbacks = [
   {
     avatar: "https://shorturl.at/1jDff",
     userName: "Anna Annova",
@@ -86,10 +85,10 @@ const FeedbackCard = ({
           </StyleToggleText>
         )}
       </StyledText>
-      {images.map((item) => (
-        <div key={item.id} {...item}></div>
+
+      {images.map((image, index) => (
+        <StyleImage key={index} src={image} alt={`feedback-image-${index}`} />
       ))}
-      <StyleImage src={images} alt="cat-photo-2024.png..." />
 
       <StyleFooter>
         <StyleDate>{date}</StyleDate>
