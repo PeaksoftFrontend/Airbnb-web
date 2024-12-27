@@ -11,11 +11,11 @@ export const Profile = ({ fullName, name, email }) => {
         <StyledContent>
           <StyledDiv>
             <StyledP>Name:</StyledP>
-            <StyledP>Contact:</StyledP>
+            <StylP>Contact:</StylP>
           </StyledDiv>
           <StyledDivs>
-            <StyleP>{email}</StyleP>
             <StyleP>{name}</StyleP>
+            <StyleP>{email}</StyleP>
           </StyledDivs>
         </StyledContent>
       </StyledContainer>
@@ -54,12 +54,11 @@ const AvatarP = styled("p")({
   display: "flex",
   justifyContent: "center",
   marginTop: "21px",
-  marginLeft: "27px",
+  marginLeft: "30px",
 });
 
 const StyledDiv = styled("div")({
   display: "flex",
-  flexDirection: "column",
   marginTop: "15px",
 });
 
@@ -83,6 +82,13 @@ const StyledP = styled("p")({
   marginLeft: "-180px",
 });
 
+const StylP = styled("P")({
+  fontSize: "16px",
+  fontWeight: "400",
+  color: "#646464",
+  marginTop: "45px",
+  marginLeft: "-65px",
+});
 const StyleP = styled("p")({
   fontSize: "18px",
   fontWeight: "500",
