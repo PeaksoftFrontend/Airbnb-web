@@ -1,25 +1,25 @@
 import { styled } from "@mui/material";
 
-export const Breadcrumbs = ({ path, current }) => {
+export const Breadcrumbs = ({ path, name }) => {
   return (
     <StyledDiv>
-      <Path>{path}</Path>
-      <Span> / </Span>
-      <Current>{current}</Current>
+      <StyledPath>{path}</StyledPath>
+      <StyledSpan> / </StyledSpan>
+      <StyledName>{name}</StyledName>
     </StyledDiv>
   );
 };
 
-const Path = styled("span")({
+const StyledPath = styled("span")({
   color: "#999",
 });
 
-const Span = styled("span")({
+const StyledSpan = styled("span")({
   margin: "0 5px",
   color: "#666",
 });
 
-const Current = styled("span")({
+const StyledName = styled("span")({
   fontWeight: "400",
   color: "#333",
 });
