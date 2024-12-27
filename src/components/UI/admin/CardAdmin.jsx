@@ -4,8 +4,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { Box, Container, styled } from "@mui/material";
-import { Icons } from "../../assets";
-import { Button } from "./Button";
+import { Icons } from "../../../assets";
+import { Button } from "../Button";
 import { useState } from "react";
 
 export const Data = [
