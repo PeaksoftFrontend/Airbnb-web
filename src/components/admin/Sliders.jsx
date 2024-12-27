@@ -29,7 +29,7 @@ export const Sliders = () => {
   };
 
   return (
-    <>
+    <StyledContainer>
       <StyledSwiper
         ref={swiperRef}
         modules={[Navigation]}
@@ -60,29 +60,38 @@ export const Sliders = () => {
           </button>
         ))}
       </StyledDiv>
-    </>
+    </StyledContainer>
   );
 };
 
+const StyledContainer = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  width: "100%",
+  transform: "translateX(-400px)",
+});
+
 const StyledSwiper = styled(Swiper)({
-  width: "630px ",
+  width: "630px",
   height: "507px",
   margin: "0 auto",
 });
 const StyledImg = styled("img")({
   width: "630px",
   height: "507px",
-  margin: "0 aauto",
+  objectFit: "cover",
 });
 
 const StyledDiv = styled("div")({
   display: "flex",
-  marginLeft: "40px",
   marginTop: "20px",
   gap: "17px",
+  justifyContent: "center",
 });
 
 const Styledimage = styled("img")({
   width: "196px",
   height: "137px",
+  objectFit: "cover",
 });
