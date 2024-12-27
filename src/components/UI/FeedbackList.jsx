@@ -13,7 +13,9 @@ export const feedbacks = [
     dislikes: 2,
     comments: 2,
     images: [
-      "https://encrypted-tbn0.gstatic.comimages?q=tbn:ANd9GcQVKZhCti6KfNKywzvjmroRlxKfbqkZB_MCLw&s",
+      "https://shorturl.at/6fOE9",
+      "https://shorturl.at/D4L3j",
+      "https://shorturl.at/6fOE9",
     ],
   },
   {
@@ -25,7 +27,9 @@ export const feedbacks = [
     likes: 4,
     dislikes: 2,
     images: [
-      "https://encrypted-tbn0.gstatic.comq=tbn:ANd9GcQVKZhCti6KfNKywzvjmroRlxKfbqkZB_MCLw&s",
+      "https://shorturl.at/6fOE9",
+      "https://shorturl.at/D4L3j",
+      "https://shorturl.at/6fOE9",
     ],
   },
 ];
@@ -86,9 +90,11 @@ const FeedbackCard = ({
         )}
       </StyledText>
 
-      {images.map((image, index) => (
-        <StyleImage key={index} src={image} alt={`feedback-image-${index}`} />
-      ))}
+      <StyleDivImage>
+        {images.map((image, index) => (
+          <StyleImage key={index} src={image} alt={`feedback-image-${index}`} />
+        ))}
+      </StyleDivImage>
 
       <StyleFooter>
         <StyleDate>{date}</StyleDate>
@@ -117,6 +123,11 @@ export const FeedbackList = () => {
     </StyleList>
   );
 };
+
+const StyleDivImage = styled("div")({
+  display: "flex",
+  gap: "2px",
+});
 
 const StyledCard = styled(Container)({
   display: "flex",
@@ -164,6 +175,9 @@ const StyleToggleText = styled("span")({
 const StyleImage = styled("img")({
   cursor: "pointer",
   color: "blue",
+  width: "80px",
+  height: "80px",
+  objectFit: "cover",
 });
 
 const StyleFooter = styled("div")({
