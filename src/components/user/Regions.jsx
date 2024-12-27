@@ -12,13 +12,11 @@ import { styled, Typography } from "@mui/material";
 export const Regions = () => {
   return (
     <StyledContainer>
-      <Typography variant="h4" sx={{ paddingLeft: "20px" }}>
-        REGION IN KYRGYZSTAN
-      </Typography>
-      <Typography variant="h6" sx={{ paddingLeft: "20px", paddingTop: "14px" }}>
+      <StyledH4 variant="h4">REGION IN KYRGYZSTAN</StyledH4>
+      <StyledH6 variant="h6">
         You can visit the site any day and be sure that you will find everything
         for a great vacation.
-      </Typography>
+      </StyledH6>
 
       <StyledBox>
         <StyledDiv>
@@ -95,6 +93,14 @@ const StyledAside = styled("div")({
   flexWrap: "wrap-reverse",
 });
 
+const StyledH4 = styled(Typography)({
+  paddingLeft: "20px",
+});
+
+const StyledH6 = styled(Typography)({
+  paddingLeft: "20px",
+  paddingTop: "14px",
+});
 const StyledAssets = styled("div")({
   display: "flex",
   gap: "20px",
