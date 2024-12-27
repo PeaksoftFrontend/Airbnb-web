@@ -30,7 +30,7 @@ export const Sliders = () => {
 
   return (
     <>
-      <Swiper
+      <StyledSwiper
         ref={swiperRef}
         modules={[Navigation]}
         spaceBetween={10}
@@ -43,7 +43,7 @@ export const Sliders = () => {
             <StyledImg src={image} alt={`Slide ${index + 1}`} />
           </SwiperSlide>
         ))}
-      </Swiper>
+      </StyledSwiper>
       <StyledDiv>
         {images.map((image, index) => (
           <button
@@ -64,11 +64,15 @@ export const Sliders = () => {
   );
 };
 
+const StyledSwiper = styled(Swiper)({
+  width: "630px ",
+  height: "507px",
+  margin: "0 auto",
+});
 const StyledImg = styled("img")({
   width: "630px",
   height: "507px",
-  marginLeft: "40px",
-  marginTop: "159px",
+  margin: "0 aauto",
 });
 
 const StyledDiv = styled("div")({

@@ -1,3 +1,9 @@
+import { Sliders } from "./components/admin/Sliders";
+
 export const App = () => {
-  return <div>App</div>;
+  return (
+    <div>
+      <Sliders />
+    </div>
+  );
 };
