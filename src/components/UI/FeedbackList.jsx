@@ -64,12 +64,16 @@ const FeedbackCard = ({
           height="20px"
           fill={i <= rating ? "#FFD700" : "#CCCCCC"}
         >
-          {" "}
           <path d="M12 17.27L18.18 21 16.54 13.97 22 9.24 14.81 8.62 12 2 9.19 8.63 2 9.24 7.46 13.97 5.82 21z" />
         </svg>
       );
     }
-    return stars;
+    return (
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        {stars}
+        <span style={{ fontSize: "14px", color: "#666" }}>({rating})</span>
+      </div>
+    );
   };
 
   return (
@@ -78,8 +82,9 @@ const FeedbackCard = ({
         <StyleUserInfo>
           <StyleAvatar src={avatar} alt={`${userName}'s avatar`} />
           <StyleSpan>{userName}</StyleSpan>
+          <StyleRating>{renderStars(rating)}</StyleRating>
         </StyleUserInfo>
-        <StyleRating>{renderStars(rating)}</StyleRating>
+        <Icons.Menufeadback />
       </StyleBox>
       <StyledText>
         {displayedText}
@@ -138,6 +143,9 @@ const StyleBox = styled(Box)({
   display: "flex",
   justifyContent: "space-between",
   marginBottom: "0.5rem",
+  "& svg": {
+    cursor: "pointer",
+  },
 });
 
 const StyleUserInfo = styled("div")({
