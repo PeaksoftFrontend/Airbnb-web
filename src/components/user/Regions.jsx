@@ -66,7 +66,7 @@ export const Regions = () => {
 };
 
 const StyledContainer = styled("div")({
-  marginLeft: "100px",
+  marginLeft: "50px",
   marginTop: "100px",
 });
 
