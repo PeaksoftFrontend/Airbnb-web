@@ -9,7 +9,7 @@ import {
 import { Icons } from "../../assets";
 import { useState } from "react";
 
-export const Page = () => {
+export const AdminPage = () => {
   const initialUsers = [
     {
       id: 1,
@@ -45,7 +45,7 @@ export const Page = () => {
   const deleteItem = (id) => () => {
     setItems((prevItems) => prevItems.filter((user) => user.id !== id));
   };
-  const colors = ["#D8D8D8", "#F3F3F3", "#fffff", "#F3F3F3"];
+  const colors = ["#F3F3F3", "#fffff"];
 
   return (
     <StyleMain>
@@ -110,6 +110,9 @@ const StyledTableCell = styled(TableCell)({
   textAlign: "left",
   fontSize: "14px",
   height: "37px",
+  " &:hover": {
+    background: "#D8D8D8",
+  },
 });
 const StyledTableRow = styled(TableRow)({});
 const StyledLi = styled("ul")({
