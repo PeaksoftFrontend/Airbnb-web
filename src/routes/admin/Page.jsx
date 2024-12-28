@@ -1,4 +1,11 @@
-import { styled } from "@mui/material";
+import {
+  styled,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+} from "@mui/material";
 import { Icons } from "../../assets";
 import { useState } from "react";
 
@@ -38,10 +45,11 @@ export const Page = () => {
   const deleteItem = (id) => () => {
     setItems((prevItems) => prevItems.filter((user) => user.id !== id));
   };
+  const colors = ["#D8D8D8", "#F3F3F3", "#fffff", "#F3F3F3"];
 
   return (
     <StyleMain>
-      <h1>Users</h1>
+      <StyledH1>Users</StyledH1>
       <StyledLi>
         <StyleDiv>
           <p>№</p>
@@ -54,20 +62,33 @@ export const Page = () => {
         </StyledPublication>
         <StyledTwoP>Action</StyledTwoP>
       </StyledLi>
-      {items.map((user) => (
-        <StyleLis key={user.id}>
-          <StyledMapP>
-            {user.id}
-            <StyledName>{user.name} </StyledName>
-            <StyledContact>{user.contact}</StyledContact>
-            <StyledBooks>{user.booking} </StyledBooks>
-            <StiledAnnouncement>{user.announcement}</StiledAnnouncement>
-            <StyledDelete onClick={deleteItem(user.id)}>
-              <Icons.Korzina />
-            </StyledDelete>
-          </StyledMapP>
-        </StyleLis>
-      ))}
+      <TableContainer>
+        <Table>
+          <TableBody>
+            {items.map((user, index) => (
+              <StyledTableRow
+                key={user.id}
+                style={{
+                  backgroundColor: colors[index % colors.length],
+                }}
+              >
+                <StyledTableCell>
+                  <StyledMap>
+                    {user.id}
+                    <StyledName>{user.name} </StyledName>
+                    <StyledContact>{user.contact}</StyledContact>
+                    <StyledBooks>{user.booking} </StyledBooks>
+                    <StyledAnnouncement>{user.announcement}</StyledAnnouncement>
+                    <StyledDelete onClick={deleteItem(user.id)}>
+                      <Icons.Korzina />
+                    </StyledDelete>
+                  </StyledMap>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </StyleMain>
   );
 };
@@ -75,12 +96,29 @@ export const Page = () => {
 const StyleMain = styled("main")({
   width: "100%",
 });
+const StyledH1 = styled("h1")({
+  width: "66px",
+  height: "24px",
+  fontSize: "20px",
+  fontWeight: "500",
+  textAlign: "left",
+  textUnderlinePosition: "from-font",
+  textDecorationSkipInk: "none",
+});
+const StyledTableCell = styled(TableCell)({
+  padding: "10px",
+  textAlign: "left",
+  fontSize: "14px",
+  height: "37px",
+});
+const StyledTableRow = styled(TableRow)({});
 const StyledLi = styled("ul")({
   display: "flex",
   padding: "10px 16px",
   textAlign: "left",
   fontSize: "14px",
   height: "37px",
+  color: "#FFFFFF",
   backgroundColor: "#646464",
 });
 const StyleDiv = styled("div")({
@@ -100,30 +138,27 @@ const StyledPublication = styled("div")({
   gap: "70px",
 });
 
-const StyleLis = styled("li")({
-  backgroundColor: "#D8D8D8",
-  padding: "10px 15px",
-  textAlign: "left",
-  display: "flex",
-});
-const StyledMapP = styled("div")({
+const StyledMap = styled("div")({
   display: "flex",
   alignItems: "center",
-  marginLeft: "16px",
+  fontSize: "18px",
+  marginLeft: "23px",
 });
-const StyledName = styled("P")({
-  marginLeft: "42px",
+const StyledName = styled("p")({
+  marginLeft: "39px",
+  width: "155px",
 });
 const StyledContact = styled("p")({
-  marginLeft: "260px",
+  marginLeft: "243px",
 });
 const StyledBooks = styled("p")({
-  marginLeft: "300px",
+  marginLeft: "277px",
 });
 
-const StiledAnnouncement = styled("div")({
-  marginLeft: "115px",
+const StyledAnnouncement = styled("div")({
+  marginLeft: "116px",
 });
 const StyledDelete = styled("span")({
-  marginLeft: "245px",
+  marginLeft: "241px",
+  cursor: "pointer",
 });
