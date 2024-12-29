@@ -1,13 +1,11 @@
-import { styled } from "@mui/material";
+import { Avatar, styled } from "@mui/material";
 
 export const Profile = ({ fullName, name, email }) => {
   return (
     <StyleBox>
       <Styledh1>{fullName}</Styledh1>
       <StyledContainer>
-        <Avatar>
-          <AvatarP>{name.charAt(0).toUpperCase()}</AvatarP>
-        </Avatar>
+        <StyledAvatar>{name.charAt(0).toUpperCase()}</StyledAvatar>
         <StyledContent>
           <StyledDiv>
             <StyledP>Name:</StyledP>
@@ -23,40 +21,23 @@ export const Profile = ({ fullName, name, email }) => {
   );
 };
 
-const StyleBox = styled("div")({
-  marginTop: "121px",
-});
+const StyleBox = styled("div")({});
 
 const StyledContainer = styled("div")({
   width: "372px",
   height: "285px",
   border: "1px solid #C4C4C4",
-  marginLeft: "100px",
-  marginTop: "20px",
   display: "flex",
   borderRadius: "16px",
 });
 
-const Avatar = styled("div")({
+const StyledAvatar = styled(Avatar)({
   width: "89px",
   height: "89px",
+  fontSize: "38px",
   backgroundColor: "#266BD3",
-  borderRadius: "45px",
-  marginTop: "38px",
-  display: "flex",
   marginLeft: "141px",
 });
-
-const AvatarP = styled("p")({
-  fontSize: "38px",
-  fontWeight: "500",
-  color: "white",
-  display: "flex",
-  justifyContent: "center",
-  marginTop: "21px",
-  marginLeft: "30px",
-});
-
 const StyledDiv = styled("div")({
   display: "flex",
   marginTop: "15px",
@@ -101,5 +82,4 @@ const Styledh1 = styled("h1")({
   fontSize: "20px",
   color: "#363636",
   fontWeight: "500",
-  marginLeft: "100px",
 });
