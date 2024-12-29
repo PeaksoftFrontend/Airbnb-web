@@ -6,8 +6,8 @@ import {
   TableContainer,
   TableRow,
 } from "@mui/material";
-import { Icons } from "../../assets";
 import { useState } from "react";
+import { Icons } from "../../assets";
 
 export const AdminPage = () => {
   const initialUsers = [
@@ -80,7 +80,7 @@ export const AdminPage = () => {
                     <StyledBooks>{user.booking} </StyledBooks>
                     <StyledAnnouncement>{user.announcement}</StyledAnnouncement>
                     <StyledDelete onClick={deleteItem(user.id)}>
-                      <Icons.Korzina />
+                        <Icons.Korzina/>
                     </StyledDelete>
                   </StyledMap>
                 </StyledTableCell>
