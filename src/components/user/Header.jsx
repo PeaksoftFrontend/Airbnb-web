@@ -60,6 +60,7 @@ const StyledP = styled("p")({
   height: "22px",
   position: "relative",
   right: "50px",
+  cursor: "pointer",
 });
 const StyledButton = styled("button")({
   width: "196px",
