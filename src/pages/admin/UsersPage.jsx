@@ -5,11 +5,14 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  Modal,
+  Box,
+  Button,
 } from "@mui/material";
 import { useState } from "react";
 import { Icons } from "../../assets";
 
-export const AdminPage = () => {
+export const UsersPage = () => {
   const initialUsers = [
     {
       id: 1,
@@ -41,10 +44,26 @@ export const AdminPage = () => {
     },
   ];
   const [items, setItems] = useState(initialUsers);
+  const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
-  const deleteItem = (id) => () => {
-    setItems((prevItems) => prevItems.filter((user) => user.id !== id));
+  const handleOpen = (id) => () => {
+    setOpen(true);
+    setDeleteId(id);
   };
+
+  const handleClose = () => {
+    setOpen(false);
+    setDeleteId(null);
+  };
+
+  const deleteItem = () => {
+    if (deleteId) {
+      setItems((prevItems) => prevItems.filter((user) => user.id !== deleteId));
+      handleClose();
+    }
+  };
+
   const colors = ["#F3F3F3", "#fffff"];
 
   return (
@@ -79,8 +98,8 @@ export const AdminPage = () => {
                     <StyledContact>{user.contact}</StyledContact>
                     <StyledBooks>{user.booking} </StyledBooks>
                     <StyledAnnouncement>{user.announcement}</StyledAnnouncement>
-                    <StyledDelete onClick={deleteItem(user.id)}>
-                        <Icons.Korzina/>
+                    <StyledDelete onClick={handleOpen(user.id)}>
+                      <Icons.Korzina />
                     </StyledDelete>
                   </StyledMap>
                 </StyledTableCell>
@@ -89,9 +108,37 @@ export const AdminPage = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </StyleMain>
-  );
+      <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Box sx={StyleBOx}>
+                        <Button
+                            onClick={handleClose}
+                            variant="contained"
+                            color="success"
+                            sx={{ '&:hover': { borderColor: 'white' } }}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={deleteItem}
+                            variant="contained"
+                            color="error"
+                             sx={{ '&:hover': { borderColor: 'white' } }}
+                        >
+                            Delete
+                        </Button>
+                    </Box>
+                </Box>
+            </Modal>
+        </StyleMain>
+    );
 };
+
 
 const StyleMain = styled("main")({
   width: "100%",
@@ -165,3 +212,22 @@ const StyledDelete = styled("span")({
   marginLeft: "241px",
   cursor: "pointer",
 });
+const style = {
+position: "absolute",
+top: "50%",
+left: "50%",
+transform: "translate(-50%, -50%)",
+width: 400,
+bgcolor: "background.paper",
+border: "2px solid #FFFFFF",
+boxShadow: 24,
+borderRadius: "25px",
+p: 4,
+};
+const StyleBOx = {
+display: "flex",
+justifyContent: "center",
+gap: "20px",
+mt: "20px",
+};
+
