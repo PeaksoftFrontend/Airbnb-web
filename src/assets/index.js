@@ -22,6 +22,12 @@ import ArrowLeft from "../assets/icons/arrow-left-icon.svg?react";
 import Google from "../assets/icons/google-icon.svg?react";
 import HeartColorless from "../assets/icons/heart-colorless-icon.svg?react";
 import Menufeadback from "../assets/icons/munu-feadback-icon.svg?react";
+import Line from "../assets/icons/Group.svg?react";
+import LineGroup from "../assets/icons/line-right-icon.svg?react";
+import Left from "../assets/icons/left-icon.svg?react";
+import Right from "../assets/icons/right-icon.svg?react";
+import LeftBlack from "../assets/icons/left-black-icon.svg?react";
+import RightBlack from "../assets/icons/right-black-icon.svg?react";
 
 export const Icons = {
   Heart,
@@ -48,4 +54,10 @@ export const Icons = {
   Google,
   HeartColorless,
   Menufeadback,
+  Line,
+  LineGroup,
+  Left,
+  Right,
+  LeftBlack,
+  RightBlack,
 };
