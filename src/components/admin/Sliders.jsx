@@ -66,8 +66,6 @@ const StyledContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  width: "100%",
-  transform: "translateX(-400px)",
 });
 
 const StyledSwiper = styled(Swiper)({
