@@ -21,8 +21,13 @@ import ArrowRight from "../assets/icons/arrow-right-icon.svg?react";
 import ArrowLeft from "../assets/icons/arrow-left-icon.svg?react";
 import Google from "../assets/icons/google-icon.svg?react";
 import HeartColorless from "../assets/icons/heart-colorless-icon.svg?react";
+<<<<<<< HEAD
 import HeardFor from "../assets/icons/Btns.svg?react";
 import MIniMenu from "../assets/icons/mini-menu-icon.svg?react";
+=======
+import LogoColor from "../assets/icons/logo-color-icon.svg?react"
+import Menufeadback from "../assets/icons/munu-feadback-icon.svg?react";
+>>>>>>> 48d0e0b7e42b9331066a26723e4cc37b9bb97dbb
 
 export const Icons = {
   Heart,
@@ -48,6 +53,11 @@ export const Icons = {
   ArrowLeft,
   Google,
   HeartColorless,
+<<<<<<< HEAD
   HeardFor,
   MIniMenu,
+=======
+  LogoColor,
+  Menufeadback,
+>>>>>>> 48d0e0b7e42b9331066a26723e4cc37b9bb97dbb
 };
