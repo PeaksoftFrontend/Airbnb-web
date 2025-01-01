@@ -1,3 +1,9 @@
+import { WelcomeSection } from "./components/user/welcome-section/WelcomeSection";
+
 export const App = () => {
-  return <div></div>;
+  return (
+    <div>
+      <WelcomeSection />
+    </div>
+  );
 };

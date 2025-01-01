@@ -1,15 +1,29 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { styled } from "@mui/material/styles";
-import { Box, IconButton, Modal, ListItem } from "@mui/material";
-import { Icons } from "../../../assets";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Button } from "../../UI/Button";
+import { Modal } from "../../UI/Modal";
+import { Icons } from "../../../assets";
+import { Input } from "../../UI/Input";
+import { Box, Typography } from "@mui/material";
+import { AccountMenu } from "./AccountMenu";
 
 export const HeaderModal = ({ showAvatarModal }) => {
-  const [open, setOpen] = useState(false);
-  const anchorRef = useRef(null);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [adminOpen, setAdminOpen] = useState(false);
+
+  const handleOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
+  };
+  const handleAdminOpen = () => {
+    setAdminOpen(true);
+  };
+  const handleAdminClose = () => {
+    setAdminOpen(false);
+  };
 
   return (
     <StyledHeader>
@@ -17,40 +31,58 @@ export const HeaderModal = ({ showAvatarModal }) => {
       <StyledDiv>
         <StyledLink>leave an ad</StyledLink>
         {showAvatarModal ? (
-          <StyledAvatarButton onClick={handleOpen} ref={anchorRef}>
-            <StyledAvatarCircle>
-              <StyledLetter>A</StyledLetter>
-            </StyledAvatarCircle>
-            <KeyboardArrowDownIcon
-              sx={{ marginLeft: "-5px", fontSize: "20px", color: "#C4C4C4" }}
-            />
-          </StyledAvatarButton>
+          <StyledButton variant="outlined" onClick={handleOpen}>
+            join us
+          </StyledButton>
         ) : (
-          <StyledButton variant="outlined">join us</StyledButton>
+          <AccountMenu />
         )}
       </StyledDiv>
-      <StyledModal
-        open={open}
-        onClose={handleClose}
-        container={anchorRef.current}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        sx={{ zIndex: 1000 }}
-      >
-        <StyledModalContent>
-          <ListItem
-            sx={{
-              cursor: "pointer",
-              color: "#646464",
-            }}
+
+      <StyledModal open={modalOpen} onClose={handleClose}>
+        <StyledBox>
+          <StyledFirstTypography variant="h6">JOIN US</StyledFirstTypography>
+          <StyledTypography variant="body1">
+            Sign in with OpenAI to start booking available listings!
+          </StyledTypography>
+
+          <StyledGoogleButton
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={() => {}}
           >
-            Выйти
-          </ListItem>
-        </StyledModalContent>
+            {<Icons.Google />} Google
+          </StyledGoogleButton>
+          <StyledModalTypography variant="body2" onClick={handleAdminOpen}>
+            Log in as admin
+          </StyledModalTypography>
+        </StyledBox>
+      </StyledModal>
+      <StyledModal open={adminOpen} onClose={handleAdminClose}>
+        <StyledBox>
+          <StyledFistBox>
+            <StyledFirstTypography> Sign in</StyledFirstTypography>
+            <StyledInputBox>
+              <StyledInput type="text" placeholder="Login" size="small" />
+              <div>
+                <StyledInput
+                  type="password"
+                  placeholder="Password"
+                  size="small"
+                />
+              </div>
+            </StyledInputBox>
+          </StyledFistBox>
+          <Button variant="outlined" sx={{ width: "414px", height: "37px" }}>
+            Sign in
+          </Button>
+        </StyledBox>
       </StyledModal>
     </StyledHeader>
   );
 };
+
 const StyledHeader = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
@@ -78,39 +110,66 @@ const StyledButton = styled(Button)({
   width: "196px",
   height: "37px",
 });
-
-const StyledAvatarButton = styled(IconButton)(() => ({
-  borderRadius: "90%",
-  color: "white",
-}));
-
-const StyledAvatarCircle = styled(Box)({
-  borderRadius: "50%",
+const StyledBox = styled(Box)({
   display: "flex",
+  flexDirection: "column",
+  gap: "20px",
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "#0298D9",
-  color: "#FFFFFF",
-  width: "37px",
-  height: "37px",
+  width: "474px",
+  height: "240px",
 });
-
-const StyledLetter = styled(Box)({
+export const StyledFirstTypography = styled(Typography)({
   fontSize: "18px",
   fontWeight: "500",
+  color: "#000000",
+  textTransform: "uppercase",
+});
+const StyledTypography = styled(Typography)({
+  fontSize: "16px",
+  fontWeight: "400",
+  color: "#828282",
+});
+const StyledGoogleButton = styled(Button)({
+  width: "424px",
+  height: "50px",
+  textTransform: "capitalize",
+  fontSize: "18px",
+  fontWeight: "500",
+  color: "#000000",
+  display: "flex",
+  gap: "16px",
+});
+const StyledModalTypography = styled(Typography)({
+  fontSize: "14px",
+  fontWeight: "400",
+  color: "#266BD3",
+  textDecoration: "underline ",
+  cursor: "pointer",
 });
 
-const StyledModal = styled(Modal)(({ theme }) => ({
+export const StyledModal = styled(Modal)(({ theme }) => ({
   display: "flex",
-  alignItems: "flex-start",
-  justifyContent: "flex-end",
-  paddingTop: theme.spacing(10),
-  paddingRight: theme.spacing(2),
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "36px",
+  backgroundColor: theme.palette.primary.main,
 }));
-
-const StyledModalContent = styled(Box)(({ theme }) => ({
-  backgroundColor: "white",
-  borderRadius: "5px",
-  minWidth: "100px",
-  padding: theme.spacing(1),
-}));
+const StyledFistBox = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  gap: "24px",
+  justifyContent: "center",
+  alignItems: "center",
+});
+const StyledInputBox = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  gap: "16px",
+});
+const StyledInput = styled(Input)({
+  width: "414px",
+  lineHeight: "39px",
+  color: "#C4C4C4",
+});

@@ -8,7 +8,7 @@ export const WelcomeSection = () => {
   return (
     <StyledBox>
       <StyledHeaderWrapper>
-        <HeaderModal showAvatarModal={false} />
+        <HeaderModal showAvatarModal={true} />
       </StyledHeaderWrapper>
       <StyledSearchBox>
         <StyledTwoBox variant="h3">
