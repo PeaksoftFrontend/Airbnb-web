@@ -115,6 +115,9 @@ export const UsersPage = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
+                    <StyleTextModal >
+                      Are you sure you want to delete user?
+                </StyleTextModal>
                     <Box sx={StyleBOx}>
                         <Button
                             onClick={handleClose}
@@ -230,4 +233,7 @@ justifyContent: "center",
 gap: "20px",
 mt: "20px",
 };
+const StyleTextModal = styled("p")({
+  paddingLeft: "20px",
+})
 
