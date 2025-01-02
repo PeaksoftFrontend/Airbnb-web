@@ -2,7 +2,7 @@ import { Avatar, styled } from "@mui/material";
 
 export const Profile = ({ fullName, name, email }) => {
   return (
-    <StyleBox>
+    <>
       <Styledh1>{fullName}</Styledh1>
       <StyledContainer>
         <StyledAvatar>{name.charAt(0).toUpperCase()}</StyledAvatar>
@@ -17,11 +17,9 @@ export const Profile = ({ fullName, name, email }) => {
           </StyledDivs>
         </StyledContent>
       </StyledContainer>
-    </StyleBox>
+    </>
   );
 };
-
-const StyleBox = styled("div")({});
 
 const StyledContainer = styled("div")({
   width: "372px",
@@ -37,6 +35,7 @@ const StyledAvatar = styled(Avatar)({
   fontSize: "38px",
   backgroundColor: "#266BD3",
   marginLeft: "141px",
+  marginTop: "38px",
 });
 const StyledDiv = styled("div")({
   display: "flex",
@@ -60,7 +59,7 @@ const StyledP = styled("p")({
   fontWeight: "400",
   color: "#646464",
   marginTop: "12px",
-  marginLeft: "-180px",
+  marginLeft: "-200px",
 });
 
 const StylP = styled("P")({
@@ -68,14 +67,14 @@ const StylP = styled("P")({
   fontWeight: "400",
   color: "#646464",
   marginTop: "45px",
-  marginLeft: "-65px",
+  marginLeft: "-55px",
 });
 const StyleP = styled("p")({
   fontSize: "18px",
   fontWeight: "500",
   color: "#383838",
   marginTop: "10px",
-  marginLeft: "-120px",
+  marginLeft: "-150px",
 });
 
 const Styledh1 = styled("h1")({
