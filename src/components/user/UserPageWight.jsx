@@ -242,6 +242,7 @@ const StyleMore = styled("p")({
   fontSize: "16px",
   fontWeight: 400,
   color: "#363636",
+  cursor: "pointer",
 });
 
 const StyleDetailsansImages = styled("div")({
