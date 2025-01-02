@@ -23,7 +23,7 @@ import Google from "../assets/icons/google-icon.svg?react";
 import HeartColorless from "../assets/icons/heart-colorless-icon.svg?react";
 import LogoColor from "../assets/icons/logo-color-icon.svg?react"
 import Menufeadback from "../assets/icons/munu-feadback-icon.svg?react";
-
+import StarColor from "../assets/icons/star-color.svg?react"
 export const Icons = {
   Heart,
   Burger,
@@ -50,4 +50,5 @@ export const Icons = {
   HeartColorless,
   LogoColor,
   Menufeadback,
+  StarColor,
 };
