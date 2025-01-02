@@ -92,6 +92,7 @@ const StyledHeader = styled(Box)(({ theme }) => ({
 const StyledIconsLogo = styled(Icons.Logo)(({ iconSize }) => ({
   width: iconSize?.width || "88px",
   height: iconSize?.height || "100%",
+  cursor: "pointer",
 }));
 const StyledDiv = styled(Box)({
   display: "flex",
