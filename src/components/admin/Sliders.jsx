@@ -4,22 +4,7 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import { styled } from "@mui/material";
 
-const image = [
-  "https://shorturl.at/eUvUY",
-  //
-  "https://shorturl.at/EvCA4",
-
-  "https://shorturl.at/OZJtQ",
-];
-const images = [
-  "https://shorturl.at/eUvUY",
-  //
-  "https://shorturl.at/EvCA4",
-
-  "https://shorturl.at/OZJtQ",
-];
-
-export const Sliders = () => {
+export const Sliders = ({ image = [], images = [] }) => {
   const swiperRef = useRef(null);
 
   const handleButtonClick = (index) => {

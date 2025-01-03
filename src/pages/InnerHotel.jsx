@@ -1,13 +1,27 @@
-import { Box, styled, Typography } from "@mui/material";
+import { Avatar, Box, styled, Typography } from "@mui/material";
 import { Sliders } from "../components/admin/Sliders";
-import { Icons } from "../assets";
+
+export const image = [
+  "https://shorturl.at/eUvUY",
+  //
+  "https://shorturl.at/EvCA4",
+
+  "https://shorturl.at/OZJtQ",
+];
+const images = [
+  "https://shorturl.at/eUvUY",
+  //
+  "https://shorturl.at/EvCA4",
+
+  "https://shorturl.at/OZJtQ",
+];
 
 export const InnerHotel = () => {
   return (
     <StyleContainer>
       <StyleDIv>
         <p>NAME</p>
-        <Sliders />
+        <Sliders image={image} images={images} />
       </StyleDIv>
       <StyledText>
         <div>
@@ -29,7 +43,7 @@ export const InnerHotel = () => {
               Hotel & SPA the rooms have bed linen and towels.
             </Typography>
             <StyleProfile>
-              <StyleAvatar></StyleAvatar>
+              <Avatar />
               <StyleEmail>
                 <StyleName>Anna Annova</StyleName>
                 <StyleNik>anna@gmail.com</StyleNik>
@@ -48,7 +62,6 @@ export const InnerHotel = () => {
 
 const StyleContainer = styled("div")({
   display: "flex",
-  padding: "0px 80px",
   gap: "65px",
 });
 
@@ -128,13 +141,6 @@ const StyleProfile = styled("div")({
   display: "flex",
   alignItems: "center",
   gap: "16px",
-});
-
-const StyleAvatar = styled("div")({
-  width: "36px",
-  height: "36px",
-  borderRadius: "50%",
-  background: " #C4C4C4",
 });
 
 const StyleEmail = styled("div")({
