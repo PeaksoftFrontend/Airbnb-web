@@ -103,6 +103,7 @@ const StyledLocation = styled("p")({
   color: "#757575",
   textAlign: "left",
   paddingBottom: "10px",
+  cursor: "pointer",
 });
 
 const StyledBox = styled(Box)(() => ({
@@ -152,11 +153,9 @@ const ViewAllButton = styled("button")(() => ({
   border: "none",
   color: "#363636",
   fontSize: "18px",
-  fontWeight: "bold",
+  fontWeight: "400",
   textDecoration: "underline",
   cursor: "pointer",
-  padding: "8px 16px",
-  margin: "16px auto",
   display: "block",
   position: "relative",
   bottom: "350px",
