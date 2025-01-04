@@ -1,15 +1,12 @@
 import { Modal as MuiModal, Box, styled } from "@mui/material";
-import React from "react";
 
-const Modal = ({ open, onClose, children }) => {
+export const Modal = ({ open, onClose, children }) => {
   return (
     <MuiModal open={open} onClose={onClose}>
       <StyledModalBox>{children}</StyledModalBox>
     </MuiModal>
   );
 };
-
-export default Modal;
 
 const StyledModalBox = styled(Box)({
   position: "absolute",

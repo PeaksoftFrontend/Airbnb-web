@@ -1,60 +1,77 @@
 import { Avatar, Box, styled, Typography } from "@mui/material";
 import { Sliders } from "../components/admin/Sliders";
 
-export const image = [
-  "https://shorturl.at/eUvUY",
-  //
-  "https://shorturl.at/EvCA4",
+const DETAIL_PUBLISHES = {
+  type: "Apartement",
+  person: "2 Guests",
+  name: "12 Morris Ave, Toronto, ON, CA",
+  description: `The hotel will provide guests with air-conditioned rooms offering a desk, a kettle, a fridge, a minibar, a safety deposit box, a flat-screen TV and a shared bathroom with a shower. At Garden Hotel & SPA the rooms have bed linen and towels.`,
+  userInfo: {
+    userImage:
+      "https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGF2YXRhcnN8ZW58MHx8MHx8fDA%3D",
+    userName: "Anna",
+    userLastName: "Annova",
+    userEmail: "anna@gmail.com",
+  },
+  images: [
+    "https://shorturl.at/eUvUY",
+    "https://shorturl.at/EvCA4",
 
-  "https://shorturl.at/OZJtQ",
-];
-const images = [
-  "https://shorturl.at/eUvUY",
-  //
-  "https://shorturl.at/EvCA4",
+    "https://shorturl.at/OZJtQ",
+    "https://shorturl.at/OZJtQ",
+  ],
+};
 
-  "https://shorturl.at/OZJtQ",
-];
-
-export const InnerHotel = () => {
+export const InnerHotel = ({
+  onOutlinedFunc,
+  onContainedFunc,
+  outlined = "",
+  contained = "",
+  payment,
+}) => {
   return (
     <StyleContainer>
       <StyleDIv>
         <p>NAME</p>
-        <Sliders image={image} images={images} />
+        <Sliders images={DETAIL_PUBLISHES?.images} />
       </StyleDIv>
       <StyledText>
         <div>
           <StyleGlobal>
-            <StyleApartaments>Apartement</StyleApartaments>
-            <StyleGuests>2 Guests</StyleGuests>
+            <StyleApartaments>{DETAIL_PUBLISHES?.type}</StyleApartaments>
+            <StyleGuests>{DETAIL_PUBLISHES?.person}</StyleGuests>
           </StyleGlobal>
           <StyleGPS>
             <p>Name of hotel</p>
-            <span>12 Morris Ave, Toronto, ON, CA</span>
+            <span>{DETAIL_PUBLISHES?.name}</span>
           </StyleGPS>
           <StyleDiscription>
-            <Typography
-              sx={{ fontSize: "14px", fontWeight: 400, color: "#363636" }}
-            >
-              The hotel will provide guests with air-conditioned rooms offering
-              a desk, a kettle, a fridge, a minibar, a safety deposit box, a
-              flat-screen TV and a shared bathroom with a shower. At Garden
-              Hotel & SPA the rooms have bed linen and towels.
-            </Typography>
+            <StyledDescription>
+              {DETAIL_PUBLISHES?.description}
+            </StyledDescription>
             <StyleProfile>
-              <Avatar />
+              <Avatar
+                src={DETAIL_PUBLISHES?.userInfo?.userImage}
+                alt={DETAIL_PUBLISHES?.userInfo?.userName}
+              />
               <StyleEmail>
-                <StyleName>Anna Annova</StyleName>
-                <StyleNik>anna@gmail.com</StyleNik>
+                <StyleName>
+                  {DETAIL_PUBLISHES?.userInfo?.userName}{" "}
+                  {DETAIL_PUBLISHES?.userInfo?.userLastName}
+                </StyleName>
+                <StyleNik>{DETAIL_PUBLISHES?.userInfo?.userEmail}</StyleNik>
               </StyleEmail>
             </StyleProfile>
           </StyleDiscription>
         </div>
-        <StyleButtons>
-          <StyleReject>REJECT</StyleReject>
-          <StyleAccept>ACCEPT</StyleAccept>
-        </StyleButtons>
+        {payment ? (
+          <h1>payment</h1>
+        ) : (
+          <StyleButtons>
+            <StyleReject onClick={onOutlinedFunc}>{outlined}</StyleReject>
+            <StyleAccept onClick={onContainedFunc}>{contained}</StyleAccept>
+          </StyleButtons>
+        )}
       </StyledText>
     </StyleContainer>
   );
@@ -63,6 +80,12 @@ export const InnerHotel = () => {
 const StyleContainer = styled("div")({
   display: "flex",
   gap: "65px",
+});
+
+const StyledDescription = styled(Typography)({
+  fontSize: "14px",
+  fontWeight: 400,
+  color: "#363636",
 });
 
 const StyleDIv = styled(Box)({

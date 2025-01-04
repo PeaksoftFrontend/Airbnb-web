@@ -4,12 +4,14 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import { styled } from "@mui/material";
 
-export const Sliders = ({ image = [], images = [] }) => {
+export const Sliders = ({ images = [] }) => {
   const swiperRef = useRef(null);
 
   const handleButtonClick = (index) => {
     swiperRef.current?.swiper?.slideTo(index, 0, false);
   };
+
+  const limitedImages = images.slice(1, 4);
 
   return (
     <StyledContainer>
@@ -21,25 +23,25 @@ export const Sliders = ({ image = [], images = [] }) => {
         navigation
         loop
       >
-        {image.map((image, index) => (
+        {images.map((image, index) => (
           <SwiperSlide key={index}>
             <StyledImg src={image} alt={`Slide ${index + 1}`} />
           </SwiperSlide>
         ))}
       </StyledSwiper>
       <StyledDiv>
-        {images.map((image, index) => (
+        {limitedImages.map((image, index) => (
           <button
             key={index}
             type="button"
-            onClick={() => handleButtonClick(index)}
+            onClick={() => handleButtonClick(index + 1)}
             style={{
               border: "none",
               background: "transparent",
               cursor: "pointer",
             }}
           >
-            <Styledimage src={image} alt={`Button ${index}`} />
+            <StyledImage src={image} alt={`Button ${index}`} />
           </button>
         ))}
       </StyledDiv>
@@ -58,6 +60,7 @@ const StyledSwiper = styled(Swiper)({
   height: "507px",
   margin: "0 auto",
 });
+
 const StyledImg = styled("img")({
   width: "630px",
   height: "507px",
@@ -71,7 +74,7 @@ const StyledDiv = styled("div")({
   justifyContent: "center",
 });
 
-const Styledimage = styled("img")({
+const StyledImage = styled("img")({
   width: "196px",
   height: "137px",
   objectFit: "cover",
