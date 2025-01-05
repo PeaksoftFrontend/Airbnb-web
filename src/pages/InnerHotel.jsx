@@ -69,7 +69,7 @@ export const InnerHotel = ({
         {payment ? (
           <StyleBox>
             <Styled26day>
-              $26/ <span>day</span>
+              $26/<span>day</span>
             </Styled26day>
             <StyleBottom></StyleBottom>
             <StyledDates>
