@@ -2,7 +2,16 @@ import { Box, Container, styled, Typography } from "@mui/material";
 import { Icons } from "../../../assets";
 import { BookedCard } from "./BookedCard";
 
-export const Booked = ({ booked }) => {
+export const Booked = () => {
+  const booked = [
+    {
+      id: "1",
+      price: "26$",
+      day: "day",
+      checkInDate: "02.02.22",
+      checkOutDate: "02.02.22",
+    },
+  ];
   return (
     <StyledContainer>
       <StyledText variant="h6">BOOKED</StyledText>
