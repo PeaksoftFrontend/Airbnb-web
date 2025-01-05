@@ -44,7 +44,6 @@ export const Icons = {
   Location,
   Logo,
   Photo,
-  Circle,
   ActionMenu,
   ArrowRight,
   ArrowLeft,
@@ -54,4 +53,5 @@ export const Icons = {
   MIniMenu,
   LogoColor,
   Menufeadback,
+  Circle,
 };
