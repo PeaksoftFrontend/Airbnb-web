@@ -25,7 +25,7 @@ import HeardFor from "../assets/icons/Btns.svg?react";
 import MIniMenu from "../assets/icons/mini-menu-icon.svg?react";
 import LogoColor from "../assets/icons/logo-color-icon.svg?react";
 import Menufeadback from "../assets/icons/munu-feadback-icon.svg?react";
-import StarColor from "../assets/icons/star-color.svg?react"
+import StarColor from "../assets/icons/star-color.svg?react";
 import Line from "../assets/icons/Group.svg?react";
 import LineGroup from "../assets/icons/line-right-icon.svg?react";
 import Left from "../assets/icons/left-icon.svg?react";
