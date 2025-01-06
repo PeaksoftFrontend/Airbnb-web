@@ -11,67 +11,76 @@ import { styled, Typography } from "@mui/material";
 
 export const Regions = () => {
   return (
-    <StyledContainer>
+    <>
       <StyledH4 variant="h4">REGION IN KYRGYZSTAN</StyledH4>
       <StyledH6 variant="h6">
         You can visit the site any day and be sure that you will find everything
         for a great vacation.
       </StyledH6>
+      <StyledContainer>
+        <StyledBox>
+          <StyledDiv>
+            <StyledImg src={Chui} alt="" />
+            <OverlayText>CHUI</OverlayText>
+          </StyledDiv>
+          <StyledAside>
+            <StyledDiv>
+              <StyledImg src={Naryn} alt="" />
+              <H1>NARYN</H1>
+            </StyledDiv>
+            <StyledDiv>
+              <StyledImg src={Batken} alt="" />
+              <Text>BATKEN</Text>
+            </StyledDiv>
+            <StyledDiv>
+              <StyledImg src={Jalalabad} alt="" />
+              <Text>JALAL-ABAD</Text>
+            </StyledDiv>
+          </StyledAside>
+        </StyledBox>
+        <Styledsection>
+          <StyledAssets>
+            <StyledDiv>
+              <StyledImg src={Issykkol} alt="" />
+              <Text>ISSYK-KOL</Text>
+            </StyledDiv>
 
-      <StyledBox>
-        <StyledDiv>
-          <img src={Chui} alt="" />
-          <OverlayText>CHUI</OverlayText>
-        </StyledDiv>
-        <StyledAside>
-          <StyledDiv>
-            <img src={Naryn} alt="" />
-            <H1>NARYN</H1>
-          </StyledDiv>
-          <StyledDiv>
-            <img src={Batken} alt="" />
-            <Text>BATKEN</Text>
-          </StyledDiv>
-          <StyledDiv>
-            <img src={Jalalabad} alt="" />
-            <Text>JALAL-ABAD</Text>
-          </StyledDiv>
-        </StyledAside>
-      </StyledBox>
-      <Styledsection>
-        <StyledAssets>
-          <StyledDiv>
-            <img src={Issykkol} alt="" />
-            <Text>ISSYK-KOL</Text>
-          </StyledDiv>
-
-          <StyledDiv>
-            <img src={Talas} alt="" />
-            <Text>TALAS</Text>
-          </StyledDiv>
-          <StyledFlex>
-            <img src={Bishkek} alt="" />
-            <StyleFlex>BISHKEK</StyleFlex>
-          </StyledFlex>
-        </StyledAssets>
-        <StyledDivs>
-          <img src={Osh} alt="" />
-          <Overlaytex>OSH</Overlaytex>
-        </StyledDivs>
-      </Styledsection>
-    </StyledContainer>
+            <StyledDiv>
+              <StyledImg src={Talas} alt="" />
+              <Text>TALAS</Text>
+            </StyledDiv>
+            <StyledFlex>
+              <StyledImg src={Bishkek} alt="" />
+              <StyleFlex>BISHKEK</StyleFlex>
+            </StyledFlex>
+          </StyledAssets>
+          <StyledDivs>
+            <StyledImg src={Osh} alt="" />
+            <Overlaytex>OSH</Overlaytex>
+          </StyledDivs>
+        </Styledsection>
+      </StyledContainer>
+    </>
   );
 };
 
+// const StyledImag = styled("img")({
+//   width: "505px",
+//   height: "621px",
+// });
+const StyledImg = styled("img")({
+  width: "100%",
+});
 const StyledContainer = styled("div")({
   marginLeft: "50px",
   marginTop: "100px",
+  width: "1240px",
+  height: "1262px",
 });
 
 const StyledBox = styled("div")({
   display: "flex",
   gap: "20px",
-  width: "1240px",
   padding: "20px",
   marginTop: "60px",
   alignItems: "center",
@@ -79,7 +88,7 @@ const StyledBox = styled("div")({
 
 const Styledsection = styled("div")({
   display: "flex",
-  marginRight: "70em",
+  // marginRight: "70em",
 });
 const StyledDiv = styled("div")({
   display: "flex",
@@ -177,7 +186,7 @@ const StyleFlex = styled("h1")({
 });
 const StyledFlex = styled("div")({
   display: "flex",
-  flexWrap: "wrap-reverse",
+  // flexWrap: "wrap-reverse",
 });
 
 const StyledDivs = styled("div")({
