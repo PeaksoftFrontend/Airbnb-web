@@ -2,6 +2,8 @@ import { Box, Container, styled, Typography } from "@mui/material";
 import { Icons } from "../../assets";
 import { Radios } from "../../components/UI/Radios";
 import { Input } from "../../components/UI/Input";
+import { Select } from "../../components/UI/Select";
+import { Button } from "../../components/UI/Button";
 
 export const Publish = () => {
   return (
@@ -15,58 +17,83 @@ export const Publish = () => {
             In this form, we'll collect some basic and additional information
             about your listing.
           </StyledInfoText>
-          <div>
-            <Box>
-              <span>Image</span>
-              <span>Max 4 photo</span>
-            </Box>
-            <Box>
-              <div>
+          <StyledFotoDiv>
+            <StyledBoxSpan>
+              <StyledSpan>Image</StyledSpan>
+              <StyledMaxSpan>Max 4 photo</StyledMaxSpan>
+            </StyledBoxSpan>
+            <StyledFotoBox>
+              <StyledIconsDiv>
                 <Icons.Photo />
-              </div>
-              <Box>
-                <Typography>Add photos to the review</Typography>
-                <Typography>
+              </StyledIconsDiv>
+              <StyledTextBox>
+                <StyledAddTypography>
+                  Add photos to the review
+                </StyledAddTypography>
+                <StyledFotoText>
                   it will become more noticeable and even more useful. You can
                   upload up to 4 photos.
-                </Typography>
-              </Box>
-            </Box>
-          </div>
+                </StyledFotoText>
+              </StyledTextBox>
+            </StyledFotoBox>
+          </StyledFotoDiv>
         </StyledCreateDiv>
         <StyledBox>
           <StyledSection>
-            <StyledRadioTypography variant="h6">
-              Home type
-            </StyledRadioTypography>
+            <StyledTypography variant="h6">Home type</StyledTypography>
             <StyledRadiosDiv>
               <StyledRadios>
-                <Radios /> <StyledRadiosSpan>Apartment</StyledRadiosSpan>
+                <Radios /> <StyledSpan>Apartment</StyledSpan>
               </StyledRadios>
               <StyledRadios>
-                <Radios /> <StyledRadiosSpan>House</StyledRadiosSpan>
+                <Radios /> <StyledSpan>House</StyledSpan>
               </StyledRadios>
             </StyledRadiosDiv>
           </StyledSection>
           <StyledSectionTwo>
             <StyledPriceDiv>
-              <StyledRadioTypography>Max of Guests</StyledRadioTypography>
-              <Input
-                type="texp"
-                placeholder="0"
-                size="small"
-                sx={{ width: "245px" }}
-              />
+              <StyledTypography>Max of Guests</StyledTypography>
+              <StyledInputMini type="texp" placeholder="0" size="small" />
             </StyledPriceDiv>
 
             <StyledPriceDiv>
-              <StyledRadioTypography>Price</StyledRadioTypography>
-              <Input placeholder="$ 0" size="small" sx={{ width: "245px" }} />
+              <StyledTypography>Price</StyledTypography>
+              <StyledInputMini type="number" placeholder="$ 0" size="small" />
             </StyledPriceDiv>
           </StyledSectionTwo>
-          <section></section>
+          <StyledSection>
+            <StyledTypography>Title</StyledTypography>
+            <Input type="text" size="small" />
+          </StyledSection>
+          <StyledSection>
+            <StyledTypography>Description of listing</StyledTypography>
+            <Input
+              type="text"
+              id="outlined-multiline-static"
+              multiline
+              rows={3}
+              maxRows={5}
+            />
+          </StyledSection>
+          <StyledSection>
+            <StyledTypography>Region</StyledTypography>
+            <Select placeholder="Please, select the region" size="small" />
+          </StyledSection>
+          <StyledSection>
+            <StyledTypography>Town / Province</StyledTypography>
+            <Input type="text" size="small" />
+          </StyledSection>
+          <StyledSection>
+            <StyledTypography>Address</StyledTypography>
+            <Input type="text" size="small" />
+          </StyledSection>
         </StyledBox>
       </StyledBoxContainer>
+      <StyledButtonDiv>
+        <StyledButton type="submit" variant="outlined">
+          Submit
+        </StyledButton>
+      </StyledButtonDiv>
     </StyledContainer>
   );
 };
@@ -75,6 +102,9 @@ const StyledContainer = styled(Container)({
   display: "flex",
   gap: "20px",
   flexDirection: "column",
+  backgroundColor: "#F5F5F5",
+  height: "145vh",
+  width: "610px",
 });
 
 const StyledStartText = styled(Typography)({
@@ -116,7 +146,7 @@ const StyledRadios = styled("div")({
   alignItems: "center",
   gap: "12px",
 });
-const StyledRadiosSpan = styled("span")({
+const StyledSpan = styled("span")({
   fontSize: "16px",
   fontWeight: "400",
   fontFamily: "Inter, sans-serif",
@@ -127,10 +157,11 @@ const StyledBox = styled(Box)({
   flexDirection: "column",
   gap: "28px",
 });
-const StyledRadioTypography = styled(Typography)({
+const StyledTypography = styled(Typography)({
   fontSize: "16px",
   fontWeight: "500",
   color: "#363636",
+  fontFamily: "Inter, sans-serif",
 });
 const StyledSectionTwo = styled("section")({
   display: "flex",
@@ -141,4 +172,53 @@ const StyledPriceDiv = styled("div")({
   display: "flex",
   flexDirection: "column",
   gap: "18px",
+});
+const StyledInputMini = styled(Input)({
+  width: "245px",
+});
+const StyledButtonDiv = styled("div")({
+  display: "flex",
+  justifyContent: "end",
+});
+const StyledButton = styled(Button)({
+  width: "196px",
+  height: "37px",
+});
+const StyledFotoDiv = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  gap: "14px",
+});
+const StyledBoxSpan = styled(Box)({ display: "flex", gap: "8px" });
+const StyledMaxSpan = styled("span")({
+  fontSize: "16px",
+  fontWeight: "400",
+  fontFamily: "Inter, sans-serif",
+  color: "#A9A9A9",
+});
+const StyledFotoBox = styled(Box)({ display: "flex", gap: "16px" });
+const StyledIconsDiv = styled("div")({
+  width: "135px",
+  height: "135px",
+  backgroundColor: "#F3F3F3",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+});
+const StyledTextBox = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  gap: "8px",
+});
+const StyledAddTypography = styled(Typography)({
+  fontSize: "16px",
+  fontWeight: "500",
+  color: "#266BD3",
+  fontFamily: "Inter, sans-serif",
+});
+const StyledFotoText = styled(Typography)({
+  fontSize: "16px",
+  fontWeight: "500",
+  color: "#828282",
+  fontFamily: "Inter, sans-serif",
 });

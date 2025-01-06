@@ -7,18 +7,12 @@ export const Select = forwardRef(
   ({ options = [], placeholder, value, label, onChange, ...props }, ref) => {
     return (
       <FormControl fullWidth variant="outlined">
-        <MuiSelect
+        <StyledSelect
           ref={ref}
           value={value}
           displayEmpty
           onChange={onChange}
           IconComponent={Icons.ArrowDown}
-          sx={{
-            color: "#828282",
-            fontSize: "16px",
-            fontWeight: "400",
-            padding: "12px auto",
-          }}
           {...props}
           renderValue={(selected) => {
             if (!selected) {
@@ -31,7 +25,7 @@ export const Select = forwardRef(
           }}
         >
           {options.length === 0 ? (
-            <MenuItem disabled>Здесь пока что нету данных.</MenuItem>
+            <MenuItem disabled> Пока что нету данных.</MenuItem>
           ) : (
             options.map((option) => (
               <StyledMenuItem key={option.value} value={option.value}>
@@ -39,11 +33,32 @@ export const Select = forwardRef(
               </StyledMenuItem>
             ))
           )}
-        </MuiSelect>
+        </StyledSelect>
       </FormControl>
     );
   }
 );
+
+const StyledSelect = styled(MuiSelect)(() => ({
+  backgroundColor: "#FFFFFF",
+  color: "#828282",
+  fontSize: "16px",
+  fontWeight: "400",
+  padding: "12px auto",
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#C4C4C4",
+  },
+  "&:hover .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#C4C4C4",
+  },
+  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#C4C4C4",
+    borderWidth: "2px",
+  },
+  "&:active .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#C4C4C4",
+  },
+}));
 
 const StyledMenuItem = styled(MenuItem)({
   color: "#5D5D5D",
@@ -51,7 +66,7 @@ const StyledMenuItem = styled(MenuItem)({
   fontWeight: "400",
   padding: "12px auto",
   "&:hover": {
-    background: "#F3F3F3",
+    backgroundColor: "#F3F3F3",
   },
 });
 

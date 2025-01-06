@@ -48,6 +48,7 @@ export const Input = forwardRef(
 const StyledTextField = styled(TextField)(({ theme }) => ({
   borderRadius: "2px",
   cursor: "pointer",
+  backgroundColor: "#FFFFFF",
 
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
@@ -57,7 +58,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
       borderColor: theme.palette.grey[600],
     },
     "&.Mui-focused fieldset": {
-      borderColor: theme.palette.primary.main,
+      border: "1px solid #828282",
     },
   },
 
