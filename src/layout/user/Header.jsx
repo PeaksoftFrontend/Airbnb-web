@@ -1,7 +1,7 @@
 import { Icons } from "../../assets";
-import { Checkbox } from "../UI/Checkbox";
+import { Checkbox } from "../../components/UI/Checkbox";
 import { styled } from "@mui/material";
-import { SearchInput } from "../UI/SearchInput";
+import { SearchInput } from "../../components/UI/SearchInput";
 
 export const Header = () => {
   return (
