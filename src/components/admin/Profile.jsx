@@ -1,10 +1,21 @@
 import { Avatar, Box, styled, Typography } from "@mui/material";
+import { useState } from "react";
+// import { Hover } from "./Hover";
 
 export const Profile = ({ Date }) => {
+  const [hoveredItem, setHoveredItem] = useState(null);
+
+  const handleMouseEnter = (id) => {
+    setHoveredItem(id);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredItem(null);
+  };
   return (
     <>
       {Date.map((item) => (
-        <Box key={item.id} {...item}>
+        <StyledBox key={item.id} {...item}>
           <Typography>{item.fullName}</Typography>
           <StyleD>
             <StyleBox>
@@ -17,28 +28,49 @@ export const Profile = ({ Date }) => {
               </StyleAvatar>
             </StyleBox>
             <StyleText>
-              <StyleName>
+              <StyleName
+                onMouseEnter={() => handleMouseEnter(`name-${item.id}`)}
+                onMouseLeave={handleMouseLeave}
+              >
                 <StyleSpan>Name:</StyleSpan>
-                {item.name}
+                {hoveredItem === `name-${item.id}`
+                  ? item.name
+                  : `${item.name.slice(0, 7)}${item.name.length > 7 ? "..." : ""}`}
               </StyleName>
-              <StyleName>
+              <StyleName
+                onMouseEnter={() => handleMouseEnter(`email-${item.id}`)}
+                onMouseLeave={handleMouseLeave}
+              >
                 <span>Contact:</span>
-                {item.email}
+                {hoveredItem === `email-${item.id}`
+                  ? item.email
+                  : item.email && item.email.length > 6
+                    ? `${item.email.substring(0, 6)}...@gmail.com`
+                    : item.email}
+                {/* // <Hover text={item.email} /> */}
               </StyleName>
             </StyleText>
           </StyleD>
-        </Box>
+        </StyledBox>
       ))}
     </>
   );
 };
+
+const StyledBox = styled(Box)({
+  display: "flex",
+  gap: "22px",
+  flexDirection: "column",
+});
 
 const StyleD = styled("div")({
   width: "372px",
   height: "285px",
   border: "1px solid #C4C4C4",
   borderRadius: "16px",
-  padding: "38px",
+  display: "flex",
+  gap: "30px",
+  flexDirection: "column",
 });
 
 const StyleAvatar = styled(Avatar)({
