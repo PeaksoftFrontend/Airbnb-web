@@ -1,9 +1,9 @@
 import { Box, Container, styled, Typography } from "@mui/material";
-import { Icons } from "../../assets";
-import { Radios } from "../../components/UI/Radios";
-import { Input } from "../../components/UI/Input";
-import { Select } from "../../components/UI/Select";
-import { Button } from "../../components/UI/Button";
+import { Icons } from "../../../assets";
+import { Radios } from "../../../components/UI/Radios";
+import { Input } from "../../../components/UI/Input";
+import { Select } from "../../../components/UI/Select";
+import { Button } from "../../../components/UI/Button";
 
 export const Publish = () => {
   return (
@@ -53,7 +53,7 @@ export const Publish = () => {
           <StyledSectionTwo>
             <StyledPriceDiv>
               <StyledTypography>Max of Guests</StyledTypography>
-              <StyledInputMini type="texp" placeholder="0" size="small" />
+              <StyledInputMini type="number" placeholder="0" size="small" />
             </StyledPriceDiv>
 
             <StyledPriceDiv>
@@ -103,7 +103,7 @@ const StyledContainer = styled(Container)({
   gap: "20px",
   flexDirection: "column",
   backgroundColor: "#F5F5F5",
-  height: "145vh",
+  height: "200vh",
   width: "610px",
 });
 
