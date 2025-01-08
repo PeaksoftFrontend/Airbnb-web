@@ -12,13 +12,13 @@ import Bishkek from "../../assets/image/bishkek-img.png";
 export const Regions = () => {
   return (
     <StyledContainer>
-      <Box>
+      <StyleBoxing>
         <StyledH4 variant="h4">REGION IN KYRGYZSTAN</StyledH4>
         <StyledH6 variant="h6">
           You can visit the site any day and be sure that you will find
           everything for a great vacation.
         </StyledH6>
-      </Box>
+      </StyleBoxing>
       <StyleBoxContainer>
         <StyledBox>
           <StyledDivs>
@@ -75,6 +75,10 @@ const StyledContainer = styled(Container)({
   gap: "60px",
 });
 
+const StyleBoxing = styled(Box)({
+  position: "relative",
+  right: "45px",
+});
 const StyleBoxContainer = styled(Box)({
   display: "flex",
   flexDirection: "column",
