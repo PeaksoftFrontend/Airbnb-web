@@ -1,6 +1,5 @@
 import { Avatar, Box, styled, Typography } from "@mui/material";
 import { useState } from "react";
-// import { Hover } from "./Hover";
 
 export const Profile = ({ Date }) => {
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -33,9 +32,7 @@ export const Profile = ({ Date }) => {
                 onMouseLeave={handleMouseLeave}
               >
                 <StyleSpan>Name:</StyleSpan>
-                {hoveredItem === `name-${item.id}`
-                  ? item.name
-                  : `${item.name.slice(0, 7)}${item.name.length > 7 ? "..." : ""}`}
+                {item.name}
               </StyleName>
               <StyleName
                 onMouseEnter={() => handleMouseEnter(`email-${item.id}`)}
@@ -44,10 +41,9 @@ export const Profile = ({ Date }) => {
                 <span>Contact:</span>
                 {hoveredItem === `email-${item.id}`
                   ? item.email
-                  : item.email && item.email.length > 6
-                    ? `${item.email.substring(0, 6)}...@gmail.com`
+                  : item.email && item.email.length > 30
+                    ? `${item.email.slice(0, 30)}...`
                     : item.email}
-                {/* // <Hover text={item.email} /> */}
               </StyleName>
             </StyleText>
           </StyleD>
@@ -99,6 +95,7 @@ const StyleName = styled("p")({
   color: "#363636",
   display: "flex",
   gap: "16px",
+  cursor: "pointer",
   "& span": {
     fontSize: "16px",
     fontWeight: 400,
