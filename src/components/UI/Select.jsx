@@ -44,7 +44,6 @@ const StyledSelect = styled(MuiSelect)(() => ({
   color: "#828282",
   fontSize: "16px",
   fontWeight: "400",
-  padding: "12px auto",
   "& .MuiOutlinedInput-notchedOutline": {
     borderColor: "#C4C4C4",
   },
@@ -64,7 +63,6 @@ const StyledMenuItem = styled(MenuItem)({
   color: "#5D5D5D",
   fontSize: "16px",
   fontWeight: "400",
-  padding: "12px auto",
   "&:hover": {
     backgroundColor: "#F3F3F3",
   },

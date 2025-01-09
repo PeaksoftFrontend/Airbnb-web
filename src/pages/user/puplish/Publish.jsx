@@ -1,11 +1,35 @@
 import { Box, Container, styled, Typography } from "@mui/material";
 import { Icons } from "../../../assets";
-import { Radios } from "../../../components/UI/Radios";
 import { Input } from "../../../components/UI/Input";
 import { Select } from "../../../components/UI/Select";
 import { Button } from "../../../components/UI/Button";
+import { useRef, useState } from "react";
+import { Radio } from "../../../components/UI/Radio";
+import { orange } from "@mui/material/colors";
+import { Modal } from "../../../components/UI/Modal";
+import { FileUploader } from "./FileUploader";
 
 export const Publish = () => {
+  const [selectedValue, setSelectedValue] = useState("");
+  const [open, setOpen] = useState(false);
+  const radioRef = useRef(null);
+  const handleRadioChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
+  const handlerOpen = () => {
+    setOpen(!open);
+  };
+  const options = [
+    { value: "Batken", label: "Batken" },
+    { value: "Jalalabat", label: "Jalalabat" },
+    { value: "Naryn", label: "Naryn" },
+    { value: "Issyk-Kul", label: "Issyk-Kul" },
+    { value: "Talas", label: "Talas" },
+    { value: "Osh", label: "Osh" },
+    { value: "Chui", label: "Chui" },
+    { value: "Bishkek", label: "Bishkek" },
+  ];
+
   return (
     <StyledContainer>
       <StyledStartText variant="h6">
@@ -24,7 +48,14 @@ export const Publish = () => {
             </StyledBoxSpan>
             <StyledFotoBox>
               <StyledIconsDiv>
-                <Icons.Photo />
+                {open ? (
+                  <StyledModal open={open} onClose={handlerOpen}>
+                    <StyledFileUp />
+                  </StyledModal>
+                ) : (
+                  ""
+                )}
+                <StyledIcons onClick={handlerOpen} />
               </StyledIconsDiv>
               <StyledTextBox>
                 <StyledAddTypography>
@@ -43,10 +74,34 @@ export const Publish = () => {
             <StyledTypography variant="h6">Home type</StyledTypography>
             <StyledRadiosDiv>
               <StyledRadios>
-                <Radios /> <StyledSpan>Apartment</StyledSpan>
+                <Radio
+                  label="Apartment"
+                  value="apartment"
+                  ref={radioRef}
+                  variant="apartment"
+                  checked={selectedValue === "apartment"}
+                  onChange={handleRadioChange}
+                  sx={{
+                    "&.Mui-checked": {
+                      color: orange[500],
+                    },
+                  }}
+                />
               </StyledRadios>
               <StyledRadios>
-                <Radios /> <StyledSpan>House</StyledSpan>
+                <Radio
+                  label="Home"
+                  ref={radioRef}
+                  value="home"
+                  variant="home"
+                  checked={selectedValue === "home"}
+                  onChange={handleRadioChange}
+                  sx={{
+                    "&.Mui-checked": {
+                      color: orange[500],
+                    },
+                  }}
+                />
               </StyledRadios>
             </StyledRadiosDiv>
           </StyledSection>
@@ -77,7 +132,11 @@ export const Publish = () => {
           </StyledSection>
           <StyledSection>
             <StyledTypography>Region</StyledTypography>
-            <Select placeholder="Please, select the region" size="small" />
+            <Select
+              placeholder="Please, select the region"
+              options={options}
+              size="small"
+            />
           </StyledSection>
           <StyledSection>
             <StyledTypography>Town / Province</StyledTypography>
@@ -97,13 +156,22 @@ export const Publish = () => {
     </StyledContainer>
   );
 };
+export const StyledModal = styled(Modal)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "36px",
+  backgroundColor: theme.palette.primary.main,
+}));
 
+const StyledFileUp = styled(FileUploader)({ width: "100%" });
 const StyledContainer = styled(Container)({
   display: "flex",
   gap: "20px",
   flexDirection: "column",
   backgroundColor: "#F5F5F5",
-  height: "200vh",
+  height: "100%",
   width: "610px",
 });
 
@@ -144,7 +212,7 @@ const StyledRadiosDiv = styled("div")({
 const StyledRadios = styled("div")({
   display: "flex",
   alignItems: "center",
-  gap: "12px",
+  gap: "16px",
 });
 const StyledSpan = styled("span")({
   fontSize: "16px",
@@ -222,3 +290,8 @@ const StyledFotoText = styled(Typography)({
   color: "#828282",
   fontFamily: "Inter, sans-serif",
 });
+const StyledIcons = styled(Icons.Photo)(({ iconSize }) => ({
+  width: iconSize?.width || "43px",
+  height: iconSize?.height || "32px",
+  cursor: "pointer",
+}));

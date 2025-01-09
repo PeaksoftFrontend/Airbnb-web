@@ -51,7 +51,6 @@ export const Icons = {
   Location,
   Logo,
   Photo,
-  Circle,
   ActionMenu,
   ArrowRight,
   ArrowLeft,
