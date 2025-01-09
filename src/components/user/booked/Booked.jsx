@@ -11,53 +11,43 @@ export const Booked = () => {
       checkInDate: "02.02.22",
       checkOutDate: "02.02.22",
     },
+    {
+      id: "2",
+      price: "26$",
+      day: "2 days",
+      checkInDate: "05.02.22",
+      checkOutDate: "07.02.22",
+    },
+    {
+      id: "3",
+      price: "26$",
+      day: "3 days",
+      checkInDate: "10.02.22",
+      checkOutDate: "13.02.22",
+    },
   ];
+
   return (
     <StyledContainer>
       <StyledText variant="h6">BOOKED</StyledText>
       <StyledDivContainer>
-        <StyledDivBox>
-          <BookedCard booked={booked} />
+        {booked.map((booking) => (
+          <StyledBookingWrapper key={booking.id}>
+            <StyledDivBox>
+              <BookedCard booked={[booking]} />{" "}
+            </StyledDivBox>
+            <StyledDivIcon>
+              <div>
+                <Icons.Circle />
+              </div>
 
-          <StyledDivIcon>
-            <div>
-              <Icons.Circle />
-            </div>
-
-            <StyledBoxData>
-              <StyledName variant="body1">Anna Annova</StyledName>
-              <StyledEmail variant="body1">anna@gmail.com</StyledEmail>
-            </StyledBoxData>
-          </StyledDivIcon>
-        </StyledDivBox>
-        <StyledDivBox>
-          <BookedCard booked={booked} />
-
-          <StyledDivIcon>
-            <div>
-              <Icons.Circle />
-            </div>
-
-            <StyledBoxData>
-              <StyledName variant="body1">Anna Annova</StyledName>
-              <StyledEmail variant="body1">anna@gmail.com</StyledEmail>
-            </StyledBoxData>
-          </StyledDivIcon>
-        </StyledDivBox>
-        <StyledDivBox>
-          <BookedCard booked={booked} />
-
-          <StyledDivIcon>
-            <div>
-              <Icons.Circle />
-            </div>
-
-            <StyledBoxData>
-              <StyledName variant="body1">Anna Annova</StyledName>
-              <StyledEmail variant="body1">anna@gmail.com</StyledEmail>
-            </StyledBoxData>
-          </StyledDivIcon>
-        </StyledDivBox>
+              <StyledBoxData>
+                <StyledName variant="body1">Anna Annova</StyledName>
+                <StyledEmail variant="body1">anna@gmail.com</StyledEmail>
+              </StyledBoxData>
+            </StyledDivIcon>
+          </StyledBookingWrapper>
+        ))}
       </StyledDivContainer>
     </StyledContainer>
   );
@@ -71,7 +61,13 @@ const StyledContainer = styled(Container)({
 
 const StyledDivContainer = styled("div")({
   display: "flex",
-  gap: "20px",
+  flexDirection: "row",
+  gap: "40px",
+});
+
+const StyledBookingWrapper = styled("div")({
+  display: "flex",
+  flexDirection: "column",
 });
 
 const StyledText = styled(Typography)({
@@ -83,7 +79,6 @@ const StyledText = styled(Typography)({
 const StyledDivBox = styled("div")({
   display: "flex",
   gap: "30px",
-  flexDirection: "column",
 });
 const StyledDivIcon = styled("div")({
   display: "flex",
