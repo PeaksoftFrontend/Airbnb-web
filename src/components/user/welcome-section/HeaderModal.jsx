@@ -22,7 +22,7 @@ export const HeaderModal = ({ showAvatarModal }) => {
     setAdminOpen(true);
   };
   const handleAdminClose = () => {
-    setAdminOpen(false);
+    setAdminOpen(true);
   };
 
   return (

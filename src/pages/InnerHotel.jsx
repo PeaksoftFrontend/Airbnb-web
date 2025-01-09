@@ -3,6 +3,7 @@ import { Avatar, Box, colors, styled, Typography } from "@mui/material";
 import { Button } from "../components/UI/Button";
 import { Sliders } from "../components/admin/Sliders";
 import { Icons } from "../assets";
+import { Button } from "../components/UI/Button";
 
 const DETAIL_PUBLISHES = {
   type: "Apartement",
