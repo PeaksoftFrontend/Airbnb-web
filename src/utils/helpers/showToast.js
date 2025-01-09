@@ -1,4 +1,3 @@
-// ToastManager.js
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 
@@ -23,6 +22,9 @@ export const showToast = (
     position: "right",
     backgroundColor: colors[type] || "#000",
     stopOnFocus: true,
+    style: {
+      color: "black",
+    },
 
     ...options,
   }).showToast();
