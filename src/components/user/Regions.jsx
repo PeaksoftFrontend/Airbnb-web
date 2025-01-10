@@ -84,9 +84,15 @@ const StyleBoxContainer = styled(Box)({
   flexDirection: "column",
   gap: "20px",
 });
-const StyledH4 = styled(Typography)({});
+const StyledH4 = styled(Typography)({
+  fontSize: "20px",
+  fontWeight: "500",
+});
 
-const StyledH6 = styled(Typography)({});
+const StyledH6 = styled(Typography)({
+  fontSize: "16px",
+  fontWeight: "400",
+});
 
 const StyledBox = styled(Box)({
   display: "flex",
