@@ -69,6 +69,7 @@ const StyledDivContainer = styled("div")({
 const StyledBookingWrapper = styled("div")({
   display: "flex",
   flexDirection: "column",
+  gap: "30px",
 });
 
 const StyledText = styled(Typography)({
