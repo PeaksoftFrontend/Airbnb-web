@@ -1,4 +1,4 @@
-import { Box, Container, styled, Typography } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 import { Icons } from "../../../assets";
 import { BookedCard } from "./BookedCard";
 
@@ -53,7 +53,7 @@ export const Booked = () => {
   );
 };
 
-const StyledContainer = styled(Container)({
+const StyledContainer = styled(Box)({
   display: "flex",
   flexDirection: "column",
   gap: "40px",
@@ -62,6 +62,7 @@ const StyledContainer = styled(Container)({
 const StyledDivContainer = styled("div")({
   display: "flex",
   flexDirection: "row",
+  justifyContent: "space-between",
   gap: "40px",
 });
 
