@@ -11,7 +11,6 @@ import { TestAuth } from "../components/TestAuth";
 export const AppRoutes = () => {
   const { isAuthorized, role } = useSelector((state) => state.auth);
 
-  // Логика перенаправления на основе роли
   const pathRole = {
     ADMIN: PATHS.ADMIN.ROOT,
     USER: PATHS.USER.ROOT,
@@ -19,14 +18,13 @@ export const AppRoutes = () => {
   };
 
   const router = createBrowserRouter([
-    // Перенаправление с корневого пути на TestAuth
     {
       path: PATHS.HOME,
       element: <Navigate to={PATHS.TEST_AUTH} replace />,
     },
     {
       path: PATHS.TEST_AUTH,
-      element: <TestAuth />, // Компонент TestAuth всегда отображается первым
+      element: <TestAuth />,
     },
     {
       path: PATHS.GUEST.ROOT,
