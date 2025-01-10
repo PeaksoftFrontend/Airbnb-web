@@ -1,5 +1,4 @@
 import { Box, Container, styled, Typography } from "@mui/material";
-import { Icons } from "../../../assets";
 import { Input } from "../../../components/UI/Input";
 import { Select } from "../../../components/UI/Select";
 import { Button } from "../../../components/UI/Button";
@@ -7,18 +6,15 @@ import { useRef, useState } from "react";
 import { Radio } from "../../../components/UI/Radio";
 import { orange } from "@mui/material/colors";
 import { Modal } from "../../../components/UI/Modal";
-import { FileUploader } from "./FileUploader";
+import { FileUpload } from "./FileUpload";
 
 export const Publish = () => {
   const [selectedValue, setSelectedValue] = useState("");
-  const [open, setOpen] = useState(false);
   const radioRef = useRef(null);
   const handleRadioChange = (event) => {
     setSelectedValue(event.target.value);
   };
-  const handlerOpen = () => {
-    setOpen(!open);
-  };
+
   const options = [
     { value: "Batken", label: "Batken" },
     { value: "Jalalabat", label: "Jalalabat" },
@@ -48,14 +44,7 @@ export const Publish = () => {
             </StyledBoxSpan>
             <StyledFotoBox>
               <StyledIconsDiv>
-                {open ? (
-                  <StyledModal open={open} onClose={handlerOpen}>
-                    <StyledFileUp />
-                  </StyledModal>
-                ) : (
-                  ""
-                )}
-                <StyledIcons onClick={handlerOpen} />
+                <FileUpload />
               </StyledIconsDiv>
               <StyledTextBox>
                 <StyledAddTypography>
@@ -165,7 +154,6 @@ export const StyledModal = styled(Modal)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
 }));
 
-const StyledFileUp = styled(FileUploader)({ width: "100%" });
 const StyledContainer = styled(Container)({
   display: "flex",
   gap: "20px",
@@ -290,8 +278,3 @@ const StyledFotoText = styled(Typography)({
   color: "#828282",
   fontFamily: "Inter, sans-serif",
 });
-const StyledIcons = styled(Icons.Photo)(({ iconSize }) => ({
-  width: iconSize?.width || "43px",
-  height: iconSize?.height || "32px",
-  cursor: "pointer",
-}));
