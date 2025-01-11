@@ -109,39 +109,36 @@ export const UsersPage = () => {
         </Table>
       </TableContainer>
       <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <StyleTextModal>Are you sure you want to delete user?</StyleTextModal>
+          <Box sx={StyleBOx}>
+            <Button
+              onClick={handleClose}
+              variant="contained"
+              color="success"
+              sx={{ "&:hover": { borderColor: "white" } }}
             >
-                <Box sx={style}>
-                    <StyleTextModal >
-                      Are you sure you want to delete user?
-                </StyleTextModal>
-                    <Box sx={StyleBOx}>
-                        <Button
-                            onClick={handleClose}
-                            variant="contained"
-                            color="success"
-                            sx={{ '&:hover': { borderColor: 'white' } }}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            onClick={deleteItem}
-                            variant="contained"
-                            color="error"
-                             sx={{ '&:hover': { borderColor: 'white' } }}
-                        >
-                            Delete
-                        </Button>
-                    </Box>
-                </Box>
-            </Modal>
-        </StyleMain>
-    );
+              Cancel
+            </Button>
+            <Button
+              onClick={deleteItem}
+              variant="contained"
+              color="error"
+              sx={{ "&:hover": { borderColor: "white" } }}
+            >
+              Delete
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+    </StyleMain>
+  );
 };
-
 
 const StyleMain = styled("main")({
   width: "100%",
@@ -216,24 +213,23 @@ const StyledDelete = styled("span")({
   cursor: "pointer",
 });
 const style = {
-position: "absolute",
-top: "50%",
-left: "50%",
-transform: "translate(-50%, -50%)",
-width: 400,
-bgcolor: "background.paper",
-border: "2px solid #FFFFFF",
-boxShadow: 24,
-borderRadius: "25px",
-p: 4,
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #FFFFFF",
+  boxShadow: 24,
+  borderRadius: "25px",
+  p: 4,
 };
 const StyleBOx = {
-display: "flex",
-justifyContent: "center",
-gap: "20px",
-mt: "20px",
+  display: "flex",
+  justifyContent: "center",
+  gap: "20px",
+  mt: "20px",
 };
 const StyleTextModal = styled("p")({
   paddingLeft: "20px",
-})
-
+});

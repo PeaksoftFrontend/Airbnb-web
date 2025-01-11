@@ -64,7 +64,7 @@ export const MainPage = () => {
           </StyledCard>
         ))}
       </StyledCardContent>
-        <ViewAllButton>View all</ViewAllButton>
+      <ViewAllButton>View all</ViewAllButton>
     </StyledBox>
   );
 };
@@ -160,5 +160,5 @@ const ViewAllButton = styled("button")(() => ({
   display: "block",
   position: "relative",
   left: "1012px",
-  bottom: "610px"
+  bottom: "610px",
 }));
