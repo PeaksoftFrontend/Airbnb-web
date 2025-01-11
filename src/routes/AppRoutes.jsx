@@ -19,13 +19,10 @@ export const AppRoutes = () => {
 
   const router = createBrowserRouter([
     {
-      path: PATHS.HOME,
-      element: <Navigate to={PATHS.TEST_AUTH} replace />,
+      path: PATHS.GUEST,
+      element: <Navigate to={GUEST} replace />,
     },
-    {
-      path: PATHS.TEST_AUTH,
-      element: <TestAuth />,
-    },
+
     {
       path: PATHS.GUEST.ROOT,
       element: (

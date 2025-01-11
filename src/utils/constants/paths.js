@@ -1,6 +1,4 @@
 export const PATHS = {
-  HOME: "/",
-  TEST_AUTH: "/test-auth",
   GUEST: {
     ROOT: "/guest",
   },
