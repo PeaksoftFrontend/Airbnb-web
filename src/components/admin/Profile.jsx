@@ -1,16 +1,8 @@
-import { Avatar, Box, styled, Typography } from "@mui/material";
+import { Avatar, Box, styled, Tooltip, Typography } from "@mui/material";
 import { useState } from "react";
 
 export const Profile = ({ Date }) => {
-  const [hoveredItem, setHoveredItem] = useState(null);
-
-  const handleMouseEnter = (id) => {
-    setHoveredItem(id);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredItem(null);
-  };
+  const [hoveredItem] = useState(null);
   return (
     <>
       {Date.map((item) => (
@@ -27,23 +19,21 @@ export const Profile = ({ Date }) => {
               </StyleAvatar>
             </StyleBox>
             <StyleText>
-              <StyleName
-                onMouseEnter={() => handleMouseEnter(`name-${item.id}`)}
-                onMouseLeave={handleMouseLeave}
-              >
+              <StyleName>
                 <StyleSpan>Name:</StyleSpan>
                 {item.name}
               </StyleName>
-              <StyleName
-                onMouseEnter={() => handleMouseEnter(`email-${item.id}`)}
-                onMouseLeave={handleMouseLeave}
-              >
-                <span>Contact:</span>
-                {hoveredItem === `email-${item.id}`
-                  ? item.email
-                  : item.email && item.email.length > 30
-                    ? `${item.email.slice(0, 30)}...`
-                    : item.email}
+              <StyleName style={{ color: "black" }}>
+                <StyleSpan>Contact:</StyleSpan>
+                <StyledTooltip title={item.email}>
+                  <StyledEmail>
+                    {hoveredItem === `email-${item.id}`
+                      ? item.email
+                      : item.email && item.email.length > 23
+                        ? `${item.email.slice(0, 23)}...`
+                        : item.email}
+                  </StyledEmail>
+                </StyledTooltip>
               </StyleName>
             </StyleText>
           </StyleD>
@@ -102,6 +92,14 @@ const StyleName = styled("p")({
     color: "#646464",
   },
 });
+const StyledEmail = styled("p")({
+  fontSize: "18px",
+  fontWeight: "500",
+  color: "#363636",
+  display: "flex",
+  gap: "16px",
+  cursor: "pointer",
+});
 
 const StyleSpan = styled("span")({
   paddingLeft: "16px",
@@ -110,4 +108,12 @@ const StyleSpan = styled("span")({
 const StyledImg = styled("img")({
   width: "100%",
   height: "100%",
+});
+
+const StyledTooltip = styled(Tooltip)({
+  ".MuiTooltip-tooltip": {
+    backgroundColor: "grey[900]",
+    color: "white",
+    fontSize: "16px",
+  },
 });
