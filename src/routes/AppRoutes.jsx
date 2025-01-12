@@ -18,8 +18,8 @@ export const AppRoutes = () => {
 
   const router = createBrowserRouter([
     {
-      path: PATHS.GUEST,
-      element: <Navigate to={GUEST} replace />,
+      path: PATHS.GUEST.ROOT,
+      element: <Navigate to={PATHS.GUEST.ROOT} replace />,
     },
 
     {
@@ -28,7 +28,7 @@ export const AppRoutes = () => {
         <PrivateRoute
           Component={<h1>Guest</h1>}
           isAuthorized={isAuthorized && role === "GUEST"}
-          fallBackPath={pathRole[role] || PATHS.TEST_AUTH}
+          fallBackPath={pathRole[role] || PATHS.GUEST}
         />
       ),
     },
@@ -38,7 +38,7 @@ export const AppRoutes = () => {
         <PrivateRoute
           Component={<h1>User</h1>}
           isAuthorized={isAuthorized && role === "USER"}
-          fallBackPath={pathRole[role] || PATHS.TEST_AUTH}
+          fallBackPath={pathRole[role] || PATHS.USER}
         />
       ),
     },
@@ -48,7 +48,7 @@ export const AppRoutes = () => {
         <PrivateRoute
           Component={<h1>Admin</h1>}
           isAuthorized={isAuthorized && role === "ADMIN"}
-          fallBackPath={pathRole[role] || PATHS.TEST_AUTH}
+          fallBackPath={pathRole[role] || PATHS.ADMIN}
         />
       ),
     },
