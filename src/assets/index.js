@@ -67,4 +67,5 @@ export const Icons = {
   Right,
   LeftBlack,
   RightBlack,
+  Circle,
 };

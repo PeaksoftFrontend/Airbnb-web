@@ -260,6 +260,7 @@ const StyledIconsDiv = styled("div")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  position: "relative",
 });
 const StyledTextBox = styled(Box)({
   display: "flex",

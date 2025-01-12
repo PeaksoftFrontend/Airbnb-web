@@ -1,7 +1,8 @@
 import { useDropzone } from "react-dropzone";
 import { Alert, Box, IconButton, styled, Tooltip } from "@mui/material";
-import { Icons } from "../../../assets";
 import { useState } from "react";
+
+import { Icons } from "../../../assets";
 
 export const FileUpload = () => {
   const [files, setFiles] = useState([]);
@@ -36,6 +37,10 @@ export const FileUpload = () => {
     },
   });
 
+  const removeFile = (fileToRemove) => {
+    setFiles(files.filter((file) => file !== fileToRemove));
+  };
+
   return (
     <Box>
       {error && <Alert severity="error">{error}</Alert>}
@@ -51,6 +56,34 @@ export const FileUpload = () => {
           <StyledIcons />
         </IconButton>
       </Tooltip>
+      <StyledBox mt={2}>
+        {files.map((file, index) => (
+          <BoxFile key={index} mt={1}>
+            <Cancellation onClick={() => removeFile(file)}>
+              <Icons.Cancellation />
+            </Cancellation>
+
+            <Format>
+              {file.type.startsWith("image/") && (
+                <StyledFile src={URL.createObjectURL(file)} alt={file.name} />
+              )}
+              {file.type.startsWith("audio/") && (
+                <StyledFile controls>
+                  <source src={URL.createObjectURL(file)} type={file.type} />
+                </StyledFile>
+              )}
+              {file.type.startsWith("video/") && (
+                <StyledFile controls>
+                  <source src={URL.createObjectURL(file)} type={file.type} />{" "}
+                </StyledFile>
+              )}
+              {file.type === "application/pdf" && (
+                <StyledFile src={URL.createObjectURL(file)} />
+              )}
+            </Format>
+          </BoxFile>
+        ))}
+      </StyledBox>
     </Box>
   );
 };
@@ -59,3 +92,30 @@ const StyledIcons = styled(Icons.Photo)(({ iconSize }) => ({
   height: iconSize?.height || "32px",
   cursor: "pointer",
 }));
+
+const StyledBox = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+});
+const BoxFile = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+
+  position: "relative",
+});
+
+const Cancellation = styled(IconButton)({
+  position: "absolute",
+  top: "10px",
+  right: "92%",
+});
+const Format = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  width: "100%",
+});
+
+const StyledFile = styled("img")({
+  width: "100px",
+  height: "auto",
+});
