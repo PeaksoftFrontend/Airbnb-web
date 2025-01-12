@@ -15,7 +15,6 @@ import Telephone from "../assets/icons/telephone-icon.svg?react";
 import Location from "../assets/icons/location-icon.svg?react";
 import Logo from "../assets/icons/logo-icon.svg?react";
 import Photo from "../assets/icons/photo-icon.svg?react";
-import Circle from "../assets/icons/circle-icon.svg?react";
 import ActionMenu from "../assets/icons/action-menu-icon.svg?react";
 import ArrowRight from "../assets/icons/arrow-right-icon.svg?react";
 import ArrowLeft from "../assets/icons/arrow-left-icon.svg?react";
@@ -32,6 +31,8 @@ import Left from "../assets/icons/left-icon.svg?react";
 import Right from "../assets/icons/right-icon.svg?react";
 import LeftBlack from "../assets/icons/left-black-icon.svg?react";
 import RightBlack from "../assets/icons/right-black-icon.svg?react";
+import LeftYellow from "../assets/icons/left-yellow.svg?react";
+import RightYellow from "../assets/icons/right-yellow.svg?react";
 
 export const Icons = {
   Heart,
@@ -67,4 +68,7 @@ export const Icons = {
   Right,
   LeftBlack,
   RightBlack,
+  LeftYellow,
+  RightYellow
+
 };
