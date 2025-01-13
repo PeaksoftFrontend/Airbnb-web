@@ -22,8 +22,18 @@ export const Application = () => {
     setPages(value);
   };
 
+  // const handleNavigate = (id) => {
+  //   navigate(`/card/${id}`);
+  //   console.log("Current Card:", card);
+  // };
   const handleNavigate = (id) => {
-    navigate(`/cards/${id}`);
+    const card = Data.find((item) => item.id === id);
+    if (card) {
+      console.log("Current Card:", card); // Отладочный вывод объекта карты
+      navigate(`/card/${id}`);
+    } else {
+      console.error("Card not found for id:", id);
+    }
   };
   return (
     <>

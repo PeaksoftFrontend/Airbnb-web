@@ -60,7 +60,6 @@ export const Icons = {
   HeardFor,
   MIniMenu,
   LogoColor,
-  Menufeadback,
   StarColor,
   Line,
   LineGroup,
@@ -68,7 +67,5 @@ export const Icons = {
   Right,
   LeftBlack,
   RightBlack,
-  LeftYellow,
-  RightYellow
-
+  Menufeadback,
 };
