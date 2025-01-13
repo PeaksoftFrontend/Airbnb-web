@@ -7,9 +7,11 @@ import { Box, Menu, MenuItem, styled } from "@mui/material";
 import { Icons } from "../../../assets";
 import { useState } from "react";
 
-export const CardAdmin = ({ cards }) => {
+export const CardAdmin = ({ cards, handleNavigate }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -21,7 +23,7 @@ export const CardAdmin = ({ cards }) => {
     <StyleContainer>
       {cards.map((item) => (
         <StyledBox key={item.id} {...item}>
-          <StyleAll isNew={item.isNew}>
+          <StyleAll isNew={item.isNew} onClick={() => handleNavigate(item.id)}>
             <StyleSwiper
               mousewheel={true}
               navigation={true}

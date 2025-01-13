@@ -3,9 +3,11 @@ import { Header } from "../../layout/admin/Header";
 import { CardAdmin } from "../../components/UI/admin/CardAdmin";
 import { Data } from "../../utils/constants/cardAdmin";
 import { useState } from "react";
-import zIndex from "@mui/material/styles/zIndex";
+import { useNavigate } from "react-router-dom";
 
 export const Application = () => {
+  const navigate = useNavigate();
+
   const [page, setPages] = useState(1);
   const cardsPerPage = 15;
 
@@ -19,6 +21,10 @@ export const Application = () => {
   const handlePageChange = (_, value) => {
     setPages(value);
   };
+
+  const handleNavigate = (id) => {
+    navigate(`/cards/${id}`);
+  };
   return (
     <>
       <Header />
@@ -30,7 +36,7 @@ export const Application = () => {
         >
           APPLICATION
         </StyleText>
-        <CardAdmin cards={currentCards} />
+        <CardAdmin cards={currentCards} handleNavigate={handleNavigate} />
         <StylePogination>
           <Pagination
             count={totalPages}
