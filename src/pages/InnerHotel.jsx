@@ -1,4 +1,6 @@
-import { Avatar, Box, styled, Typography } from "@mui/material";
+import React from "react";
+import { Avatar, Box, colors, styled, Typography } from "@mui/material";
+import { Button } from "../components/UI/Button";
 import { Sliders } from "../components/admin/Sliders";
 import { Icons } from "../assets";
 import { Button } from "../components/UI/Button";
@@ -68,7 +70,7 @@ export const InnerHotel = ({
         {payment ? (
           <StyleBox>
             <Styled26day>
-              $26/<span>day</span>
+              $26/ <span>day</span>
             </Styled26day>
             <StyleBottom></StyleBottom>
             <StyledDates>
