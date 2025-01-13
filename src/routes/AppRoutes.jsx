@@ -1,8 +1,4 @@
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PrivateRoute } from "./PrivateRoute";
 import { PATHS } from "../utils/constants/paths";
 import { useSelector } from "react-redux";
@@ -19,16 +15,11 @@ export const AppRoutes = () => {
   const router = createBrowserRouter([
     {
       path: PATHS.GUEST.ROOT,
-      element: <Navigate to={PATHS.GUEST.ROOT} replace />,
-    },
-
-    {
-      path: PATHS.GUEST.ROOT,
       element: (
         <PrivateRoute
           Component={<h1>Guest</h1>}
-          isAuthorized={isAuthorized && role === "GUEST"}
-          fallBackPath={pathRole[role] || PATHS.GUEST}
+          isAuthorized={role === "GUEST"}
+          fallBackPath={pathRole[role] || PATHS.GUEST.ROOT}
         />
       ),
     },
@@ -38,7 +29,7 @@ export const AppRoutes = () => {
         <PrivateRoute
           Component={<h1>User</h1>}
           isAuthorized={isAuthorized && role === "USER"}
-          fallBackPath={pathRole[role] || PATHS.USER}
+          fallBackPath={pathRole[role] || PATHS.GUEST.ROOT}
         />
       ),
     },
@@ -48,7 +39,7 @@ export const AppRoutes = () => {
         <PrivateRoute
           Component={<h1>Admin</h1>}
           isAuthorized={isAuthorized && role === "ADMIN"}
-          fallBackPath={pathRole[role] || PATHS.ADMIN}
+          fallBackPath={pathRole[role] || PATHS.GUEST.ROOT}
         />
       ),
     },
