@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PrivateRoute } from "./PrivateRoute";
 import { PATHS } from "../utils/constants/paths";
 import { useSelector } from "react-redux";
-import { Publish } from "../pages/user/puplish/Publish";
 
 export const AppRoutes = () => {
   const { isAuthorized, role } = useSelector((state) => state.auth);
@@ -18,7 +17,7 @@ export const AppRoutes = () => {
       path: PATHS.GUEST.ROOT,
       element: (
         <PrivateRoute
-          Component={<Publish />}
+          Component={<h1>Guest</h1>}
           isAuthorized={role === "GUEST"}
           fallBackPath={pathRole[role] || PATHS.GUEST.ROOT}
         />
