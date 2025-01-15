@@ -32,6 +32,8 @@ import Left from "../assets/icons/left-icon.svg?react";
 import Right from "../assets/icons/right-icon.svg?react";
 import LeftBlack from "../assets/icons/left-black-icon.svg?react";
 import RightBlack from "../assets/icons/right-black-icon.svg?react";
+import EyeCrossed from "../assets/icons/eye-crossed-icon.svg?react";
+import Eye from "../assets/icons/eye-icon.svg?react";
 
 export const Icons = {
   Heart,
@@ -67,4 +69,6 @@ export const Icons = {
   Right,
   LeftBlack,
   RightBlack,
+  EyeCrossed,
+  Eye,
 };
