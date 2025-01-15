@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import  { useState, useRef, useEffect } from "react";
 import {
   Box,
   styled,
@@ -8,11 +8,9 @@ import {
   ListItem,
   ListItemText,
   Typography,
-  Input,
 } from "@mui/material";
 import { Icons } from "../../assets";
 import { Header } from "../../layout/admin/Header";
-// import styled from "styled-components";
 export const AllHousingPage = () => {
   const Filter = ({ label, options }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -50,17 +48,10 @@ export const AllHousingPage = () => {
     return (
       <FilterGroup>
         <FormControl>
-          <OutlinedInput
+          <StyledOutlinedInput
             id={`filter-input-${label}`}
             onClick={handleInputClick}
             inputRef={inputRef}
-            sx={{
-              width: "271px",
-              height: "42px",
-              fontSize: "1rem",
-              paddingTop: "5px",
-              paddingBottom: "5px",
-            }}
             readOnly
             startAdornment={
               <LabelValueWrapper>
@@ -111,7 +102,7 @@ export const AllHousingPage = () => {
     {
       imageUrl:
         "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
-      price: "$26",
+      price: "$26 ",
       rating: "3.4",
       description:
         "Beautiful and picturesque apartment in the center of the city...",
@@ -121,7 +112,7 @@ export const AllHousingPage = () => {
     {
       imageUrl:
         "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
-      price: "$26",
+      price: "$26 ",
       rating: "3.4",
       description:
         "Beautiful and picturesque apartment in the center of the city...",
@@ -131,7 +122,7 @@ export const AllHousingPage = () => {
     {
       imageUrl:
         "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
-      price: "$26",
+      price: "$26 ",
       rating: "3.4",
       description:
         "Beautiful and picturesque apartment in the center of the city...",
@@ -141,7 +132,7 @@ export const AllHousingPage = () => {
     {
       imageUrl:
         "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
-      price: "$26",
+      price: "$26 ",
       rating: "3.4",
       description:
         "Beautiful and picturesque apartment in the center of the city...",
@@ -151,7 +142,7 @@ export const AllHousingPage = () => {
     {
       imageUrl:
         "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
-      price: "$26",
+      price: "$26 ",
       rating: "3.4",
       description:
         "Beautiful and picturesque apartment in the center of the city...",
@@ -159,8 +150,9 @@ export const AllHousingPage = () => {
       guests: "2",
     },
     {
-      imageUrl: "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
-      price: "$26",
+      imageUrl:
+        "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
+      price: "$26 ",
       rating: "3.4",
       description:
         "Beautiful and picturesque apartment in the center of the city...",
@@ -168,8 +160,9 @@ export const AllHousingPage = () => {
       guests: "2",
     },
     {
-      imageUrl: "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
-      price: "$26",
+      imageUrl:
+        "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
+      price: "$26 ",
       rating: "3.4",
       description:
         "Beautiful and picturesque apartment in the center of the city...",
@@ -177,8 +170,9 @@ export const AllHousingPage = () => {
       guests: "2",
     },
     {
-      imageUrl: "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
-      price: "$26",
+      imageUrl:
+        "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
+      price: "$26 ",
       rating: "3.4",
       description:
         "Beautiful and picturesque apartment in the center of the city...",
@@ -186,8 +180,9 @@ export const AllHousingPage = () => {
       guests: "2",
     },
     {
-      imageUrl: "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
-      price: "$26",
+      imageUrl:
+        "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
+      price: "$26 ",
       rating: "3.4",
       description:
         "Beautiful and picturesque apartment in the center of the city...",
@@ -195,8 +190,9 @@ export const AllHousingPage = () => {
       guests: "2",
     },
     {
-      imageUrl: "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
-      price: "$26",
+      imageUrl:
+        "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
+      price: "$26 ",
       rating: "3.4",
       description:
         "Beautiful and picturesque apartment in the center of the city...",
@@ -204,8 +200,9 @@ export const AllHousingPage = () => {
       guests: "2",
     },
     {
-      imageUrl: "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
-      price: "$26",
+      imageUrl:
+        "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
+      price: "$26 ",
       rating: "3.4",
       description:
         "Beautiful and picturesque apartment in the center of the city...",
@@ -213,8 +210,9 @@ export const AllHousingPage = () => {
       guests: "2",
     },
     {
-      imageUrl: "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
-      price: "$26",
+      imageUrl:
+        "https://s3-alpha-sig.figma.com/img/97df/7521/04b03f4d29327afda7d780c1e6389996?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=iN~GyCBNir5szPSyP6-WV8y-xtHMeEV8LlazRdX4hPZacei0PtlBqzAbO1hUcoyEVWa99uJhGt4Y8bTda5fym0FJE2sFP5I~Y4nZVMQWsq7INtiL7NAKcrR2v8DE9E5QE89rm5Gj6Wcw7Y5lSHJnmmZqnHUa4yJmT~nsKqoSF5jq85p78QFHkElrRImTJ2XL6YSiKg0a0auKRhf7-piEMzW-Ab30mo9kZaB6L5bYjoOCHFu9mb76cGndephZdJBwFAl8HQVXek~6YwuSlI-tbJIOh~6IGVJSB9FtX8nWIs2HqySRkrcdEpBueTJ5L0~sdEAvowF8WPbZbpNGmJ5N3g__",
+      price: "$26 ",
       rating: "3.4",
       description:
         "Beautiful and picturesque apartment in the center of the city...",
@@ -223,15 +221,15 @@ export const AllHousingPage = () => {
     },
   ];
   return (
-    <div >
+    <div>
       <Header />
       <FilterContainer>
-        <h1>All Housing</h1>
-        <div style={{ display: "flex", marginLeft: "120px" }}>
-          {allHousing.map((filter, index) => (
+        <StyledAllHousingH1>All Housing</StyledAllHousingH1>
+        {allHousing.map((filter, index) => (
+          <StyledInputs>
             <Filter key={index} label={filter.label} options={filter.options} />
-          ))}
-        </div>
+          </StyledInputs>
+        ))}
       </FilterContainer>
       <HousingCardContainer>
         {housingData.map((housing, index) => (
@@ -240,27 +238,28 @@ export const AllHousingPage = () => {
               style={{ backgroundImage: `url(${housing.imageUrl})` }}
             />
             <HousingContent>
-              <HousingPrice>{housing.price} / day</HousingPrice>
-              <HousingRating>
-                <StarIcon/>
-                <Typography
-                  variant="body2"
-                  sx={{ color: "#888", fontWeight: "bold" }}
-                >
-                  {housing.rating}
-                </Typography>
-              </HousingRating>
+              <StyledTogetherday>
+                <StyledHousingPriceTogether>
+                  <HousingPrice>{housing.price} </HousingPrice>
+                  <HousingPriceTwo> / day</HousingPriceTwo>
+                </StyledHousingPriceTogether>
+                <HousingRating>
+                  <StyledStarIcon>
+                    <StarIcon />
+                  </StyledStarIcon>
+                  <Typography variant="body2" sx={{ color: "#FFFFFF" }}>
+                    {housing.rating}
+                  </Typography>
+                </HousingRating>
+              </StyledTogetherday>
               <HousingDescription>{housing.description}</HousingDescription>
               <HousingLocation>
-                <Icons.Location
-                  sx={{ marginRight: "3px", fontSize: "14px", color: "#888" }}
-                />
-                {housing.location}
+                <StyledLocation />
+                <StyledHouse>{housing.location}</StyledHouse>
               </HousingLocation>
               <HousingGuests>
                 {housing.guests} guests
-                <Icons.ActionMenu />
-                {/* <HousingDots /> */}
+                <ActionMenu />
               </HousingGuests>
             </HousingContent>
           </HousingCard>
@@ -270,21 +269,56 @@ export const AllHousingPage = () => {
   );
 };
 const FilterContainer = styled(Box)(({ theme }) => ({
-  display: "flex",
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(271px, auto))",
   justifyContent: "flex-start",
   alignItems: "center",
   margin: theme.spacing(1),
   paddingBottom: theme.spacing(1),
   margin: "40px",
 }));
-
+const StyledAllHousingH1 = styled("h1")({
+  fontSize: "20px",
+  color: "#000000",
+  width: "136px",
+  height: "24px",
+});
+const StyledInputs = styled("span")({
+  marginLeft: "21px",
+});
+const StyledOutlinedInput = styled(OutlinedInput)({
+  width: "271px",
+  height: "42px",
+  fontSize: "1rem",
+  paddingTop: "5px",
+  paddingBottom: "5px",
+});
+const StyledHousingPriceTogether = styled("div")({
+  display: "flex",
+  gap: "5px",
+});
 const FilterGroup = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   marginRight: theme.spacing(2),
   position: "relative",
 }));
-
+const HousingPriceTwo = styled("span")({
+  color: "#6C6C6C",
+  fontSize: "16px",
+  paddingTop: "4px",
+});
+const StyledTogetherday = styled("div")({
+  display: "flex",
+  gap: "60px",
+});
+const StyledLocation = styled(Icons.Location)({
+  cursor: "pointer",
+});
+const StyledStarIcon = styled("span")({
+  paddingTop: "0.5px",
+  paddingLeft: "5px",
+});
 const StyledList = styled(List)(({ theme }) => ({
   position: "absolute",
   top: "100%",
@@ -296,7 +330,9 @@ const StyledList = styled(List)(({ theme }) => ({
   maxHeight: "200px",
   overflowY: "auto",
 }));
-
+const StyledHouse = styled("span")({
+  marginLeft: "4px",
+});
 const StyledListItem = styled(ListItem)(({ theme }) => ({
   fontSize: "1rem",
   paddingTop: theme.spacing(0.625),
@@ -315,7 +351,10 @@ const CustomArrow = styled(Icons.ArrowDown)(({ theme }) => ({
   pointerEvents: "none",
   color: theme.palette.grey[600],
 }));
-
+const ActionMenu = styled(Icons.ActionMenu)({
+  marginLeft: "115px",
+  cursor: "pointer",
+});
 const ValueWrapper = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -358,49 +397,51 @@ const HousingContent = styled(Box)({
 });
 
 const HousingPrice = styled(Typography)({
-  fontSize: "1.2rem",
+  fontSize: "18px",
   marginBottom: "5px",
+  color: "#363636",
 });
 
 const HousingRating = styled(Box)({
   display: "flex",
   alignItems: "center",
+  backgroundColor: "#828282",
+  width: "62px",
+  height: "25px",
+  borderRadius: "2px",
+  gap: "5px",
 });
 const StarIcon = styled(Icons.StarColor)({
-  marginRight: "3px",
-  fontSize: "16px",
-  color: "gold",
+  marginLeft: "5px",
+  cursor: "pointer",
 });
 
 const HousingDescription = styled(Typography)({
-  fontSize: "1rem",
+  fontSize: "18px",
   marginBottom: "5px",
   overflow: "hidden",
   textOverflow: "ellipsis",
+  color: "#2B2B2B",
   whiteSpace: "nowrap",
 });
 
 const HousingLocation = styled(Typography)({
   fontSize: "0.9rem",
   marginBottom: "5px",
+  color: "#828282",
   overflow: "hidden",
+  paddingRight: "5px",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
 });
 
 const HousingGuests = styled(Typography)({
   fontSize: "0.9rem",
-  color: " #888",
+  color: " #C4C4C4",
   marginBottom: "5px",
   display: "flex",
   "& svg": {
-      width: "19px",
-      height: "27px",
+    width: "19px",
+    height: "27px",
   },
 });
-
-const HousingDots = styled(Box)({
-  display: "inline-block",
-  marginLeft: "5px",
-});
-
