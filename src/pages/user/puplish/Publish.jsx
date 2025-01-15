@@ -1,4 +1,11 @@
-import { Box, Container, styled, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  IconButton,
+  styled,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { Input } from "../../../components/UI/Input";
 import { Select } from "../../../components/UI/Select";
 import { Button } from "../../../components/UI/Button";
@@ -6,13 +13,47 @@ import { useRef, useState } from "react";
 import { Radio } from "../../../components/UI/Radio";
 import { orange } from "@mui/material/colors";
 import { Modal } from "../../../components/UI/Modal";
-import { FileUpload } from "./FileUpload";
+import { Icons } from "../../../assets";
+import { useDropzone } from "react-dropzone";
 
 export const Publish = () => {
-  const [selectedValue, setSelectedValue] = useState("");
+  const [radioValue, setRadioValue] = useState("");
   const radioRef = useRef(null);
+  const [files, setFiles] = useState([]);
+
   const handleRadioChange = (event) => {
-    setSelectedValue(event.target.value);
+    setRadioValue(event.target.value);
+  };
+
+  const onDrop = (acceptedFiles) => {
+    if (files.length + acceptedFiles.length <= 4) {
+      setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
+    } else {
+      Error;
+    }
+  };
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    maxFiles: 4,
+    accept: {
+      "image/*": [],
+      "application/pdf": [],
+      "text/*": [],
+      "application/msword": [],
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+        [],
+      "application/vnd.ms-excel": [],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [],
+      "application/vnd.ms-powerpoint": [],
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+        [],
+      "audio/*": [],
+      "video/*": [],
+    },
+  });
+  const removeFile = (fileToRemove) => {
+    setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToRemove));
   };
 
   const options = [
@@ -38,13 +79,24 @@ export const Publish = () => {
             about your listing.
           </StyledInfoText>
           <StyledFotoDiv>
+            <input {...getInputProps()} />
             <StyledBoxSpan>
               <StyledSpan>Image</StyledSpan>
               <StyledMaxSpan>Max 4 photo</StyledMaxSpan>
             </StyledBoxSpan>
             <StyledFotoBox>
               <StyledIconsDiv>
-                <FileUpload />
+                <Tooltip title="Загрузить файл">
+                  <IconButton
+                    {...getRootProps()}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      document.querySelector('input[type="file"]').click();
+                    }}
+                  >
+                    <StyledIcons />
+                  </IconButton>
+                </Tooltip>
               </StyledIconsDiv>
               <StyledTextBox>
                 <StyledAddTypography>
@@ -56,6 +108,17 @@ export const Publish = () => {
                 </StyledFotoText>
               </StyledTextBox>
             </StyledFotoBox>
+            <StyledImagesContainer>
+              {files.map((file) => (
+                <StyledImagesContainer key={file.name}>
+                  <StyledImage
+                    src={URL.createObjectURL(file)}
+                    alt={`Uploaded file ${file.name}`}
+                  />
+                  <Icons.Cancellation onClick={() => removeFile(file)} />
+                </StyledImagesContainer>
+              ))}
+            </StyledImagesContainer>
           </StyledFotoDiv>
         </StyledCreateDiv>
         <StyledBox>
@@ -68,7 +131,7 @@ export const Publish = () => {
                   value="apartment"
                   ref={radioRef}
                   variant="apartment"
-                  checked={selectedValue === "apartment"}
+                  checked={radioValue === "apartment"}
                   onChange={handleRadioChange}
                   sx={{
                     "&.Mui-checked": {
@@ -83,7 +146,7 @@ export const Publish = () => {
                   ref={radioRef}
                   value="home"
                   variant="home"
-                  checked={selectedValue === "home"}
+                  checked={radioValue === "home"}
                   onChange={handleRadioChange}
                   sx={{
                     "&.Mui-checked": {
@@ -116,7 +179,6 @@ export const Publish = () => {
               id="outlined-multiline-static"
               multiline
               rows={3}
-              maxRows={5}
             />
           </StyledSection>
           <StyledSection>
@@ -145,6 +207,26 @@ export const Publish = () => {
     </StyledContainer>
   );
 };
+
+const StyledImagesContainer = styled(Box)({
+  display: "flex",
+  flexDirection: "row",
+  position: "relative",
+  gap: "10px",
+  flexWrap: "wrap",
+});
+
+const StyledImage = styled("img")({
+  width: "100px",
+  height: "auto",
+  borderRadius: "4px",
+});
+
+const StyledIcons = styled(Icons.Photo)(({ iconSize }) => ({
+  width: iconSize?.width || "43px",
+  height: iconSize?.height || "32px",
+  cursor: "pointer",
+}));
 export const StyledModal = styled(Modal)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
@@ -258,9 +340,9 @@ const StyledIconsDiv = styled("div")({
   height: "135px",
   backgroundColor: "#F3F3F3",
   display: "flex",
+  flexDirection: "row",
   justifyContent: "center",
   alignItems: "center",
-  position: "relative",
 });
 const StyledTextBox = styled(Box)({
   display: "flex",
