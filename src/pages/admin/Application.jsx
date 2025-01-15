@@ -1,4 +1,4 @@
-import { Box, Pagination, styled, Typography } from "@mui/material";
+import { Box, Pagination, styled } from "@mui/material";
 import { Header } from "../../layout/admin/Header";
 import { CardAdmin } from "../../components/UI/admin/CardAdmin";
 import { Data } from "../../utils/constants/cardAdmin";
@@ -22,19 +22,6 @@ export const Application = () => {
     setPages(value);
   };
 
-  // const handleNavigate = (id) => {
-  //   navigate(`/card/${id}`);
-  //   console.log("Current Card:", card);
-  // };
-  const handleNavigate = (id) => {
-    const card = Data.find((item) => item.id === id);
-    if (card) {
-      console.log("Current Card:", card); // Отладочный вывод объекта карты
-      navigate(`/card/${id}`);
-    } else {
-      console.error("Card not found for id:", id);
-    }
-  };
   return (
     <>
       <Header />
@@ -46,7 +33,7 @@ export const Application = () => {
         >
           APPLICATION
         </StyleText>
-        <CardAdmin cards={currentCards} handleNavigate={handleNavigate} />
+        <CardAdmin cards={currentCards} />
         <StylePogination>
           <Pagination
             count={totalPages}

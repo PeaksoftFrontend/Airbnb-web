@@ -2,7 +2,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PrivateRoute } from "./PrivateRoute";
 import { PATHS } from "../utils/constants/paths";
 import { useSelector } from "react-redux";
-import { Application } from "../pages/admin/Application";
+import { AdminLayout } from "../layout/admin/AdminLayout";
+import {AdminRoutes} from "../routes/admin/AdminRoutes"
+
 
 export const AppRoutes = () => {
   const { isAuthorized, role } = useSelector((state) => state.auth);
@@ -38,11 +40,12 @@ export const AppRoutes = () => {
       path: PATHS.ADMIN.ROOT,
       element: (
         <PrivateRoute
-          Component={<Application />}
+          Component={<AdminLayout />}
           isAuthorized={isAuthorized && role === "ADMIN"}
           fallBackPath={pathRole[role] || PATHS.ADMIN.ROOT}
         />
       ),
+      children: AdminRoutes(),
     },
   ]);
 

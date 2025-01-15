@@ -7,7 +7,7 @@ import { Box, Menu, MenuItem, styled } from "@mui/material";
 import { Icons } from "../../../assets";
 import { useState } from "react";
 
-export const CardAdmin = ({ cards, handleNavigate }) => {
+export const CardAdmin = ({ cards }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);
@@ -23,7 +23,7 @@ export const CardAdmin = ({ cards, handleNavigate }) => {
     <StyleContainer>
       {cards.map((item) => (
         <StyledBox key={item.id} {...item}>
-          <StyleAll isNew={item.isNew} onClick={() => handleNavigate(item.id)}>
+          <StyleAll isNew={item.isNew}>
             <StyleSwiper
               mousewheel={true}
               navigation={true}
@@ -70,7 +70,7 @@ export const CardAdmin = ({ cards, handleNavigate }) => {
                     sx={{
                       "& .MuiMenu-paper": {
                         backgroundColor: "#fff",
-                        borderRadius: "8px",
+
                         boxShadow: "none",
                         border: "1px solid #C4C4C4",
                         width: "180px",
