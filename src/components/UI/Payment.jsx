@@ -229,8 +229,11 @@ const StyledButton = styled(Button)({
   backgroundColor: " #DD8A08",
   color: "#F7F7F7",
   marginRght: "10px",
-  border: "none",
   cursor: "pointer",
+
+  ".MuiButtonBase-root": {
+    border: "none",
+  },
 });
 
 const StyledButtonModal = styled(Button)({
