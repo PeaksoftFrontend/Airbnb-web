@@ -6,8 +6,8 @@ export const authSlice = createSlice({
     name: "Aiturgan",
     email: "",
     token: null,
-    role: "GUEST",
-    isAuthorized: false,
+    role: "ADMIN",
+    isAuthorized: true,
   },
 
   reducers: {
@@ -17,7 +17,7 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       state.isAuthorized = false;
-      state.role = "GUEST";
+      state.role = "ADMIN";
     },
   },
 });

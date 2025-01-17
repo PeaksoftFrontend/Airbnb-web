@@ -31,7 +31,7 @@ const properties = [
   },
 ];
 
-export const MainPage = () => {
+export const HousesPage = () => {
   return (
     <StyledBox>
       <StyledPopularHouse variant="h4" fontWeight="bold" gutterBottom>
