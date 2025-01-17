@@ -1,45 +1,43 @@
 import { Avatar, Box, styled, Tooltip, Typography } from "@mui/material";
-import { useState } from "react";
 
-export const Profile = ({ Date }) => {
-  const [hoveredItem] = useState(null);
+export const Profile = ({ name, email, fullName, avatar, isAuth, role }) => {
+  const handleLogout = () => {};
   return (
-    <>
-      {Date.map((item) => (
-        <StyledBox key={item.id} {...item}>
-          <Typography>{item.fullName}</Typography>
-          <StyleD>
-            <StyleBox>
-              <StyleAvatar>
-                {item.image ? (
-                  <StyledImg src={item.image} alt={`${item.name}'s avatar`} />
-                ) : (
-                  item.name.charAt(0).toUpperCase()
-                )}
-              </StyleAvatar>
-            </StyleBox>
-            <StyleText>
-              <StyleName>
-                <StyleSpan>Name:</StyleSpan>
-                {item.name}
-              </StyleName>
-              <StyleName style={{ color: "black" }}>
-                <StyleSpan>Contact:</StyleSpan>
-                <StyledTooltip title={item.email}>
-                  <StyledEmail>
-                    {hoveredItem === `email-${item.id}`
-                      ? item.email
-                      : item.email && item.email.length > 23
-                        ? `${item.email.slice(0, 23)}...`
-                        : item.email}
-                  </StyledEmail>
-                </StyledTooltip>
-              </StyleName>
-            </StyleText>
-          </StyleD>
-        </StyledBox>
-      ))}
-    </>
+    <StyledBox>
+      {role === "ADMIN" && (
+        <StyledTypography>
+          {name} {fullName}
+        </StyledTypography>
+      )}
+      <StyledContainer>
+        <StyledAvatar>
+          {avatar ? (
+            <StyledImg src={avatar} alt={`${name}'s avatar`} />
+          ) : (
+            name.charAt(0).toUpperCase()
+          )}
+        </StyledAvatar>
+        <StyledText>
+          <StyledRow>
+            <StyledLabel>Name:</StyledLabel>
+            <span>
+              {name} {fullName}
+            </span>
+          </StyledRow>
+          <StyledRow>
+            <StyledLabel>Contact:</StyledLabel>
+            <StyledTooltip title={email || "No email provided"}>
+              <StyledEmail>{`${email.slice(0, 24)}...`}</StyledEmail>
+            </StyledTooltip>
+          </StyledRow>
+        </StyledText>
+        {isAuth ? (
+          <Typography onClick={handleLogout} color="red">
+            Log out
+          </Typography>
+        ) : null}
+      </StyledContainer>
+    </StyledBox>
   );
 };
 
@@ -49,71 +47,68 @@ const StyledBox = styled(Box)({
   flexDirection: "column",
 });
 
-const StyleD = styled("div")({
+const StyledContainer = styled(Box)({
   width: "372px",
-  height: "285px",
+  height: "fit-content",
   border: "1px solid #C4C4C4",
   borderRadius: "16px",
   display: "flex",
   gap: "30px",
   flexDirection: "column",
+  padding: "16px",
+  paddingBottom: "24px",
 });
 
-const StyleAvatar = styled(Avatar)({
+const StyledTypography = styled(Typography)({
+  fontSize: "20px",
+  fontWeight: "500",
+  textTransform: "uppercase",
+});
+
+const StyledAvatar = styled(Avatar)({
   width: "89px",
   height: "89px",
-  background: " #266BD3",
+  background: "#266BD3",
   color: "#FFFFFF",
   fontSize: "40px",
+  alignSelf: "center",
 });
 
-const StyleBox = styled("div")({
-  display: "flex",
-  justifyContent: "center",
-});
-
-const StyleText = styled("div")({
+const StyledText = styled(Box)({
   display: "flex",
   flexDirection: "column",
-  paddingTop: "30px",
   gap: "12px",
 });
 
-const StyleName = styled("p")({
-  fontSize: "18px",
-  fontWeight: "500",
-  color: "#363636",
+const StyledRow = styled(Box)({
   display: "flex",
+  alignItems: "center",
   gap: "16px",
-  cursor: "pointer",
-  "& span": {
-    fontSize: "16px",
-    fontWeight: 400,
-    color: "#646464",
-  },
-});
-const StyledEmail = styled("p")({
   fontSize: "18px",
-  fontWeight: "500",
+  fontWeight: 500,
   color: "#363636",
-  display: "flex",
-  gap: "16px",
-  cursor: "pointer",
 });
 
-const StyleSpan = styled("span")({
-  paddingLeft: "16px",
+const StyledLabel = styled("span")({
+  fontSize: "16px",
+  fontWeight: 400,
+  color: "#646464",
+});
+
+const StyledEmail = styled("span")({
+  cursor: "pointer",
+  color: "#363636",
+});
+
+const StyledTooltip = styled(Tooltip)({
+  "& .MuiTooltip-tooltip": {
+    backgroundColor: "#424242",
+    color: "white",
+    fontSize: "16px",
+  },
 });
 
 const StyledImg = styled("img")({
   width: "100%",
   height: "100%",
-});
-
-const StyledTooltip = styled(Tooltip)({
-  ".MuiTooltip-tooltip": {
-    backgroundColor: "grey[900]",
-    color: "white",
-    fontSize: "16px",
-  },
 });
