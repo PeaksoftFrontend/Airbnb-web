@@ -3,8 +3,7 @@ import { PrivateRoute } from "./PrivateRoute";
 import { PATHS } from "../utils/constants/paths";
 import { useSelector } from "react-redux";
 import { AdminLayout } from "../layout/admin/AdminLayout";
-import {AdminRoutes} from "../routes/admin/AdminRoutes"
-
+import { AdminRoutes } from "../routes/admin/AdminRoutes";
 
 export const AppRoutes = () => {
   const { isAuthorized, role } = useSelector((state) => state.auth);

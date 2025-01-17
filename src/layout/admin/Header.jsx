@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Icons } from "../../assets";
 import { styled } from "@mui/material";
 

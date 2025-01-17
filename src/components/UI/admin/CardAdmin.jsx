@@ -6,29 +6,44 @@ import { Navigation, Pagination } from "swiper/modules";
 import { Box, Menu, MenuItem, styled } from "@mui/material";
 import { Icons } from "../../../assets";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../../utils/constants/paths";
 
 export const CardAdmin = ({ cards }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
 
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
+    event.stopPropagation();
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (event) => {
+    event.stopPropagation();
     setAnchorEl(null);
+  };
+
+  const handleNavigate = (id) => {
+    navigate(PATHS.ADMIN.APPLICATION_ADMIN + "/" + id);
   };
   return (
     <StyleContainer>
       {cards.map((item) => (
-        <StyledBox key={item.id} {...item}>
+        <StyledBox key={item.id} onClick={() => handleNavigate(item.id)}>
           <StyleAll isNew={item.isNew}>
             <StyleSwiper
               mousewheel={true}
-              navigation={true}
+              navigation={{
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+              }}
               keyboard={true}
-              pagination={{ clickable: true }}
+              pagination={{
+                clickable: true,
+                el: ".swiper-pagination",
+              }}
               modules={[Navigation, Pagination]}
             >
               {item.images.map((images, index) => (
@@ -36,7 +51,20 @@ export const CardAdmin = ({ cards }) => {
                   <StyleImg src={images} alt="" />
                 </SwiperSlide>
               ))}
+              <div
+                className="swiper-button-prev"
+                onClick={(e) => e.stopPropagation()}
+              ></div>
+              <div
+                className="swiper-button-next"
+                onClick={(e) => e.stopPropagation()}
+              ></div>
+              <div
+                className="swiper-pagination"
+                onClick={(e) => e.stopPropagation()}
+              ></div>
             </StyleSwiper>
+
             <div>
               <StylePieces>
                 <p>
