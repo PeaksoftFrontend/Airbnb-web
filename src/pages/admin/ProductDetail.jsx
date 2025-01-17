@@ -1,4 +1,4 @@
-import { Box, Container, styled, Typography } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 import { Header } from "../../layout/admin/Header";
 import { Breadcrumbs } from "../../components/UI/Breadcrumbs";
 import { InnerHotel } from "../../pages/InnerHotel";
@@ -13,7 +13,7 @@ const path = [
 
 export const ProductDetail = () => {
   return (
-    <StylContainer>
+    <StyledDiv>
       <Header />
       <Box>
         <StyledBox>
@@ -33,31 +33,37 @@ export const ProductDetail = () => {
         </StyledBoxed>
         <StyledShow variant="h6">Show more</StyledShow>
       </Box>
-    </StylContainer>
+    </StyledDiv>
   );
 };
 
-const StylContainer = styled(Container)({
+const StyledDiv = styled("div")({
   width: "100%",
+  maxWidth: "100%",
+  overflowX: "hidden",
+  overflowY: "hidden",
 });
 const StyledBox = styled(Box)({
   position: "relative",
   top: "40px",
+  left: "40px",
 });
 const StyledInner = styled(Box)({
   position: "relative",
   top: "103px",
+  left: "40px",
 });
 
 const StyledBoxing = styled(Box)({
   position: "relative",
   top: "200px",
-  right: "35px",
+  left: "5px",
 });
 
 const StylTypography = styled(Typography)({
   position: "relative",
   top: "150px",
+  left: "40px",
 });
 
 const StyledBoxed = styled(Box)({
@@ -67,7 +73,7 @@ const StyledBoxed = styled(Box)({
 const StyledReviews = styled(Box)({
   position: "relative",
   top: "230px",
-  left: "20px",
+  left: "120px",
 });
 
 const StyledShow = styled(Typography)({
@@ -75,5 +81,5 @@ const StyledShow = styled(Typography)({
   alignContent: "center",
   position: "relative",
   top: "15rem",
-  left: "10rem",
+  left: "30rem",
 });
