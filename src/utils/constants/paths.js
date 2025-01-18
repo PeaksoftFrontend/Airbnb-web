@@ -4,6 +4,7 @@ export const PATHS = {
   },
   USER: {
     ROOT: "/user",
+    FAVORITE_USER: "/user/favorite",
   },
   ADMIN: {
     ROOT: "/admin",
