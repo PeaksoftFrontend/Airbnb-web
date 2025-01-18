@@ -1,6 +1,4 @@
-import React from "react";
-import { Avatar, Box, colors, styled, Typography } from "@mui/material";
-import { Button } from "../components/UI/Button";
+import { Avatar, Box, styled, Typography } from "@mui/material";
 import { Sliders } from "../components/admin/Sliders";
 import { Icons } from "../assets";
 import { Button } from "../components/UI/Button";

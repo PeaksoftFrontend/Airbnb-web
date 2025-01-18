@@ -8,5 +8,7 @@ export const PATHS = {
   ADMIN: {
     ROOT: "/admin",
     APPLICATION_ADMIN: "/admin/application",
+    USERS: "/admin/users",
+    USERS_DETAIL: "/admin/users/:userId",
   },
 };
