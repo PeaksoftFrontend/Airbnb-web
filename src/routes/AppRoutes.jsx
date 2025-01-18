@@ -44,6 +44,7 @@ export const AppRoutes = () => {
           fallBackPath={pathRole[role] || PATHS.ADMIN.ROOT}
         />
       ),
+      children: AdminRoutes(),
     },
   ]);
 
