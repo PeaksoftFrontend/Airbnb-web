@@ -4,6 +4,7 @@ export const PATHS = {
   },
   USER: {
     ROOT: "/user",
+    INNER_HOTEL_OF_REGIONS: "/user/inner-hotel-of-regions",
   },
   ADMIN: {
     ROOT: "/admin",
