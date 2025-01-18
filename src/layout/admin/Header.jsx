@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Icons } from "../../assets";
 import { styled } from "@mui/material";
 
@@ -12,13 +12,13 @@ export const Header = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-        if(dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-           setIsOpen(false);
-        }
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
     };
-    
+
     document.addEventListener("mousedown", handleClickOutside);
-    
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -82,11 +82,11 @@ const StyleEnd = styled("div")({
 });
 const StyledA = styled("li")({
   textDecoration: "none",
-  fontSize: '18px',
-  fontWeight: '400',
-  lineHeight: '21.78px',
-  textAlign: 'left',
-  textUnderlinePosition: 'from-font',
+  fontSize: "18px",
+  fontWeight: "400",
+  lineHeight: "21.78px",
+  textAlign: "left",
+  textUnderlinePosition: "from-font",
   ":hover": {
     color: "#FF4B4B",
   },
@@ -122,9 +122,9 @@ const StyledNav = styled("nav")({
   border: "1px solid #C4C4C4",
   top: "36px",
   paddingTop: "20px",
-  width: '180px',
-  height: '59px',
-  borderRadius: '2px 0px 0px 0px',
+  width: "180px",
+  height: "59px",
+  borderRadius: "2px 0px 0px 0px",
   zIndex: 1,
 });
 const StyledHoverText = styled("div")({
@@ -136,5 +136,5 @@ const StyledHoverText = styled("div")({
 const StyledDropDownText = styled("a")({
   color: "#5D5D5D",
   textDecoration: "none",
-  paddingLeft: "20px"
+  paddingLeft: "20px",
 });

@@ -1,4 +1,4 @@
-import { Box, Container, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { useState } from "react";
 import { Icons } from "../../assets";
 
@@ -134,7 +134,7 @@ const StyleDivImage = styled("div")({
   gap: "2px",
 });
 
-const StyledCard = styled(Container)({
+const StyledCard = styled(Box)({
   display: "flex",
   flexDirection: "column",
 });
