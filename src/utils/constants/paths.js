@@ -8,5 +8,6 @@ export const PATHS = {
   ADMIN: {
     ROOT: "/admin",
     APPLICATION_ADMIN: "/admin/application",
+    APPLICATION_ADMIN_PRODUCT: "/admin/application/:productId",
   },
 };
