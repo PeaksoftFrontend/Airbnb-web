@@ -6,7 +6,7 @@ import { Reviews } from "../../components/user/Reviews";
 
 export const ProductDetail = () => {
   const path = [
-    { id: 1, url: "/user", title: "Users" },
+    { id: 1, url: "/users", title: "Users" },
     { id: 1, url: "/user", title: "Медер Медеров" },
     { id: 2, url: "/advertising_page", title: "Name" },
   ];

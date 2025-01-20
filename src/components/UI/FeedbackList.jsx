@@ -2,7 +2,7 @@ import { Box, styled } from "@mui/material";
 import { useState } from "react";
 import { Icons } from "../../assets";
 
-export const feedbacks = [
+const feedbacks = [
   {
     avatar: "https://shorturl.at/1jDff",
     userName: "Anna Annova",
@@ -90,7 +90,7 @@ const FeedbackCard = ({
         {displayedText}
         {text.length > 100 && (
           <StyleToggleText onClick={toggleText}>
-            {isExpanded ? " See Less" : " See More"}
+            {isExpanded ? "See Less" : " See More"}
           </StyleToggleText>
         )}
       </StyledText>
@@ -170,6 +170,7 @@ const StyleRating = styled("div")({
 const StyledText = styled("div")({
   fontSize: "1rem",
   margin: "0.5rem 0",
+  maxWidth: "850px",
 });
 
 const StyleToggleText = styled("span")({
