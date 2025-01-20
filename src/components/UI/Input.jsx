@@ -1,7 +1,6 @@
 import { forwardRef, useState } from "react";
 import { TextField, InputAdornment, IconButton, styled } from "@mui/material";
-import RemoveRedEyeOutlined from "@mui/icons-material/RemoveRedEyeOutlined";
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import { Icons } from "../../assets";
 
 export const Input = forwardRef(
   ({ type, value, onChange, placeholder, name, required, ...props }, ref) => {
@@ -31,11 +30,7 @@ export const Input = forwardRef(
                   onClick={handleTogglePasswordVisibility}
                   edge="end"
                 >
-                  {isPasswordVisible ? (
-                    <RemoveRedEyeOutlined />
-                  ) : (
-                    <VisibilityOffOutlinedIcon />
-                  )}
+                  {isPasswordVisible ? <Icons.EyeCrossed /> : <Icons.Eye />}
                 </IconButton>
               </InputAdornment>
             ) : null,

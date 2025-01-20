@@ -1,4 +1,4 @@
-import  { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Box,
   styled,
@@ -8,16 +8,31 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import { Icons } from "../../assets";
 import { Header } from "../../layout/admin/Header";
 export const AllHousingPage = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (event) => {
+    event.stopPropagation();
+    setAnchorEl(null);
+  };
+
   const Filter = ({ label, options }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [value, setValue] = useState("All");
     const inputRef = useRef(null);
     const listRef = useRef(null);
-
     useEffect(() => {
       const handleOutsideClick = (event) => {
         if (
@@ -259,7 +274,47 @@ export const AllHousingPage = () => {
               </HousingLocation>
               <HousingGuests>
                 {housing.guests} guests
-                <ActionMenu />
+                <StyleMenuItem>
+                  <ActionMenu
+                    aria-controls={open ? "fade-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleClick}
+                  />
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    sx={{
+                      "& .MuiMenu-paper": {
+                        backgroundColor: "#fff",
+                        boxShadow: "none",
+                        border: "1px solid #C4C4C4",
+                        width: "180px",
+                        height: "125px",
+                        borderRadius: "2px",
+                        transformOrigin: "center bottom",
+                      },
+                      "& .MuiButtonBase-root": {
+                        fontSize: "16px",
+                        color: "#5D5D5D",
+                        padding: "5px 20px",
+                      },
+                    }}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right",
+                    }}
+                    transformOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right",
+                    }}
+                  >
+                    <MenuItem onClick={handleClose}>Accept</MenuItem>
+                    <MenuItem onClick={handleClose}>Reject</MenuItem>
+                    <MenuItem onClick={handleClose}>Delete</MenuItem>
+                  </Menu>
+                </StyleMenuItem>
               </HousingGuests>
             </HousingContent>
           </HousingCard>
@@ -286,6 +341,7 @@ const StyledAllHousingH1 = styled("h1")({
 const StyledInputs = styled("span")({
   marginLeft: "21px",
 });
+const StyledMenuItem = styled("div")({});
 const StyledOutlinedInput = styled(OutlinedInput)({
   width: "271px",
   height: "42px",
@@ -394,6 +450,11 @@ const HousingImage = styled(Box)({
 const HousingContent = styled(Box)({
   height: "135px",
   padding: "7px",
+});
+const StyleMenuItem = styled("div")({
+  "& svg": {
+    cursor: "pointer",
+  },
 });
 
 const HousingPrice = styled(Typography)({

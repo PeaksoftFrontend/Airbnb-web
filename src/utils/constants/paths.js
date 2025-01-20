@@ -7,5 +7,6 @@ export const PATHS = {
   },
   ADMIN: {
     ROOT: "/admin",
+    APPLICATION_ADMIN: "/admin/application",
   },
 };

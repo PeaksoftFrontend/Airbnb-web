@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { Box, Typography, Modal, TextField } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { useState } from "react";
+import { Box, Typography, Modal, TextField, styled } from "@mui/material";
 import { Icons } from "../../assets";
 import { Input } from "./Input";
 import { Button } from "./Button";
 
-export const Payment = ({}) => {
+export const Payment = () => {
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [openModal, setOpenModal] = useState(false);
@@ -152,7 +151,6 @@ const StyledSpanOut = styled("span")({
 });
 const StyledText = styled(Typography)({
   color: "#777",
-  marginTop: 2,
   textAlign: "center",
 });
 const StyledTogether = styled("div")({
@@ -232,6 +230,10 @@ const StyledButton = styled(Button)({
   color: "#F7F7F7",
   marginRght: "10px",
   cursor: "pointer",
+
+  ".MuiButtonBase-root": {
+    border: "none",
+  },
 });
 
 const StyledButtonModal = styled(Button)({

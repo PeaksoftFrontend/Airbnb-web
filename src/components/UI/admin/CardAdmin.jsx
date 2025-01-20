@@ -3,50 +3,47 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
-import { Box, Container, styled } from "@mui/material";
+import { Box, Menu, MenuItem, styled } from "@mui/material";
 import { Icons } from "../../../assets";
-import { Button } from "../Button";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../../utils/constants/paths";
 
-export const Data = [
-  {
-    id: 1,
-    images: ["https://shorturl.at/RWBEI"],
-    pieces: 26,
-    rating: 3.4,
-    title: "Beautiful and picturesque 2 sto...",
-    gps: "12 Morris Ave, Toronto, ON, CA,",
-    guests: 2,
-    isNew: true,
-  },
-  {
-    id: 2,
-    images: [
-      "https://shorturl.at/sFdTT",
-      "https://shorturl.at/RWBEI",
-      "https://shorturl.at/SFypy",
-      "https://shorturl.at/WlCnu",
-    ],
-    pieces: 26,
-    rating: 3.4,
-    title: "Beautiful and picturesque 2 sto...",
-    gps: "12 Morris Ave, Toronto, ON, CA,",
-    guests: 2,
-    isNew: false,
-  },
-];
+export const CardAdmin = ({ cards }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
 
-export const CardAdmin = () => {
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (event) => {
+    event.stopPropagation();
+    setAnchorEl(null);
+  };
+
+  const handleNavigate = (id) => {
+    navigate(PATHS.ADMIN.APPLICATION_ADMIN + "/" + id);
+  };
   return (
     <StyleContainer>
-      {Data.map((item) => (
-        <StyledBox key={item.id} {...item}>
+      {cards.map((item) => (
+        <StyledBox key={item.id} onClick={() => handleNavigate(item.id)}>
           <StyleAll isNew={item.isNew}>
             <StyleSwiper
               mousewheel={true}
-              navigation={true}
+              navigation={{
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+              }}
               keyboard={true}
-              pagination={{ clickable: true }}
+              pagination={{
+                clickable: true,
+                el: ".swiper-pagination",
+              }}
               modules={[Navigation, Pagination]}
             >
               {item.images.map((images, index) => (
@@ -54,7 +51,20 @@ export const CardAdmin = () => {
                   <StyleImg src={images} alt="" />
                 </SwiperSlide>
               ))}
+              <div
+                className="swiper-button-prev"
+                onClick={(e) => e.stopPropagation()}
+              ></div>
+              <div
+                className="swiper-button-next"
+                onClick={(e) => e.stopPropagation()}
+              ></div>
+              <div
+                className="swiper-pagination"
+                onClick={(e) => e.stopPropagation()}
+              ></div>
             </StyleSwiper>
+
             <div>
               <StylePieces>
                 <p>
@@ -74,7 +84,48 @@ export const CardAdmin = () => {
               </StyleDiv>
               <StyleguesNum>
                 <div>{item.guests} guests</div>
-                <Icons.MIniMenu />
+                <StyleMenuItem>
+                  <Icons.MIniMenu
+                    aria-controls={open ? "fade-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleClick}
+                  />
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    sx={{
+                      "& .MuiMenu-paper": {
+                        backgroundColor: "#fff",
+
+                        boxShadow: "none",
+                        border: "1px solid #C4C4C4",
+                        width: "180px",
+                        height: "125px",
+                        borderRadius: "2px",
+                        transformOrigin: "center bottom",
+                      },
+                      "& .MuiButtonBase-root": {
+                        fontSize: "16px",
+                        color: "#5D5D5D",
+                        padding: "5px 20px",
+                      },
+                    }}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right",
+                    }}
+                    transformOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right",
+                    }}
+                  >
+                    <MenuItem onClick={handleClose}>Accept</MenuItem>
+                    <MenuItem onClick={handleClose}>Reject</MenuItem>
+                    <MenuItem onClick={handleClose}>Delete</MenuItem>
+                  </Menu>
+                </StyleMenuItem>
               </StyleguesNum>
             </div>
           </StyleAll>
@@ -83,6 +134,12 @@ export const CardAdmin = () => {
     </StyleContainer>
   );
 };
+
+const StyleMenuItem = styled("div")({
+  "& svg": {
+    cursor: "pointer",
+  },
+});
 
 const StyleAll = styled("div")(({ isNew }) => ({
   display: "flex",
@@ -141,9 +198,11 @@ const StyleSwiper = styled(Swiper)({
   },
 });
 
-const StyleContainer = styled(Container)({
+const StyleContainer = styled("div")({
   display: "flex",
-  gap: "40px",
+  gap: "13px",
+  width: "100%",
+  flexWrap: "wrap",
 });
 const StylePieces = styled("div")({
   display: "flex",
@@ -214,11 +273,4 @@ const StyleguesNum = styled("div")({
     height: "27px",
     color: "background: #C4C4C4",
   },
-});
-const StyledButton = styled(Button)({
-  width: "103px",
-  height: "27px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
 });
