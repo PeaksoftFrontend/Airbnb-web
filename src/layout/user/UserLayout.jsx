@@ -1,6 +1,6 @@
-import React from "react";
 import { Header } from "./Header";
 import { Outlet } from "react-router-dom";
+import { DatePickers } from "../../components/UI/DatePickers";
 
 export const UserLayout = () => {
   return (
@@ -8,6 +8,7 @@ export const UserLayout = () => {
       <Header />
       <main>
         <Outlet />
+        <DatePickers />
       </main>
     </div>
   );
