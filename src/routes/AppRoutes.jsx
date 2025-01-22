@@ -4,6 +4,7 @@ import { PATHS } from "../utils/constants/paths";
 import { useSelector } from "react-redux";
 import { AllHousingPage } from "../pages/admin/AllHousingPage";
 import { FavoritePage } from "../pages/user/FavoritePage";
+import { UserRoutes } from "./user/UserRoutes";
 
 export const AppRoutes = () => {
   const { isAuthorized, role } = useSelector((state) => state.auth);
@@ -34,6 +35,7 @@ export const AppRoutes = () => {
           fallBackPath={pathRole[role] || PATHS.USER.ROOT}
         />
       ),
+      children: UserRoutes(),
     },
     {
       path: PATHS.ADMIN.ROOT,
