@@ -11,7 +11,7 @@ import { useState } from "react";
 import { Modal } from "../UI/Modal";
 import { Icons } from "../../assets";
 import { useDropzone } from "react-dropzone";
-import { Input } from "../UI/Input";
+import { Textarea } from "@mui/joy";
 
 export const ModalFeedback = () => {
   const [open, setOpen] = useState(false);
@@ -112,10 +112,8 @@ export const ModalFeedback = () => {
             </SecondBox>
             <SecondBox>
               <Styledtext variant="h7">Feedback</Styledtext>
-              <Input
-                type="text"
-                multiline
-                rows={2}
+              <StyledTextarea
+                maxRows={3}
                 placeholder="Share your impressions about this place"
               />
             </SecondBox>
@@ -129,6 +127,21 @@ export const ModalFeedback = () => {
     </Box>
   );
 };
+const StyledTextarea = styled(Textarea)({
+  width: "100%",
+  height: "76px",
+  border: "1px solid #828282",
+  "&:hover": {
+    border: "1px solid #828282",
+  },
+  "&:active": {
+    border: "1px solid #828282",
+  },
+  "&:focus": {
+    outline: "none",
+    border: "1px solid #828282",
+  },
+});
 const WhiteButton = styled(Button)({
   borderRadius: "none",
   width: "150px",
@@ -219,6 +232,8 @@ const StyledSecond = styled(Typography)({
 
 const StyledImage = styled("img")({
   width: "70px",
+  height: "40px",
+  objectFit: "cover",
 });
 const Cancellation = styled(Icons.Cancellation)({ cursor: "pointer" });
 const StyledBoxImg = styled(Box)({
