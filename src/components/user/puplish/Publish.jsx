@@ -6,15 +6,16 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { Input } from "../../../components/UI/Input";
-import { Select } from "../../../components/UI/Select";
-import { Button } from "../../../components/UI/Button";
+import { Input } from "../../UI/Input";
+import { Select } from "../../UI/Select";
+import { Button } from "../../UI/Button";
 import { useRef, useState } from "react";
-import { Radio } from "../../../components/UI/Radio";
+import { Radio } from "../../UI/Radio";
 import { orange } from "@mui/material/colors";
-import { Modal } from "../../../components/UI/Modal";
+import { Modal } from "../../UI/Modal";
 import { Icons } from "../../../assets";
 import { useDropzone } from "react-dropzone";
+import { Textarea } from "@mui/joy";
 
 export const Publish = () => {
   const [radioValue, setRadioValue] = useState("");
@@ -174,12 +175,7 @@ export const Publish = () => {
           </StyledSection>
           <StyledSection>
             <StyledTypography>Description of listing</StyledTypography>
-            <Input
-              type="text"
-              id="outlined-multiline-static"
-              multiline
-              rows={3}
-            />
+            <StyledTextarea minRows={3} />
           </StyledSection>
           <StyledSection>
             <StyledTypography>Region</StyledTypography>
@@ -207,7 +203,16 @@ export const Publish = () => {
     </StyledContainer>
   );
 };
-
+const StyledTextarea = styled(Textarea)(() => ({
+  width: "100%",
+  height: "104px",
+  borderRadius: "2px",
+  border: `1px solid #C4C4C4`,
+  "&:focus": {
+    border: `1px solid #C4C4C4`,
+    outline: "none",
+  },
+}));
 const StyledImagesContainer = styled(Box)({
   display: "flex",
   flexDirection: "row",
@@ -220,6 +225,7 @@ const StyledImage = styled("img")({
   width: "100px",
   height: "auto",
   borderRadius: "4px",
+  objectFit: "cover",
 });
 
 const StyledIcons = styled(Icons.Photo)(({ iconSize }) => ({
