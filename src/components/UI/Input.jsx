@@ -52,7 +52,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
       borderColor: theme.palette.grey[600],
     },
     "&.Mui-focused fieldset": {
-      borderColor: theme.palette.primary.main,
+      borderColor: theme.palette.grey[600],
     },
   },
 
