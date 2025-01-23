@@ -8,32 +8,7 @@ import { Icons } from "../../assets";
 import { Button } from "../UI/Button";
 import { useState } from "react";
 
-export const Data = [
-  {
-    id: 1,
-    images: ["https://shorturl.at/RWBEI"],
-    pieces: 26,
-    rating: 3.4,
-    title: "Beautiful and picturesque 2 sto...",
-    gps: "12 Morris Ave, Toronto, ON, CA,",
-    guests: 2,
-  },
-  {
-    id: 2,
-    images: [
-      "https://shorturl.at/sFdTT",
-      "https://shorturl.at/RWBEI",
-      "https://shorturl.at/SFypy",
-    ],
-    pieces: 26,
-    rating: 3.4,
-    title: "Beautiful and picturesque 2 sto...",
-    gps: "12 Morris Ave, Toronto, ON, CA,",
-    guests: 2,
-  },
-];
-
-export const CardUser = () => {
+export const CardUser = ({ cards }) => {
   const [favorites, setFavorites] = useState({});
 
   const handleFavorite = (id) => {
@@ -44,7 +19,7 @@ export const CardUser = () => {
   };
   return (
     <StyleContainer>
-      {Data.map((item) => (
+      {cards.map((item) => (
         <Box key={item.id} {...item}>
           <StyleAll>
             <StyleSwiper
@@ -140,9 +115,11 @@ const StyleSwiper = styled(Swiper)({
   },
 });
 
-const StyleContainer = styled(Container)({
+const StyleContainer = styled("div")({
   display: "flex",
-  gap: "40px",
+  gap: "15px",
+  flexWrap: "wrap",
+  padding: "0 19px",
 });
 const StylePieces = styled("div")({
   display: "flex",
