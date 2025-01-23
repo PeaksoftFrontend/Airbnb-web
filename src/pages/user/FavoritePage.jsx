@@ -1,9 +1,9 @@
-import { Header } from "../../layout/user/Header";
 import { Box, Typography, styled } from "@mui/material";
 import { Icons } from "../../assets";
-import { Footer } from "../../layout/user/Footer";
 import { Button } from "../../components/UI/Button";
-export const FavoritePage = ({ initial }) => {
+import { Breadcrumbs } from "../../components/UI/Breadcrumbs";
+
+export const FavoritePage = () => {
   const housingData = [
     {
       imageUrl:
@@ -51,92 +51,73 @@ export const FavoritePage = ({ initial }) => {
       guests: "2",
     },
   ];
+  const breadcrumbs = [
+    {
+      id: "1",
+      url: "/user",
+      title: "Main",
+    },
+    {
+      id: "2",
+      url: "/user/favorite",
+      title: "Favorite",
+    },
+  ];
   return (
-    <div>
-      <HeaderBarContainer>
-        <Header />
-        <FavoriteTitleHeader>
-          FAVORITE({housingData.length})
-        </FavoriteTitleHeader>
-        <AccountSelectorContainer>
-          <Avatar>
-            <Typography variant="h6" sx={{ color: "#FFFFFF" }}>
-              {initial}
-            </Typography>
-          </Avatar>
-          <ArrowIcon />
-        </AccountSelectorContainer>
-      </HeaderBarContainer>
-      <MainContainer>
-        <StyledMainFavorite>
-          <div sx={{ color: "#C4C4C4" }}>Main </div>
-          <div sx={{ color: "#363636" }}> / Favorite</div>
-        </StyledMainFavorite>
-        <FavoriteTitle>
-          FAVORITE <StyledSpanLength>({housingData.length})</StyledSpanLength>
-        </FavoriteTitle>
-        <HousingCardContainer>
-          {housingData.map((housing, index) => (
-            <HousingCard key={index}>
-              <HousingImage
-                style={{ backgroundImage: `url(${housing.imageUrl})` }}
-              />
-              <HousingContent>
-                <Box sx={{ display: "flex", gap: "3px" }}>
-                  <HousingPrice>{housing.price} /</HousingPrice>
-                  <Typography
-                    sx={{
-                      color: "#6C6C6C",
-                      fontSize: "16px",
-                      marginTop: "1px",
-                    }}
-                  >
-                    day
-                  </Typography>
-                </Box>
-                <HousingRating>
-                  <StyledDivIcon>
-                    <Icons.StarColor />
-                  </StyledDivIcon>
-                  <Typography sx={{ color: "#FFFFFF" }}>
-                    {housing.rating}
-                  </Typography>
-                </HousingRating>
-                <HousingDescription>{housing.description}</HousingDescription>
-                <HousingLocation>
-                  <StyledLocationIcon />
-                  {housing.location}
-                </HousingLocation>
-                <HousingGuests>{housing.guests} guests</HousingGuests>
-              </HousingContent>
-              <StyledDiv>
-                <StyledButton>Book</StyledButton>
-                <StyledIconsHeart>
-                  <Icons.Heart />
-                </StyledIconsHeart>
-              </StyledDiv>
-            </HousingCard>
-          ))}
-        </HousingCardContainer>
-      </MainContainer>
-      <StyledFooter>
-        <Footer />
-      </StyledFooter>
-    </div>
+    <MainContainer>
+      <StyledMainFavorite>
+        <Breadcrumbs path={breadcrumbs} />
+      </StyledMainFavorite>
+      <FavoriteTitle>
+        FAVORITE <StyledSpanLength>({housingData.length})</StyledSpanLength>
+      </FavoriteTitle>
+      <HousingCardContainer>
+        {housingData.map((housing, index) => (
+          <HousingCard key={index}>
+            <HousingImage
+              style={{ backgroundImage: `url(${housing.imageUrl})` }}
+            />
+            <HousingContent>
+              <Box sx={{ display: "flex", gap: "3px" }}>
+                <HousingPrice>{housing.price} /</HousingPrice>
+                <Typography
+                  sx={{
+                    color: "#6C6C6C",
+                    fontSize: "16px",
+                    marginTop: "1px",
+                  }}
+                >
+                  day
+                </Typography>
+              </Box>
+              <HousingRating>
+                <StyledDivIcon>
+                  <Icons.StarColor />
+                </StyledDivIcon>
+                <Typography sx={{ color: "#FFFFFF" }}>
+                  {housing.rating}
+                </Typography>
+              </HousingRating>
+              <HousingDescription>{housing.description}</HousingDescription>
+              <HousingLocation>
+                <StyledLocationIcon />
+                {housing.location}
+              </HousingLocation>
+              <HousingGuests>{housing.guests} guests</HousingGuests>
+            </HousingContent>
+            <StyledDiv>
+              <StyledButton>Book</StyledButton>
+              <StyledIconsHeart>
+                <Icons.Heart />
+              </StyledIconsHeart>
+            </StyledDiv>
+          </HousingCard>
+        ))}
+      </HousingCardContainer>
+    </MainContainer>
   );
 };
-const HeaderBarContainer = styled(Box)({
-  display: "flex",
-  textAlign: "center",
-  justifyContent: "center",
-  backgroundColor: "#FFFFFF",
-  height: "88px",
-  boxSizing: "border-box",
-  boxShadow: "0px 4px 12px 0px #909090",
-});
-const StyledFooter = styled("footer")({
-  marginTop: "286px",
-});
+
 const StyledMainFavorite = styled("div")({
   marginLeft: "40px",
   paddingBottom: "40px",
@@ -148,30 +129,23 @@ const StyledDivIcon = styled("div")({
   paddingLeft: "5px",
   cursor: "pointer",
 });
-const FavoriteTitleHeader = styled(Typography)({
-  marginRight: "50px",
-  marginTop: " 30px",
-  color: "#000000",
-  width: "97px",
-  height: "19px",
-});
+
 const StyledSpanLength = styled("span")({
   color: "#646464",
   fontSize: "18px",
 });
+
 const StyledDiv = styled("div")({
   position: "relative",
   bottom: "30px",
   left: "60px",
   right: "0",
 });
-const HousingPriceTwo = styled("span")({
-  color: "#6C6C6C",
-  fontSize: "16px",
-  paddingTop: "4px",
-});
+
 const MainContainer = styled("main")({
-  marginTop: "90px",
+  paddingTop: "40px",
+  background: "#F7F7F7",
+  minHeight: "100vh",
 });
 const HousingPrice = styled(Typography)({
   display: "flex",
@@ -179,19 +153,7 @@ const HousingPrice = styled(Typography)({
   marginBottom: "5px",
   color: "#363636",
 });
-const StyledHousingPriceTogether = styled("div")({
-  display: "flex",
-  gap: "5px",
-});
-const AccountSelectorContainer = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  padding: "12px",
-  width: "auto",
-});
-const StyledSpan = styled("span")({
-  marginLeft: "5px",
-});
+
 const StyledIconsHeart = styled("div")({
   width: "40px",
   height: "27px",
@@ -213,23 +175,7 @@ const StyledIconsHeart = styled("div")({
 const StyledLocationIcon = styled(Icons.Location)({
   cursor: "pointer",
 });
-const Avatar = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "40px",
-  height: "40px",
-  borderRadius: "50%",
-  backgroundColor: "#266BD3",
-  marginRight: "8px",
-});
 
-const ArrowIcon = styled(Icons.ArrowDown)({
-  fontSize: "1rem",
-  color: "#757575",
-  marginLeft: "auto",
-  cursor: "pointer",
-});
 const StyledButton = styled(Button)({
   width: "103px",
   height: "27px",
@@ -278,11 +224,6 @@ const HousingRating = styled(Box)({
   borderRadius: "2px",
   gap: "5px",
 });
-const StyledStarIcon = styled("div")({
-  paddingTop: "0.5px",
-  paddingLeft: "5px",
-  cursor: "pointer",
-});
 
 const HousingDescription = styled(Typography)({
   fontSize: "1rem",
@@ -324,10 +265,4 @@ const FavoriteTitle = styled(Typography)({
   marginBottom: "16px",
   paddingLeft: "40px",
   color: "#363636",
-  marginBottom: "30px",
-});
-
-const HousingDots = styled(Box)({
-  display: "inline-block",
-  marginLeft: "5px",
 });

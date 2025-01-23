@@ -3,8 +3,8 @@ import { PrivateRoute } from "./PrivateRoute";
 import { PATHS } from "../utils/constants/paths";
 import { useSelector } from "react-redux";
 import { AllHousingPage } from "../pages/admin/AllHousingPage";
-import { FavoritePage } from "../pages/user/FavoritePage";
 import { UserRoutes } from "./user/UserRoutes";
+import { UserLayout } from "../layout/user/UserLayout";
 
 export const AppRoutes = () => {
   const { isAuthorized, role } = useSelector((state) => state.auth);
@@ -30,7 +30,7 @@ export const AppRoutes = () => {
       path: PATHS.USER.ROOT,
       element: (
         <PrivateRoute
-          Component={<FavoritePage />}
+          Component={<UserLayout />}
           isAuthorized={isAuthorized && role === "USER"}
           fallBackPath={pathRole[role] || PATHS.USER.ROOT}
         />
