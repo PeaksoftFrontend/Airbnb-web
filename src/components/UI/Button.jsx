@@ -47,6 +47,18 @@ const StyledButton = styled(MuiButton)(({ variant }) => ({
       background: "#C4C4C4",
     },
   }),
+  ...(variant === "white" && {
+    border: "none",
+    borderRadius: "none",
+    background: "none",
+    color: "#828282",
+    "&:active": {
+      border: "none",
+      borderRadius: "none",
+      background: "none",
+      color: "#828282",
+    },
+  }),
 
   ...(variant === "contained" && {
     borderRadius: "8px",
