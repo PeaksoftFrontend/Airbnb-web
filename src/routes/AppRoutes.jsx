@@ -30,7 +30,7 @@ export const AppRoutes = () => {
       path: PATHS.USER.ROOT,
       element: (
         <PrivateRoute
-          Component={<InnerHotelPage/>}
+          Component={<InnerHotelPage />}
           isAuthorized={isAuthorized && role === "USER"}
           fallBackPath={pathRole[role] || PATHS.USER.ROOT}
         />

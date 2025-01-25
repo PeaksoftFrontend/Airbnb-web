@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Breadcrumbs } from "../components/UI/Breadcrumbs";
 import { Select } from "../components/UI/Select";
 import { Box, Pagination, styled } from "@mui/material";
@@ -144,13 +144,13 @@ export const InnerOfHotel = () => {
   );
 };
 
-const StyleSelect = styled(Select)(({ theme }) => ({
+const StyleSelect = styled(Select)({
   width: "271px",
   height: "42px",
   "& fieldset": {
     borderRadius: "0",
   },
-}));
+});
 
 const StyleSelects = styled("div")({
   display: "flex",
