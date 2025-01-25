@@ -1,10 +1,8 @@
 import { Sliders } from "../../components/admin/Sliders";
-import { Header } from "../../layout/user/Header";
 import { Avatar, Box, styled, Typography } from "@mui/material";
 import { Payment } from "../../components/UI/Payment";
 import { Reviews } from "../../components/user/Reviews";
 import { FeedbackList } from "../../components/UI/FeedbackList";
-import { Footer } from "../../layout/user/Footer";
 
 export const InnerHotelPage = () => {
   const image = [
@@ -26,7 +24,6 @@ export const InnerHotelPage = () => {
   };
   return (
     <div>
-      <Header />
       <StyledSection>
         <StyledTogetherLink>
           <p style={{ color: "#C4C4C4" }}>Main /</p>
@@ -83,7 +80,6 @@ export const InnerHotelPage = () => {
           </StyledBox>
         </StyledSectionFeedback>
       </StyledSection>
-      <Footer />
     </div>
   );
 };
