@@ -3,9 +3,9 @@ import { Breadcrumbs } from "../../components/UI/Breadcrumbs";
 import { Profile } from "../../components/admin/Profile";
 import { TabsPanel } from "../../components/UI/tabs/TabsPanel";
 import { useState } from "react";
-import { CardAdmin } from "../../components/UI/admin/CardAdmin";
-import { Data } from "../../utils/constants/cardAdmin";
 import { Button } from "../../components/UI/Button";
+import { Booking } from "../../components/UI/Booking";
+import { MyAnnouncement } from "../../components/UI/MyAnnouncement";
 export const UserDetail = () => {
   const [tabValue, setTabValue] = useState(0);
   const [showButton, setShowButton] = useState(false);
@@ -21,11 +21,9 @@ export const UserDetail = () => {
     { id: 1, url: "/user", title: "Медер Медеров" },
   ];
 
-  const limitedData = Data.slice(0, 8);
-
   const tabs = [
-    { label: "Bookings", content: <CardAdmin cards={limitedData} /> },
-    { label: "My announcement", content: <CardAdmin cards={limitedData} /> },
+    { label: "Bookings", content: <Booking /> },
+    { label: "My announcement", content: <MyAnnouncement /> },
   ];
   return (
     <StyledBox>
