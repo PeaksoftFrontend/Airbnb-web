@@ -144,7 +144,7 @@ export const InnerOfHotel = () => {
   );
 };
 
-const StyleSelect = styled(Select)(({ theme }) => ({
+const StyleSelect = styled(Select)(() => ({
   width: "271px",
   height: "42px",
   "& fieldset": {

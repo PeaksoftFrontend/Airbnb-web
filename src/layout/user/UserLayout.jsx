@@ -1,4 +1,4 @@
-import { Sort } from "../../components/user/Sort";
+import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Outlet } from "react-router-dom";
 
@@ -8,8 +8,8 @@ export const UserLayout = () => {
       <Header />
       <main>
         <Outlet />
-        <Sort />
       </main>
+      <Footer />
     </div>
   );
 };

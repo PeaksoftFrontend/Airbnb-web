@@ -13,7 +13,7 @@ const StyledModalBox = styled(Box)({
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  maxWidth: "500px",
+  maxWidth: "1000px",
   backgroundColor: "#fff",
   borderRadius: "8px",
   boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",

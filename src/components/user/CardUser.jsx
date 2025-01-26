@@ -3,7 +3,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
-import { Box, Container, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { Icons } from "../../assets";
 import { Button } from "../UI/Button";
 import { useState } from "react";
