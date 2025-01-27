@@ -16,10 +16,11 @@ const DETAIL_PUBLISHES = {
     userEmail: "anna@gmail.com",
   },
   images: [
-    "https://shorturl.at/eUvUY",
-    "https://shorturl.at/EvCA4",
-    "https://shorturl.at/OZJtQ",
-    "https://shorturl.at/OZJtQ",
+    "https://shorturl.at/SzvvR",
+    "https://shorturl.at/SzvvR",
+    "https://shorturl.at/SzvvR",
+    "https://shorturl.at/SzvvR",
+    "https://shorturl.at/SzvvR",
   ],
 };
 
