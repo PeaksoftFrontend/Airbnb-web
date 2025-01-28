@@ -33,6 +33,7 @@ import LeftBlack from "../assets/icons/left-black-icon.svg?react";
 import RightBlack from "../assets/icons/right-black-icon.svg?react";
 import EyeCrossed from "../assets/icons/eye-crossed-icon.svg?react";
 import Eye from "../assets/icons/eye-icon.svg?react";
+import Remove from "../assets/icons/remove-icon.svg?react";
 
 export const Icons = {
   Heart,
@@ -70,4 +71,5 @@ export const Icons = {
   EyeCrossed,
   Eye,
   Menufeadback,
+  Remove,
 };
