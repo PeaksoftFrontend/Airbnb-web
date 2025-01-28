@@ -9,6 +9,7 @@ import {
   styled,
   Box,
   Chip,
+  Button,
 } from "@mui/material";
 import { Checkbox } from "../../UI/Checkbox";
 import { Radio } from "../../UI/Radio";
@@ -31,11 +32,10 @@ const groupedOptions = [
   },
 ];
 
-export const Sort = () => {
-  const [selectedValues, setSelectedValues] = useState([]);
+export const Sort = ({ selectedValues, setSelectedValues, onClear }) => {
   const [selectedPrice, setSelectedPrice] = useState("");
 
-  const handleFruitChange = (event, optionValue) => {
+  const handleSortChange = (event, optionValue) => {
     const newSelectedValues = [...selectedValues];
     if (event.target.checked) {
       newSelectedValues.push(optionValue);
@@ -61,18 +61,19 @@ export const Sort = () => {
   const allSelectedValues = [...selectedValues, selectedPrice].filter(Boolean);
 
   return (
-    <FormControl fullWidth>
+    <StyledFromControl>
       <StyledSelect
+        placeholder="Sort"
         multiple
         value={allSelectedValues}
         displayEmpty
-        renderValue={() => (
-          <StyledPlaceholder>
-            {allSelectedValues.length === 0
-              ? "Sort"
-              : allSelectedValues.join(", ")}
-          </StyledPlaceholder>
-        )}
+        renderValue={() =>
+          allSelectedValues.length === 0 ? (
+            <StyledPlaceholder>Sort</StyledPlaceholder>
+          ) : (
+            ""
+          )
+        }
       >
         {groupedOptions.map((group) => (
           <Fragment key={group.label}>
@@ -82,7 +83,7 @@ export const Sort = () => {
                 <MenuItem key={option.value} value={option.value}>
                   <Checkbox
                     checked={selectedValues.includes(option.value)}
-                    onChange={(event) => handleFruitChange(event, option.value)}
+                    onChange={(event) => handleSortChange(event, option.value)}
                   />
                   <ListItemText primary={option.label} />
                 </MenuItem>
@@ -107,22 +108,87 @@ export const Sort = () => {
           </Fragment>
         ))}
       </StyledSelect>
-    </FormControl>
+      <StyledBoxDel>
+        <StyledChipContainer>
+          {selectedValues.map((value) => (
+            <StyledChip
+              key={value}
+              label={value}
+              onDelete={() => handleRemoveValue(value)}
+            />
+          ))}
+        </StyledChipContainer>
+        <StyledClearButton onClick={onClear}>
+          Clear all selections
+        </StyledClearButton>
+      </StyledBoxDel>
+    </StyledFromControl>
   );
 };
+const StyledBoxDel = styled(Box)({
+  display: "flex",
+  gap: "16px",
+});
+const StyledClearButton = styled(Button)({
+  color: "#828282",
+  width: "150px",
+  height: "32px",
+  fontSize: "16px",
+  textDecoration: "underline",
+  textTransform: "capitalize",
+  marginTop: "16px",
+  display: "none",
+});
 
+export const StyledFromControl = styled(FormControl)({ width: "271px" });
+const StyledChipContainer = styled(Box)({
+  display: "flex",
+  gap: "16px",
+  marginTop: "16px",
+  backgroundColor: "#F3F3F3",
+});
+
+const StyledPlaceholder = styled(Box)({
+  padding: "8px 14px",
+  color: "#828282",
+});
+
+const StyledChip = styled(Chip)({
+  color: "#828282",
+  fontSize: "16px",
+  fontWeight: "400",
+  height: "32px",
+  backgroundColor: "#F3F3F3",
+  "& .MuiChip-deleteIcon": {
+    backgroundColor: "transparent",
+  },
+});
 const StyledSelect = styled(Select)({
   height: "42px",
+  padding: 0,
   "& .MuiSelect-select": {
     height: "40px",
     display: "flex",
     alignItems: "center",
+    padding: 0,
   },
   "&:hover .MuiSelect-select": {
     backgroundColor: "transparent",
   },
-});
-
-const StyledPlaceholder = styled(Box)({
-  color: "#828282",
+  "& .MuiInputBase-root": {
+    padding: 0,
+  },
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#C4C4C4",
+  },
+  "&:hover .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#C4C4C4",
+  },
+  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#C4C4C4",
+    borderWidth: "2px",
+  },
+  "&:active .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#C4C4C4",
+  },
 });
