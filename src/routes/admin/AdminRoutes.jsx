@@ -27,7 +27,7 @@ export const AdminRoutes = () => {
       ),
     },
     {
-      path: PATHS.ADMIN.APPLICATION_ADMIN_PRODUCT,
+      path: PATHS.ADMIN.USER_ADMIN_PRODUCT_ADMIN_PRODUCT,
       element: (
         <PrivateRoute
           Component={<ProductDetail />}
