@@ -1,4 +1,4 @@
-import  { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Box,
   styled,
@@ -273,7 +273,6 @@ const FilterContainer = styled(Box)(({ theme }) => ({
   gridTemplateColumns: "repeat(auto-fit, minmax(271px, auto))",
   justifyContent: "flex-start",
   alignItems: "center",
-  margin: theme.spacing(1),
   paddingBottom: theme.spacing(1),
   margin: "40px",
 }));
@@ -364,11 +363,11 @@ const ValueWrapper = styled(Box)(({ theme }) => ({
   transform: "translateY(-50%)",
 }));
 
-const LabelValueWrapper = styled(Box)(({ theme }) => ({
+const LabelValueWrapper = styled(Box)({
   display: "flex",
   alignItems: "center",
   whiteSpace: "nowrap",
-}));
+});
 
 const HousingCardContainer = styled(Box)({
   display: "grid",
