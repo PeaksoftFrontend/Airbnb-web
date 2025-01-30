@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { PATHS } from "../../utils/constants/paths";
 import { PrivateRoute } from "../PrivateRoute";
-import { Application } from "../../pages/admin/Application";
+import { AllHousingPage } from "../../pages/admin/AllHousingPage";
 
 export const AdminRoutes = () => {
   return [
@@ -9,17 +9,17 @@ export const AdminRoutes = () => {
       path: PATHS.ADMIN.ROOT,
       element: (
         <PrivateRoute
-          Component={<Navigate to={PATHS.ADMIN.APPLICATION_ADMIN} />}
+          Component={<Navigate to={PATHS.ADMIN.ALL_HOUSING_ADMIN} />}
           isAuthorized={true}
           fallBackPath={PATHS.ADMIN.ROOT}
         />
       ),
     },
     {
-      path: PATHS.ADMIN.APPLICATION_ADMIN,
+      path: PATHS.ADMIN.ALL_HOUSING_ADMIN,
       element: (
         <PrivateRoute
-          Component={<Application />}
+          Component={<AllHousingPage />}
           isAuthorized={true}
           fallBackPath={PATHS.ADMIN.ROOT}
         />
