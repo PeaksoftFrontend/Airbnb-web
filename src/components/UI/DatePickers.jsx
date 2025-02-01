@@ -1,19 +1,13 @@
-import { useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 
-export const DatePickers = () => {
-  const [value, setValue] = useState(null);
-
+export const DatePickers = ({ value, onChange, label }) => {
   return (
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <StyledDatePicker
-          value={value}
-          onChange={(newValue) => setValue(newValue)}
-        />
+        <StyledDatePicker label={label} value={value} onChange={onChange} />
       </LocalizationProvider>
     </ThemeProvider>
   );
