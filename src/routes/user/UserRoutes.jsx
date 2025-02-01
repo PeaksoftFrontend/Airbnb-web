@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
-import { InnerOfHotel } from "../../pages/InnerOfHotel";
 import { PrivateRoute } from "../PrivateRoute";
 import { PATHS } from "../../utils/constants/paths";
 import { InFavorites } from "../../components/user/InFavorites";
+import { NotFoundPage } from "../../pages/user/NotFoundPage";
 
 export const UserRoutes = () => {
   return [
@@ -10,7 +10,7 @@ export const UserRoutes = () => {
       path: PATHS.USER.ROOT,
       element: (
         <PrivateRoute
-          Component={<Navigate to={PATHS.USER.INFAVORITES} />}
+          Component={<Navigate to={PATHS.USER.NOT_FOUND_OF_HOTEL} />}
           isAuthorized={true}
           fallBackPath={PATHS.USER.ROOT}
         />
@@ -21,6 +21,16 @@ export const UserRoutes = () => {
       element: (
         <PrivateRoute
           Component={<InFavorites />}
+          isAuthorized={true}
+          fallBackPath={PATHS.USER.ROOT}
+        />
+      ),
+    },
+    {
+      path: PATHS.USER.NOT_FOUND_OF_HOTEL,
+      element: (
+        <PrivateRoute
+          Component={<NotFoundPage />}
           isAuthorized={true}
           fallBackPath={PATHS.USER.ROOT}
         />
