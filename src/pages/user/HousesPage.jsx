@@ -9,7 +9,7 @@ const properties = [
     price: "$26 / ",
     rating: 3.4,
     image:
-      "https://s3-alpha-sig.figma.com/img/0262/e146/c386a7b3971406286b2dce8e892dd438?Expires=1736726400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=OYwVrb3ytEehO6G~7EWLupW1r5flhXd93RLf66JfUD6S5BIWwIAji4oRe23IpBzxMKQ9e3en9WmAG-L-KhXBNB2r6YxvwLWrerv3idEvd6pScw~G0kcZ953nGQHYjADBFVKabFGU~BBJZltflvtlzaEQBw-aE3kWsoMD0GC6ByWeBWgO~FZdx9tv0u8FY~nvwviYKOZdz3MDGdL-CAjqV34ZAPXA6NvO22ozf8sWLl6cWLe0RPdQqBNKBUVNfCRIyJ14FBBRYlbDaDGGilpR83j2KbRRtmejtM59psV8pWvnQJVTrVkDW~-XN4iycPRHaVTjyMiSDyRNTTzWBldUmQ__", // Replace with actual image URLs or import paths
+      "https://s3-alpha-sig.figma.com/img/0262/e146/c386a7b3971406286b2dce8e892dd438?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=pV6F4X2AHi9rdhfIn-tpsD2DgoI02B3pfs7keWf0dqQnrWsG4yfLQ~LSp8QXih33dnjNHutcX5R7uhzzPCCNM6T34~dY4QZUb2YG0~i9DHXBoA6giJcA5ERgINOoVyJZvhGlsTDrkhtNOm8sj3tgiqbxgkWUOPhU1519czWErABBChTK4-kL~fxoimsA5ucZKQcsPY7gJrhKJ8zcwEgrf-pSbQ5dxNQt8qEJWLJGebtP3KGleEHMYtMlNqDI1NpXIXsqwzhXUpvbiYAoAnGPJre~2GDzT3nyPKWk~ypwd9cdQ~WuBILVaiBWoOAXOZTCOlnG-zjgH6zsILW2fjGttg__",
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const properties = [
     price: "$26 / ",
     rating: 3.4,
     image:
-      "https://s3-alpha-sig.figma.com/img/65f5/d71f/91bfdf24c0f08f6cab79a581bccfb36b?Expires=1736726400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bu9qI4r2ttTF-IXyd1fhrWTf~Rih8Lm1Pf~rLEDB4X7FRX5HXN6VeRK6UV55P~bBiLQ8OhMcr8FGP8fyJOhJqIEyjxc~WPzMlervZ85bCzAufcPy2xXP5U0EeJ9lBW7ZBnY290pCsxJ-gNgRp5p0C1s4ajGhuZ2iAvSTw27bLhF7NSA3Rdbwmhx0cJG~WmjbcnNu-nhmQ4l~Lk3KjSUaABFdJDCzNMq2u6gtQ~S4yLrswPlo2KZOpenZTE5zjWhVJzV-PQ0Tw0KtTZZZU2xd6hFaGWNA0P6VMEwhZIZLFInTwR0UEyLl06ES3sOye5oqD1Bf8ZcdNKFE-h0mEt8v6g__",
+      "https://s3-alpha-sig.figma.com/img/0262/e146/c386a7b3971406286b2dce8e892dd438?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=pV6F4X2AHi9rdhfIn-tpsD2DgoI02B3pfs7keWf0dqQnrWsG4yfLQ~LSp8QXih33dnjNHutcX5R7uhzzPCCNM6T34~dY4QZUb2YG0~i9DHXBoA6giJcA5ERgINOoVyJZvhGlsTDrkhtNOm8sj3tgiqbxgkWUOPhU1519czWErABBChTK4-kL~fxoimsA5ucZKQcsPY7gJrhKJ8zcwEgrf-pSbQ5dxNQt8qEJWLJGebtP3KGleEHMYtMlNqDI1NpXIXsqwzhXUpvbiYAoAnGPJre~2GDzT3nyPKWk~ypwd9cdQ~WuBILVaiBWoOAXOZTCOlnG-zjgH6zsILW2fjGttg__",
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ const properties = [
     price: "$26 / ",
     rating: 3.4,
     image:
-      "https://s3-alpha-sig.figma.com/img/5f4a/e1c4/3a16ceafbb60eebec045632a920ef12e?Expires=1736726400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=AxQdhca0Hkdfb0SzDSndPEnJVcGa84zPoikDlwPccaH2oRgNRfRnwj7mIH1xGmZeah71-Xfgf~UOBkwYNXqSQSWLBHK40vBN9AvZn4QKgH8-GvlywAHyRpcEmtk-E8SBc0Uj92PywX~y7XElXfEe2aYv6FL57FdWBcaRP3-6dUqsuxpxA9hzrt~DPUohGaFvr5ovrvesxHT~YCU7QxaAK92EvQFdLCABcK9lkDe5oSHdIrgbO3uvBlYPeJB6hbSbjMkO9ft6e3-bW3qQD96ld6-1j~fkxtqyeBPNDBTwlCbxAaDoFzBzvHc4e7J9wSHIVkshJLqYN0CqSseWihQklw__",
+      "https://s3-alpha-sig.figma.com/img/0262/e146/c386a7b3971406286b2dce8e892dd438?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=pV6F4X2AHi9rdhfIn-tpsD2DgoI02B3pfs7keWf0dqQnrWsG4yfLQ~LSp8QXih33dnjNHutcX5R7uhzzPCCNM6T34~dY4QZUb2YG0~i9DHXBoA6giJcA5ERgINOoVyJZvhGlsTDrkhtNOm8sj3tgiqbxgkWUOPhU1519czWErABBChTK4-kL~fxoimsA5ucZKQcsPY7gJrhKJ8zcwEgrf-pSbQ5dxNQt8qEJWLJGebtP3KGleEHMYtMlNqDI1NpXIXsqwzhXUpvbiYAoAnGPJre~2GDzT3nyPKWk~ypwd9cdQ~WuBILVaiBWoOAXOZTCOlnG-zjgH6zsILW2fjGttg__",
   },
 ];
 
@@ -107,10 +107,8 @@ const StyledLocation = styled("p")({
 });
 
 const StyledBox = styled(Box)(() => ({
-  padding: "24px",
+  padding: "20px 100px",
   textAlign: "center",
-  fontFamily: "Roboto, sans-serif",
-  marginLeft: "100px",
 }));
 
 const StyledCard = styled("div")(() => ({

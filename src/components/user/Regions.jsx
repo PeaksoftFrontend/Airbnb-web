@@ -8,8 +8,16 @@ import Talas from "../../assets/image/talas-img.png";
 import Issykkol from "../../assets/image/issykkol-img.png";
 import Chui from "../../assets/image/chui-img.png";
 import Bishkek from "../../assets/image/bishkek-img.png";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../utils/constants/paths";
 
 export const Regions = () => {
+  const navigate = useNavigate();
+
+  const handleRegions = (region) => {
+    navigate(`${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}`);
+  };
+
   return (
     <StyledContainer>
       <StyleBoxing>
@@ -21,22 +29,22 @@ export const Regions = () => {
       </StyleBoxing>
       <StyleBoxContainer>
         <StyledBox>
-          <StyledDivs>
+          <StyledDivs onClick={() => handleRegions("Chui")}>
             <img src={Chui} alt="" />
             <StyledText variant="h6">CHUI</StyledText>
           </StyledDivs>
           <StyledDiv>
             <StyleDiv>
-              <StyledDivs>
+              <StyledDivs onClick={() => handleRegions("Batken")}>
                 <img src={Batken} alt="" />
                 <StyledTex>BATKEN</StyledTex>
               </StyledDivs>
-              <StyledDivs>
+              <StyledDivs onClick={() => handleRegions("Jalalabad")}>
                 <img src={Jalalabad} alt="" />
                 <StyledTex>JALALABAT</StyledTex>
               </StyledDivs>
             </StyleDiv>
-            <StyledDivs>
+            <StyledDivs onClick={() => handleRegions("Naryn")}>
               <img src={Naryn} alt="" />
               <StyleNaryn>NARYN</StyleNaryn>
             </StyledDivs>
@@ -45,21 +53,21 @@ export const Regions = () => {
         <StylBox>
           <StyledDiv>
             <StylesDiv>
-              <StyledDivs>
+              <StyledDivs onClick={() => handleRegions("Issykkol")}>
                 <img src={Issykkol} alt="" />
                 <StyledTex>ISSYK-KUL</StyledTex>
               </StyledDivs>
-              <StyledDivs>
+              <StyledDivs onClick={() => handleRegions("Talas")}>
                 <img src={Talas} alt="" />
                 <StyledTex>TALAS</StyledTex>
               </StyledDivs>
             </StylesDiv>
-            <StyledDivs>
+            <StyledDivs onClick={() => handleRegions("Bishkek")}>
               <img src={Bishkek} alt="" />
               <StyledTex>BISHKEK</StyledTex>
             </StyledDivs>
           </StyledDiv>
-          <StyledDivs>
+          <StyledDivs onClick={() => handleRegions("Osh")}>
             <img src={Osh} alt="" />
             <StyledText>OSH</StyledText>
           </StyledDivs>
@@ -130,6 +138,7 @@ const StyledTex = styled(Typography)({
 
 const StyledDivs = styled("div")({
   position: "relative",
+  cursor: "pointer",
 });
 
 const StyleNaryn = styled(Typography)({

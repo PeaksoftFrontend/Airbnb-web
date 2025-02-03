@@ -33,7 +33,7 @@ export const WelcomeSection = () => {
 };
 
 export const StyledBox = styled(Box)({
-  backgroundImage: `url(${"https://shorturl.at/xs8ce"})`,
+  backgroundImage: `url(${"https://s3-alpha-sig.figma.com/img/881d/982b/7e4c3296da11913f9e1154a99cf7f812?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=YxiVq4KQCsojOuP-3kv2OE3i9tpYF9bp3BwrqscHJfIPtuYhgQbeO6kJzsD6C20cVfBoEdfTEAXk-RDP1TU0O2HDRyrYCNZpoJ4jeahOuVg9MfUjP7QfBwaj4V10Q9hyzCi~9oSwBErHCMpk15Gfdi8I7erll0dWNvLrDdKly1EvxCYY0uMvt~v-Mdo3wV5tOTmJGZSvfBMJNmmK2Rsi1JswJY9vpwlDq4SXkydb2aiIq619SrwOT20x~8Pyg-AXfArmvWz7OtMAYak-LPIv4Hd7bJ-zyeQ4ERTEbP~RCsq1-hTsLriwQhGmz~lEhhMvmazMkuJ5Ue6LlzbYdVPWSQ__"})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -77,15 +77,14 @@ export const StyledTwoBox = styled(Box)({
   whiteSpace: "nowrap",
 });
 
-export const StyledSearchBox = styled(Box)(({ theme }) => ({
+export const StyledSearchBox = styled(Box)({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  padding: theme.spacing(2),
   gap: "50px",
-  marginTop: "12.4rem",
-}));
+  marginTop: "8rem",
+});
 
 const StyledCheckBox = styled(Box)({
   display: "flex",

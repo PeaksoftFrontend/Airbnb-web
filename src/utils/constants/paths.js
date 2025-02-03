@@ -1,6 +1,7 @@
 export const PATHS = {
   GUEST: {
     ROOT: "/",
+    LANDING_PAGE: "/landing-page",
   },
   USER: {
     ROOT: "/user",
