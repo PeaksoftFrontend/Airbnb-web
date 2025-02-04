@@ -92,8 +92,8 @@ export const InnerHotel = ({
           </StyleBox>
         ) : (
           <StyleButtons>
-            <StyleReject onClick={onOutlinedFunc}>{outlined}</StyleReject>
-            <StyleAccept onClick={onContainedFunc}>{contained}</StyleAccept>
+            <StyleReject onClick={onOutlinedFunc}>{outlined}DELETE</StyleReject>
+            <StyleAccept onClick={onContainedFunc}>{contained}EDIT</StyleAccept>
           </StyleButtons>
         )}
       </StyledText>

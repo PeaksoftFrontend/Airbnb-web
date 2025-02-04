@@ -76,18 +76,17 @@ const StyledText = styled(Typography)({
 
 const StyledDivBox = styled("div")({
   display: "flex",
-  // gap: "30px",
 });
 const StyledDivIcon = styled("div")({
   display: "flex",
   gap: "16px",
   alignItems: "center",
+  marginLeft: "15px",
 });
 
 const StyledBoxData = styled(Box)({
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
   gap: "1px",
 });
 

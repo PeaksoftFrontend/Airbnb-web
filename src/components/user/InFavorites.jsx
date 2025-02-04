@@ -2,24 +2,28 @@ import { Box, styled, Typography } from "@mui/material";
 
 const IN_FAVORITES = [
   {
+    id: 1,
     avatar: "https://shorturl.at/1jDff",
     userName: "Anna Annova",
     email: "anna@gmail.com",
     date: "28.04.22",
   },
   {
+    id: 2,
     avatar: "https://shorturl.at/1jDff",
     userName: "Anna Annova",
     email: "anna@gmail.com",
     date: "28.04.22",
   },
   {
+    id: 3,
     avatar: "https://shorturl.at/1jDff",
     userName: "Anna Annova",
     email: "anna@gmail.com",
     date: "28.04.22",
   },
   {
+    id: 4,
     avatar: "https://shorturl.at/1jDff",
     userName: "Anna Annova",
     email: "anna@gmail.com",
@@ -37,7 +41,7 @@ export const InFavorites = () => {
       </Typography>
       <STyleAll>
         {IN_FAVORITES.map((item) => (
-          <Box key={item.id} {...item}>
+          <Box key={item.id}>
             <StyleContainer>
               <StyleInfavorites>
                 <StyleAvatar
@@ -71,7 +75,7 @@ const StyleAvatar = styled("img")({
 
 const StyleInfavorites = styled("div")({
   display: "flex",
-  gap: "6px",
+  gap: "15px",
   alignItems: "center",
 });
 
@@ -91,7 +95,7 @@ const STyleDate = styled("p")({
   fontSize: "16px",
   fontWeight: 400,
   color: "#363636",
-  paddingLeft: "40px",
+  paddingLeft: "50px",
   paddingTop: "5px",
 });
 
