@@ -1,8 +1,15 @@
-import { Profile } from "../../components/admin/Profile";
+import { Box, styled } from "@mui/material";
 import { Breadcrumbs } from "../../components/UI/Breadcrumbs";
-import { TabPanel } from "../../components/UI/tabs/TabPanel";
-
+import { Profile } from "../../components/admin/Profile";
+import { TabsPanel } from "../../components/UI/tabs/TabsPanel";
+import { useState } from "react";
 export const Profiles = () => {
+  const [tabValue, setTabValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    event.preventDefault();
+    setTabValue(newValue);
+  };
   const path = [
     { id: 1, url: "/user", title: "Main" },
     { id: 1, url: "/advertising_page", title: "Naryn" },
@@ -10,15 +17,45 @@ export const Profiles = () => {
     { id: 2, url: "/advertising_page", title: "Profile" },
   ];
 
+  const tabs = [
+    { label: "Bookings", content: "Booking", count: "" },
+    { label: "My announcement", content: "MyAnnouncement", count: "" },
+    { label: "On moderation", content: "Moderation", count: "" },
+  ];
   return (
-    <div>
-      <Breadcrumbs path={path} />
+    <StyledBox>
       <div>
-        <Profile name="Медер Медербеков" email="mederbekov@gmail.com" />
+        <Breadcrumbs path={path} />
       </div>
-      <div>
-        <TabPanel />
-      </div>
-    </div>
+      <StyledDivContent>
+        <StyledProfileBox>
+          <Profile
+            name={"Медер"}
+            fullName={"Медербеков"}
+            email={"mederbekov@gmail.com"}
+            isAuth={true}
+            role={"USER"}
+          />
+        </StyledProfileBox>
+        <Box>
+          <TabsPanel tabs={tabs} onChange={handleChange} value={tabValue} />
+        </Box>
+      </StyledDivContent>
+    </StyledBox>
   );
 };
+
+const StyledBox = styled(Box)({
+  display: "flex",
+  gap: "40px",
+  flexDirection: "column",
+  margin: "46px 40px",
+});
+
+const StyledDivContent = styled("div")({ display: "flex", gap: "47px" });
+const StyledProfileBox = styled(Box)({
+  display: "flex",
+  gap: "40px",
+  flexDirection: "column",
+  alignItems: "center",
+});
