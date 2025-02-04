@@ -1,4 +1,4 @@
-import { Profiles } from "../../pages/user/Profiles";
+import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Outlet } from "react-router-dom";
 
@@ -8,8 +8,8 @@ export const UserLayout = () => {
       <Header />
       <main>
         <Outlet />
-        <Profiles />
       </main>
+      <Footer />
     </div>
   );
 };
