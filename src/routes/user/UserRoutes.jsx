@@ -1,5 +1,4 @@
 import { Navigate } from "react-router-dom";
-import { InnerOfHotel } from "../../pages/InnerOfHotel";
 import { PrivateRoute } from "../PrivateRoute";
 import { PATHS } from "../../utils/constants/paths";
 import { InFavorites } from "../../components/user/InFavorites";

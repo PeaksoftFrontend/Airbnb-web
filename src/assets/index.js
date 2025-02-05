@@ -34,7 +34,10 @@ import RightBlack from "../assets/icons/right-black-icon.svg?react";
 import EyeCrossed from "../assets/icons/eye-crossed-icon.svg?react";
 import Eye from "../assets/icons/eye-icon.svg?react";
 import Remove from "../assets/icons/remove-icon.svg?react";
-
+import FiveCStars from "../assets/icons/five-stars-color-icon.svg?react";
+import FourCStars from "../assets/icons/four-stars-color-icon.svg?react";
+import ThreeCStars from "../assets/icons/three-stars-color-icon.svg?react";
+import TwoCStars from "../assets/icons/two-stars-color-icon.svg?react";
 export const Icons = {
   Heart,
   Burger,
@@ -72,4 +75,8 @@ export const Icons = {
   Eye,
   Menufeadback,
   Remove,
+  FiveCStars,
+  FourCStars,
+  ThreeCStars,
+  TwoCStars,
 };
