@@ -15,9 +15,8 @@ export const UserRoutes = () => {
         />
       ),
     },
-
     {
-      path: `${PATHS.USER.INNER_HOTEL_OF_REGIONS}/:region/:category`,
+      path: `${PATHS.USER.INNER_HOTEL_OF_REGIONS}/:region`,
       element: (
         <PrivateRoute
           Component={<InnerOfHotel />}

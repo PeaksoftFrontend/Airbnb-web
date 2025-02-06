@@ -43,7 +43,9 @@ export const UserPageSlide = () => {
   const [totalSlides, setTotalSlides] = useState(0);
 
   const handleRegions = (region) => {
-    navigate(`${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}?category`);
+    navigate(
+      `${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}?category=apartment`
+    );
   };
 
   const handlePrev = () => {
@@ -86,7 +88,9 @@ export const UserPageSlide = () => {
           </div>
           <StyleLines>
             <StyleDetailsansImages>
-              <StyleMore onClick={handleRegions}>{item.detail}</StyleMore>
+              <StyleMore onClick={() => handleRegions("Another")}>
+                {item.detail}
+              </StyleMore>
               <StyleImages>
                 <StyleSwiper
                   onSwiper={(swiper) => {

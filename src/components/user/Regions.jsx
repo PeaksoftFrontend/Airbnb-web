@@ -10,6 +10,7 @@ import Chui from "../../assets/image/chui-img.png";
 import Bishkek from "../../assets/image/bishkek-img.png";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../utils/constants/paths";
+// import { PATHS } from "../../utils/constants/paths";
 
 export const Regions = () => {
   const navigate = useNavigate();
