@@ -16,10 +16,11 @@ const DETAIL_PUBLISHES = {
     userEmail: "anna@gmail.com",
   },
   images: [
-    "https://shorturl.at/eUvUY",
-    "https://shorturl.at/EvCA4",
-    "https://shorturl.at/OZJtQ",
-    "https://shorturl.at/OZJtQ",
+    "https://shorturl.at/SzvvR",
+    "https://shorturl.at/SzvvR",
+    "https://shorturl.at/SzvvR",
+    "https://shorturl.at/SzvvR",
+    "https://shorturl.at/SzvvR",
   ],
 };
 
@@ -91,8 +92,8 @@ export const InnerHotel = ({
           </StyleBox>
         ) : (
           <StyleButtons>
-            <StyleReject onClick={onOutlinedFunc}>{outlined}</StyleReject>
-            <StyleAccept onClick={onContainedFunc}>{contained}</StyleAccept>
+            <StyleReject onClick={onOutlinedFunc}>{outlined}DELETE</StyleReject>
+            <StyleAccept onClick={onContainedFunc}>{contained}EDIT</StyleAccept>
           </StyleButtons>
         )}
       </StyledText>
