@@ -2,6 +2,7 @@ import { Navigate } from "react-router-dom";
 import { PATHS } from "../../utils/constants/paths";
 import { PrivateRoute } from "../PrivateRoute";
 import { AllHousingPage } from "../../pages/admin/AllHousingPage";
+import { ProductDetail } from "../../pages/admin/ProductDetail";
 
 export const AdminRoutes = () => {
   return [
@@ -20,6 +21,16 @@ export const AdminRoutes = () => {
       element: (
         <PrivateRoute
           Component={<AllHousingPage />}
+          isAuthorized={true}
+          fallBackPath={PATHS.ADMIN.ROOT}
+        />
+      ),
+    },
+    {
+      path: PATHS.ADMIN.APPLICATION_ADMIN_PRODUCT,
+      element: (
+        <PrivateRoute
+          Component={<ProductDetail />}
           isAuthorized={true}
           fallBackPath={PATHS.ADMIN.ROOT}
         />

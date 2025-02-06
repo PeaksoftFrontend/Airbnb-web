@@ -1,79 +1,55 @@
-import { Box, Container, styled, Typography } from "@mui/material";
-import { Header } from "../../layout/admin/Header";
+import { Box, styled, Typography } from "@mui/material";
 import { Breadcrumbs } from "../../components/UI/Breadcrumbs";
 import { InnerHotel } from "../../pages/InnerHotel";
 import { FeedbackList } from "../../components/UI/FeedbackList";
 import { Reviews } from "../../components/user/Reviews";
 
-const path = [
-  { id: 1, url: "/user", title: "Users" },
-  { id: 1, url: "/user", title: "Медер Медеров" },
-  { id: 2, url: "/advertising_page", title: "Name" },
-];
-
 export const ProductDetail = () => {
+  const path = [
+    { id: 1, url: "/users", title: "Users" },
+    { id: 1, url: "/user", title: "Медер Медеров" },
+    { id: 2, url: "/advertising_page", title: "Name" },
+  ];
   return (
-    <StylContainer>
-      <Header />
+    <StyledContainer>
       <Box>
-        <StyledBox>
-          <Breadcrumbs path={path} />
-        </StyledBox>
-        <StyledInner>
-          <InnerHotel />
-        </StyledInner>
-        <StylTypography variant="h5">FEEDBACK</StylTypography>
-        <StyledBoxed>
-          <StyledBoxing>
-            <FeedbackList />
-          </StyledBoxing>
-          <StyledReviews>
-            <Reviews />
-          </StyledReviews>
-        </StyledBoxed>
-        <StyledShow variant="h6">Show more</StyledShow>
+        <Breadcrumbs path={path} />
       </Box>
-    </StylContainer>
+      <Box>
+        <InnerHotel outlined="DELETE" contained="BLOCK" />
+      </Box>
+      <div>
+        <Typography variant="h5">FEEDBACK</Typography>
+      </div>
+      <StyledBox>
+        <StyledDiv>
+          <FeedbackList />
+          <Typography variant="h6">Show More</Typography>
+        </StyledDiv>
+        <div>
+          <Reviews />
+        </div>
+      </StyledBox>
+    </StyledContainer>
   );
 };
 
-const StylContainer = styled(Container)({
-  width: "100%",
+const StyledContainer = styled("div")({
+  display: "flex",
+  gap: "40px",
+  flexDirection: "column",
+  paddingLeft: "40px",
+  marginTop: "46px",
 });
 const StyledBox = styled(Box)({
-  position: "relative",
-  top: "40px",
-});
-const StyledInner = styled(Box)({
-  position: "relative",
-  top: "103px",
-});
-
-const StyledBoxing = styled(Box)({
-  position: "relative",
-  top: "200px",
-  right: "35px",
-});
-
-const StylTypography = styled(Typography)({
-  position: "relative",
-  top: "150px",
-});
-
-const StyledBoxed = styled(Box)({
   display: "flex",
   flexDirection: "row",
-});
-const StyledReviews = styled(Box)({
-  position: "relative",
-  top: "230px",
-  left: "20px",
+  gap: "120px",
 });
 
-const StyledShow = styled(Typography)({
+const StyledDiv = styled("div")({
   display: "flex",
-  alignContent: "center",
-  position: "relative",
-  top: "15rem",
-  left: "10rem",
+  gap: "28px",
+  flexDirection: "column",
+  alignItems: "center",
 });
