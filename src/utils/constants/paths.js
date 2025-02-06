@@ -6,10 +6,11 @@ export const PATHS = {
   USER: {
     ROOT: "/user",
     INNER_HOTEL_OF_REGIONS: "/user/inner-hotel-of-regions",
+    MY_ANNOUNCEMENT: "/user/my-announcement",
   },
   ADMIN: {
     ROOT: "/admin",
     APPLICATION_ADMIN: "/admin/application",
-    APPLICATION_ADMIN_PRODUCT: "/admin/application/:productId",
+    USER_ADMIN_PRODUCT: "/admin/user/:productId",
   },
 };

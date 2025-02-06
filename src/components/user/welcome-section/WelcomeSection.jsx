@@ -2,6 +2,7 @@ import { Box, styled } from "@mui/material";
 import { SearchInput } from "../../UI/SearchInput";
 import { Checkbox } from "../../UI/Checkbox";
 import { HeaderModal } from "./HeaderModal";
+import Backround from "../../../assets/image/backgroundimage-img.png";
 
 export const WelcomeSection = () => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };

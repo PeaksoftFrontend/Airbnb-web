@@ -1,5 +1,4 @@
-import { Box, styled, Typography } from "@mui/material";
-import { Icons } from "../../../assets";
+import { Avatar, Box, styled, Typography } from "@mui/material";
 import { BookedCard } from "./BookedCard";
 
 export const Booked = () => {
@@ -34,11 +33,11 @@ export const Booked = () => {
         {booked.map((booking) => (
           <StyledBookingWrapper key={booking.id}>
             <StyledDivBox>
-              <BookedCard booked={[booking]} />{" "}
+              <BookedCard booked={[booking]} />
             </StyledDivBox>
             <StyledDivIcon>
               <div>
-                <Icons.Circle />
+                <Avatar />
               </div>
 
               <StyledBoxData>
@@ -56,14 +55,11 @@ export const Booked = () => {
 const StyledContainer = styled(Box)({
   display: "flex",
   flexDirection: "column",
-  gap: "40px",
+  width: "100%",
 });
 
 const StyledDivContainer = styled("div")({
   display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  gap: "40px",
 });
 
 const StyledBookingWrapper = styled("div")({
@@ -80,18 +76,17 @@ const StyledText = styled(Typography)({
 
 const StyledDivBox = styled("div")({
   display: "flex",
-  gap: "30px",
 });
 const StyledDivIcon = styled("div")({
   display: "flex",
   gap: "16px",
   alignItems: "center",
+  marginLeft: "15px",
 });
 
 const StyledBoxData = styled(Box)({
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
   gap: "1px",
 });
 
