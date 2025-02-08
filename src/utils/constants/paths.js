@@ -1,14 +1,19 @@
 export const PATHS = {
   GUEST: {
     ROOT: "/",
+    LANDING_PAGE: "/landing-page",
   },
   USER: {
     ROOT: "/user",
     INNER_HOTEL_OF_REGIONS: "/user/inner-hotel-of-regions",
+    MY_ANNOUNCEMENT: "/user/my-announcement",
   },
   ADMIN: {
     ROOT: "/admin",
     APPLICATION_ADMIN: "/admin/application",
+    USERS: "/admin/users",
+    USERS_DETAIL: "/admin/users/:userId",
     APPLICATION_ADMIN_PRODUCT: "/admin/application/:productId",
+    USER_ADMIN_PRODUCT: "/admin/user/:productId",
   },
 };

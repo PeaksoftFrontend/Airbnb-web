@@ -3,12 +3,12 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
-
-import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
+// import Settings from "@mui/icons-material/Settings";
+// import Logout from "@mui/icons-material/Logout";
 import { useRef, useState } from "react";
 import { Box, styled } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+
+import { Icons } from "../../../assets";
 
 export const AccountMenu = () => {
   const anchorRef = useRef(null);
@@ -23,7 +23,7 @@ export const AccountMenu = () => {
     <>
       <StyledAvatarBox>
         <StyledLetter ref={anchorRef}>A</StyledLetter>
-        <KeyboardArrowDownIcon
+        <Icons.Eye
           onClick={handleAvatarOpen}
           onClose={handleAvatarClose}
           sx={{
@@ -79,21 +79,15 @@ export const AccountMenu = () => {
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleAvatarClose}>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
+          <ListItemIcon>{/* <PersonAdd fontSize="small" /> */}</ListItemIcon>
           Add another account
         </MenuItem>
         <MenuItem onClick={handleAvatarClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
+          <ListItemIcon>{/* <Settings fontSize="small" /> */}</ListItemIcon>
           Settings
         </MenuItem>
         <MenuItem onClick={handleAvatarClose}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
+          <ListItemIcon>{/* <Logout fontSize="small" /> */}</ListItemIcon>
           Logout
         </MenuItem>
       </Menu>
