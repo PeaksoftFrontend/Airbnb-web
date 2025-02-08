@@ -1,8 +1,7 @@
-import { Navigate } from "react-router-dom";
+import { InnerOfHotel } from "../../pages/InnerOfHotel";
 import { PrivateRoute } from "../PrivateRoute";
 import { PATHS } from "../../utils/constants/paths";
-import { InFavorites } from "../../components/user/InFavorites";
-import { MyAnnouncement } from "../../pages/user/MyAnnouncement";
+import { Navigate } from "react-router-dom";
 
 export const UserRoutes = () => {
   return [
@@ -10,17 +9,17 @@ export const UserRoutes = () => {
       path: PATHS.USER.ROOT,
       element: (
         <PrivateRoute
-          Component={<Navigate to={PATHS.USER.MY_ANNOUNCEMENT} />}
+          Component={<Navigate to={PATHS.USER.INNER_HOTEL_OF_REGIONS} />}
           isAuthorized={true}
           fallBackPath={PATHS.USER.ROOT}
         />
       ),
     },
     {
-      path: PATHS.USER.MY_ANNOUNCEMENT,
+      path: `${PATHS.USER.INNER_HOTEL_OF_REGIONS}/:region`,
       element: (
         <PrivateRoute
-          Component={<MyAnnouncement />}
+          Component={<InnerOfHotel />}
           isAuthorized={true}
           fallBackPath={PATHS.USER.ROOT}
         />
