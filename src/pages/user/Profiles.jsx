@@ -3,6 +3,7 @@ import { Breadcrumbs } from "../../components/UI/Breadcrumbs";
 import { Profile } from "../../components/admin/Profile";
 import { TabsPanel } from "../../components/UI/tabs/TabsPanel";
 import { useState } from "react";
+import { CombinedSort } from "../../components/user/sort/CombinedSort";
 export const Profiles = () => {
   const [tabValue, setTabValue] = useState(0);
 
@@ -19,7 +20,7 @@ export const Profiles = () => {
 
   const tabs = [
     { label: "Bookings", content: "Booking", count: "" },
-    { label: "My announcement", content: "MyAnnouncement", count: "" },
+    { label: "My announcement", content: <CombinedSort />, count: "" },
     { label: "On moderation", content: "Moderation", count: "" },
   ];
   return (
