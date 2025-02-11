@@ -1,29 +1,33 @@
-import { AppBar, Box, styled, Tab, Tabs } from "@mui/material";
+import { AppBar, Badge, Box, styled, Tab, Tabs } from "@mui/material";
 import { TabPanel } from "./TabPanel";
 
-export const TabsPanel = ({ tabs, value, onChange }) => {
+export const TabsPanel = ({ tabs, value, onChange, isAuth, ...props }) => {
   return (
     <StyledBox>
       <StyledAppBar>
-        <StyledTabs value={value} onChange={onChange}>
+        <StyledTabs value={value} onChange={onChange} {...props}>
           {tabs.map((tab, index) => (
             <StyledTab
               key={index}
               label={
                 <StyledSpan isActive={value === index}>
                   {tab.label}
-                  {`(${tab.count})`}
+                  {isAuth && tab.count > 0 && (
+                    <Badge badgeContent={tab.count} color="secondary" />
+                  )}
                 </StyledSpan>
               }
             />
           ))}
         </StyledTabs>
       </StyledAppBar>
-      {tabs.map((tab, index) => (
-        <TabPanel key={index} value={value} index={index}>
-          {tab.content}
-        </TabPanel>
-      ))}
+      <Box>
+        {tabs.map((tab, index) => (
+          <TabPanel key={index} value={value} index={index}>
+            {tab.content}
+          </TabPanel>
+        ))}
+      </Box>
     </StyledBox>
   );
 };

@@ -1,6 +1,7 @@
 export const PATHS = {
   GUEST: {
     ROOT: "/",
+    LANDING_PAGE: "/landing-page",
   },
   USER: {
     ROOT: "/user",
@@ -12,6 +13,9 @@ export const PATHS = {
   ADMIN: {
     ROOT: "/admin",
     APPLICATION_ADMIN: "/admin/application",
+    USERS: "/admin/users",
+    USERS_DETAIL: "/admin/users/:userId",
+    APPLICATION_ADMIN_PRODUCT: "/admin/application/:productId",
     USER_ADMIN_PRODUCT: "/admin/user/:productId",
   },
 };
