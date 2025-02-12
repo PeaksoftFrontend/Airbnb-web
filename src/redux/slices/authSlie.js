@@ -17,7 +17,7 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       state.isAuthorized = false;
-      state.role = "ADMIN";
+      state.role = "USER";
     },
   },
 });
