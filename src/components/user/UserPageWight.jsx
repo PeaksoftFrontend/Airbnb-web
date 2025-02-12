@@ -10,7 +10,7 @@ import { useState } from "react";
 const POPULAR_REGIONS = [
   {
     title: "THE LASTEST",
-    url: "https://shorturl.at/LyWva",
+    url: "https://shorturl.at/3IY2D",
     text: "Aska Lara Resort & Spa Hotel",
     description:
       "The Aska Lara Resort & Spa Hotel, which operates on an all-inclusive system, occupies 2 plots separated by a road. The hotel is located in the Lara district, 500 meters from the sea.",
@@ -18,15 +18,15 @@ const POPULAR_REGIONS = [
     information: "Read more",
     detail: "View all",
     images: [
-      "https://shorturl.at/pMxJg",
-      "https://shorturl.at/4U5dB",
-      "https://shorturl.at/ADcKH",
-      "https://shorturl.at/pctcI",
-      "https://shorturl.at/pMxJg",
-      "https://shorturl.at/4U5dB",
-      "https://shorturl.at/ADcKH",
-      "https://shorturl.at/pMxJg",
-      "https://shorturl.at/pMxJg",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
     ],
   },
 ];
@@ -198,7 +198,7 @@ const StyleContainer = styled("div")({
   overflow: "hidden",
   width: "100%",
   maxWidth: "none",
-  padding: "100px 0px",
+  padding: "10px 0px",
 });
 
 const StyleDescriptionText = styled("div")({

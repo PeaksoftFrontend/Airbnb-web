@@ -1,19 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Breadcrumbs } from "../components/UI/Breadcrumbs";
 import { Select } from "../components/UI/Select";
 import { Box, Pagination, styled } from "@mui/material";
 import { Icons } from "../assets";
 import { CardUser } from "../components/user/CardUser";
 import { Data } from "../utils/constants/cardUser";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-const main = [{ id: 1, url: "/main", title: "Naryn" }];
+const main = [
+  { id: 1, url: "/main", title: "Main" },
+  { id: 2, url: "/main", title: "Naryn" },
+];
 
 export const InnerOfHotel = () => {
+  const { region } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const params = new URLSearchParams(location.search);
+  const categoryFromURL = params.get("category") || "";
+
   const [page, setPages] = useState(1);
   const [select1, setSelect1] = useState("");
-  const [select2, setSelect2] = useState("");
+  const [select2, setSelect2] = useState(categoryFromURL || "");
   const [select3, setSelect3] = useState("");
   const [select4, setSelect4] = useState("");
+  // const [showApartment, setShowApartment] = useState(false);
+
+  // useEffect(() => {
+  //   setSelect2(categoryFromURL);
+  // }, [categoryFromURL]);
+
+  useEffect(() => {
+    if (categoryFromURL) {
+      setSelect2(categoryFromURL);
+    }
+  }, [categoryFromURL]);
+
+  const handleCategoryChange = (value) => {
+    setSelect2(value);
+    navigate(`${location.pathname}?category=${value}`);
+  };
 
   const options = [
     { value: "Batken", label: "Batken" },
@@ -25,6 +51,16 @@ export const InnerOfHotel = () => {
     { value: "Chui", label: "Chui" },
     { value: "Bishkek", label: "Bishkek" },
   ];
+
+  const option2 = [
+    { value: "popular", label: "popular" },
+    { value: "apartment", label: "apartment" },
+  ];
+
+  // const option2 = Data.map((item) => ({
+  //   value: item.id, // Берем id из данных
+  //   label: item.title, // Можно использовать другое поле, например title
+  // }));
 
   const handleSelectChange = (event, select) => {
     const value = event.target.value;
@@ -72,7 +108,8 @@ export const InnerOfHotel = () => {
         <Breadcrumbs path={main} />
         <StyleRegionNameandSlect>
           <StyleTitle>
-            NARYN<span>({Data.length})</span>
+            {region}
+            <span>({Data.length})</span>
           </StyleTitle>
 
           <StyleDiv>
@@ -84,11 +121,12 @@ export const InnerOfHotel = () => {
                 placeholder="Sort by:"
               ></StyleSelect>
               <StyleSelect
-                options={options}
+                options={option2}
                 value={select2}
-                onChange={(value) => handleSelectChange(value, "select2")}
-                placeholder="Sort by:"
-              ></StyleSelect>
+                onChange={(event) => handleCategoryChange(event.target.value)}
+                placeholder={select2 || "Sort by:"}
+              />
+
               <StyleSelect
                 options={options}
                 value={select3}
