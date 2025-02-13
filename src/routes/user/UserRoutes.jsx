@@ -2,6 +2,7 @@ import { InnerOfHotel } from "../../pages/InnerOfHotel";
 import { PrivateRoute } from "../PrivateRoute";
 import { PATHS } from "../../utils/constants/paths";
 import { Navigate } from "react-router-dom";
+import { Profiles } from "../../pages/user/Profiles";
 
 export const UserRoutes = () => {
   return [
@@ -20,6 +21,16 @@ export const UserRoutes = () => {
       element: (
         <PrivateRoute
           Component={<InnerOfHotel />}
+          isAuthorized={true}
+          fallBackPath={PATHS.USER.ROOT}
+        />
+      ),
+    },
+    {
+      path: `${PATHS.USER.PROFILES}`,
+      element: (
+        <PrivateRoute
+          Component={<Profiles />}
           isAuthorized={true}
           fallBackPath={PATHS.USER.ROOT}
         />
