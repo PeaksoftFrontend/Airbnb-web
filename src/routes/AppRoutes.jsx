@@ -2,9 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PrivateRoute } from "./PrivateRoute";
 import { PATHS } from "../utils/constants/paths";
 import { useSelector } from "react-redux";
-import { AdminRoutes } from "../routes/admin/AdminRoutes";
-import { UserLayout } from "../layout/user/UserLayout";
 import { UserRoutes } from "./user/UserRoutes";
+import { UserLayout } from "../layout/user/UserLayout";
 import { LandingPAge } from "../pages/user/LandingPAge";
 import { AdminLayout } from "../layout/admin/AdminLayout";
 
@@ -42,7 +41,6 @@ export const AppRoutes = () => {
           fallBackPath={pathRole[role] || PATHS.ADMIN.ROOT}
         />
       ),
-      children: AdminRoutes(),
     },
   ]);
 

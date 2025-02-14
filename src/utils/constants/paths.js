@@ -5,9 +5,11 @@ export const PATHS = {
   },
   USER: {
     ROOT: "/user",
+    FAVORITE_USER: "/user/favorite",
     INNER_HOTEL_OF_REGIONS: "/user/inner-hotel-of-regions",
+    NOT_FOUND_OF_HOTEL: "/user/*",
     MY_ANNOUNCEMENT: "/user/my-announcement",
-    PROFILES: "/user/profiles",
+    PROFILES_USER: "/user/profiles",
   },
   ADMIN: {
     ROOT: "/admin",
