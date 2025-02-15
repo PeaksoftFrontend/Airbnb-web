@@ -165,11 +165,6 @@ const StyledDiv = styled("div")({
   left: "60px",
   right: "0",
 });
-const HousingPriceTwo = styled("span")({
-  color: "#6C6C6C",
-  fontSize: "16px",
-  paddingTop: "4px",
-});
 const MainContainer = styled("main")({
   marginTop: "90px",
 });
@@ -179,18 +174,11 @@ const HousingPrice = styled(Typography)({
   marginBottom: "5px",
   color: "#363636",
 });
-const StyledHousingPriceTogether = styled("div")({
-  display: "flex",
-  gap: "5px",
-});
 const AccountSelectorContainer = styled(Box)({
   display: "flex",
   alignItems: "center",
   padding: "12px",
   width: "auto",
-});
-const StyledSpan = styled("span")({
-  marginLeft: "5px",
 });
 const StyledIconsHeart = styled("div")({
   width: "40px",
@@ -278,12 +266,6 @@ const HousingRating = styled(Box)({
   borderRadius: "2px",
   gap: "5px",
 });
-const StyledStarIcon = styled("div")({
-  paddingTop: "0.5px",
-  paddingLeft: "5px",
-  cursor: "pointer",
-});
-
 const HousingDescription = styled(Typography)({
   fontSize: "1rem",
   marginBottom: "5px",
@@ -321,13 +303,7 @@ const HousingGuests = styled(Typography)({
 const FavoriteTitle = styled(Typography)({
   fontSize: "20px",
   fontWeight: "500",
-  marginBottom: "16px",
   paddingLeft: "40px",
   color: "#363636",
   marginBottom: "30px",
-});
-
-const HousingDots = styled(Box)({
-  display: "inline-block",
-  marginLeft: "5px",
 });
