@@ -6,6 +6,7 @@ import { UserRoutes } from "./user/UserRoutes";
 import { UserLayout } from "../layout/user/UserLayout";
 import { LandingPAge } from "../pages/user/LandingPAge";
 import { AdminLayout } from "../layout/admin/AdminLayout";
+import { AdminRoutes } from "./admin/AdminRoutes";
 
 export const AppRoutes = () => {
   const { isAuthorized, role } = useSelector((state) => state.auth);
@@ -19,7 +20,7 @@ export const AppRoutes = () => {
   const router = createBrowserRouter([
     {
       path: PATHS.GUEST.ROOT,
-      element: <LandingPAge />,
+      element: <AdminLayout />,
     },
     {
       path: PATHS.USER.ROOT,
@@ -41,6 +42,7 @@ export const AppRoutes = () => {
           fallBackPath={pathRole[role] || PATHS.ADMIN.ROOT}
         />
       ),
+      children: AdminRoutes(),
     },
   ]);
 

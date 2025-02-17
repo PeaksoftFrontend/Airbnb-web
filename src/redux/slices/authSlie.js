@@ -6,7 +6,7 @@ export const authSlice = createSlice({
     name: "Aiturgan",
     email: "",
     token: null,
-    role: "GUEST",
+    role: "ADMIN",
     isAuthorized: true,
   },
 
