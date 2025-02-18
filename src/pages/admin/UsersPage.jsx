@@ -12,11 +12,12 @@ import {
   Popper,
   Box,
 } from "@mui/material";
-import { useGetUsersQuery } from "../../api/UserApi";
+import { useGetUsersQuery, useRemoveUserMutation } from "../../api/UserApi";
 import { Icons } from "../../assets";
 
 export const UsersPage = () => {
   const { data, error, isLoading } = useGetUsersQuery();
+  const [removeUser] = useRemoveUserMutation();
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
 
@@ -33,7 +34,13 @@ export const UsersPage = () => {
     setDeleteId(null);
   };
 
-  const deleteItem = () => {
+  const handleDeleteItem = async (id) => {
+    try {
+      await removeUser(id).unwrap();
+      console.log(`${id} delete`);
+    } catch (error) {
+      console.log("error delete", error);
+    }
     handleClose();
   };
 
@@ -113,7 +120,11 @@ export const UsersPage = () => {
           <Button onClick={handleClose} variant="contained" color="success">
             Cancel
           </Button>
-          <Button onClick={deleteItem} variant="contained" color="error">
+          <Button
+            onClick={() => handleDeleteItem(deleteId)} // Используем deleteId, который был сохранён ранее
+            variant="contained"
+            color="error"
+          >
             Delete
           </Button>
         </Box>
