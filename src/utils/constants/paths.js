@@ -9,6 +9,7 @@ export const PATHS = {
     INNER_HOTEL_OF_REGIONS: "/user/inner-hotel-of-regions",
     NOT_FOUND_OF_HOTEL: "/user/*",
     MY_ANNOUNCEMENT: "/user/my-announcement",
+    PROFILES_USER: "/user/profiles",
   },
   ADMIN: {
     ROOT: "/admin",
