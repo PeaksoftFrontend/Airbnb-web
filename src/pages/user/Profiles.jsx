@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 import { Breadcrumbs } from "../../components/UI/Breadcrumbs";
 import { Profile } from "../../components/admin/Profile";
 import { TabsPanel } from "../../components/UI/tabs/TabsPanel";
@@ -29,16 +29,27 @@ export const Profiles = () => {
         <Breadcrumbs path={path} />
       </div>
       <StyledDivContent>
-        <StyledProfileBox>
-          <Profile
-            name={"Медер"}
-            fullName={"Медербеков"}
-            email={"mederbekov@gmail.com"}
-            isAuth={true}
-            role={"USER"}
-          />
-        </StyledProfileBox>
-        <Box>
+        <Wrapper>
+          <Typography variant="h1" fontSize="20px" fontWeight="500">
+            Profile
+          </Typography>
+          <StyledProfileBox>
+            <Profile
+              name={"Медер"}
+              fullName={"Медербеков"}
+              email={"mederbekov@gmail.com"}
+              isAuth={true}
+              role={"USER"}
+            />
+          </StyledProfileBox>
+        </Wrapper>
+        <Box
+          sx={{
+            "&.MuiBox-root": {
+              width: "100%",
+            },
+          }}
+        >
           <TabsPanel tabs={tabs} onChange={handleChange} value={tabValue} />
         </Box>
       </StyledDivContent>
@@ -51,6 +62,7 @@ const StyledBox = styled(Box)({
   gap: "40px",
   flexDirection: "column",
   margin: "46px 40px",
+  height: "51vh",
 });
 
 const StyledDivContent = styled("div")({ display: "flex", gap: "47px" });
@@ -59,4 +71,10 @@ const StyledProfileBox = styled(Box)({
   gap: "40px",
   flexDirection: "column",
   alignItems: "center",
+});
+
+const Wrapper = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  gap: "22px",
 });

@@ -38,7 +38,7 @@ export const UserRoutes = () => {
       ),
     },
     {
-      path: PATHS.PROFILES_USER,
+      path: PATHS.USER.PROFILES_USER,
       element: (
         <PrivateRoute
           Component={<Profiles />}
