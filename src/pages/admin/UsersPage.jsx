@@ -121,7 +121,7 @@ export const UsersPage = () => {
             Cancel
           </Button>
           <Button
-            onClick={() => handleDeleteItem(deleteId)} // Используем deleteId, который был сохранён ранее
+            onClick={() => handleDeleteItem(deleteId)}
             variant="contained"
             color="error"
           >

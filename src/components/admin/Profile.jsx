@@ -27,7 +27,7 @@ export const Profile = ({ name, email, fullName, avatar, isAuth, role }) => {
           <StyledRow>
             <StyledLabel>Contact:</StyledLabel>
             <StyledTooltip title={email || "No email provided"}>
-              <StyledEmail>{`${email.slice(0, 24)}...`}</StyledEmail>
+              <StyledEmail>{`${email.slice(0, 26)}${email.length >= 25 ? "..." : ""}`}</StyledEmail>
             </StyledTooltip>
           </StyledRow>
         </StyledText>
