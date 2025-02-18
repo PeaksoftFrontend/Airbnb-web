@@ -6,8 +6,8 @@ export const PATHS = {
   USER: {
     ROOT: "/user",
     FAVORITE_USER: "/user/favorite",
-    INNER_HOTEL_OF_REGIONS: "/user/inner-hotel-of-regions",
-    PROFILE_INNER_PAGE_HOTEL: "/user/inner-hotel: hotelId",
+    INNER_HOTEL_OF_REGIONS: "/user/inner-hotel-of-regions/*",
+    PROFILE_INNER_PAGE_HOTEL: "/user/inner-hotel-of-regions/:hotelId",
     MY_ANNOUNCEMENT: "/user/my-announcement",
   },
   ADMIN: {

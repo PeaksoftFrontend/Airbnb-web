@@ -3,8 +3,14 @@ import { Avatar, Box, styled, Typography } from "@mui/material";
 import { Payment } from "../../components/UI/Payment";
 import { Reviews } from "../../components/user/Reviews";
 import { FeedbackList } from "../../components/UI/FeedbackList";
+import { Breadcrumbs } from "../../components/UI/Breadcrumbs";
 
 export const InnerHotelPage = () => {
+  const main = [
+    { id: 1, url: "/main", title: "Main" },
+    { id: 2, url: "/naryn", title: "Naryn" },
+    { id: 3, url: "/hotel", title: "Hotel" },
+  ];
   const image = [
     "https://s3-alpha-sig.figma.com/img/d191/5c46/b81941212a948a76824c21edd9c509af?Expires=1738540800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ZSDZAlR88jSO92~pwqhGJKBP9MAXPnDWuQgc5aU7eMrs6zUjJJums87sRE84aJun~a-z9vwEc5lKyK0rb3ykp8X8jR8TLw5zsItr8gp4BhYFTuIrBxVJK-J68R8P7YIwDVBDWlNo61dU0tQEB3ZPXS3ErAb30JinIMgAhs4SjsOMPBtiJyQ9NDjWWg51V8zp5e1OqZ24AMXueIs9liO5G8JZknq-YKuhGOkM~qDPgi626eio~QS2ZlprsmZ27lZrzQAUygo5LXsNzUaWH5SdagXc~f88b0Hidi5YWuTaoKREgzLcFlsbczXXXJw7Fw2DZk-K1F~ihXP5P46-fsc2Dg__",
     "https://s3-alpha-sig.figma.com/img/f3fb/d735/f97c76cf6d37044fead6fcdd7924e622?Expires=1738540800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Yimd5DvJT2qMJwn6K2zHks9EXYq0xvVSLoR~F63UlsvQV7y1v32OxWL9PRrMVFHR0CRMhYAIDBJ2amj9IrUa0MSy2UZMmfKVUh~IWvHGuMNm7mTwhqzVBtQjhC7Ze9y4uYqQtoZ2EM3HWwdAVHUG26bIEn9I6fGs36~PUyACc-koEAJuj018PVYJoGG9~XK2L3ZgNyBsVyH9NR~NxMA3FKBWDJb7Z1X4-WUGTiEAfpKaj0TIhmn0-sf7NTErn0tGzjgAB~qHAYcpwSX9twmIeKUkDmKA211K~MuR91mw6VLUp7oVcY2hnvgByVBcobjSQS6eXDTjY4FL9HBDe6WjTg__",
@@ -25,11 +31,8 @@ export const InnerHotelPage = () => {
   return (
     <div>
       <StyledSection>
-        <StyledTogetherLink>
-          <p style={{ color: "#C4C4C4" }}>Main /</p>
-          <p style={{ color: "#C4C4C4" }}>Naryn </p>
-          <p style={{ color: "#363636" }}> / Hotel</p>
-        </StyledTogetherLink>
+        <Breadcrumbs path={main} />
+
         <StyleContainer>
           <StyleDIv>
             <p>NAME</p>
@@ -99,11 +102,7 @@ const StyledSectionFeedback = styled("section")({
 const StyledFeedBack = styled(Typography)({
   paddingLeft: "10px",
 });
-const StyledTogetherLink = styled("div")({
-  display: "flex",
-  gap: "5px",
-  paddingBottom: "40px",
-});
+
 const StyledDescription = styled(Typography)({
   fontSize: "14px",
   fontWeight: 400,
