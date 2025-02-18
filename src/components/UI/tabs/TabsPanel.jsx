@@ -31,15 +31,34 @@ export const TabsPanel = ({ tabs, value, onChange, isAuth, ...props }) => {
     </StyledBox>
   );
 };
-const StyledBox = styled(Box)({ width: "100%" });
+const StyledBox = styled(Box)({
+  "&.MuiBox-root": {
+    width: "100%",
+  },
+  "& .MuiTabs-root": {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+  },
+  "& .MuiTabs-scroller": {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+  },
+});
+
 const StyledAppBar = styled(AppBar)({
   position: "static",
+  width: "100%",
   backgroundColor: "#FFF",
   color: "grey",
   boxShadow: "none",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  "&.MuiBox-root": {
+    width: "100%",
+  },
 });
 
 const StyledSpan = styled("span")((props) => ({
