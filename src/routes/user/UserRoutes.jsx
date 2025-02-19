@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { PrivateRoute } from "../PrivateRoute";
+import { PrivateRoute } from "../private/PrivateRoute";
 import { PATHS } from "../../utils/constants/paths";
 import { NotFoundPage } from "../../pages/user/NotFoundPage";
 import { MyAnnouncement } from "../../pages/user/MyAnnouncement";

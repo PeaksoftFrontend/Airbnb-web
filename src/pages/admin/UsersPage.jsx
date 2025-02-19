@@ -12,8 +12,11 @@ import {
   Popper,
   Box,
 } from "@mui/material";
-import { useGetUsersQuery, useRemoveUserMutation } from "../../api/UserApi";
 import { Icons } from "../../assets";
+import {
+  useGetUsersQuery,
+  useRemoveUserMutation,
+} from "../../redux/api/users.service";
 
 export const UsersPage = () => {
   const { data, error, isLoading } = useGetUsersQuery();

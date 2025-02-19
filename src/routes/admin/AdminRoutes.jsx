@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { PATHS } from "../../utils/constants/paths";
-import { PrivateRoute } from "../PrivateRoute";
+import { PrivateRoute } from "../private/PrivateRoute";
 import { ProductDetail } from "../../pages/admin/ProductDetail";
 import { Application } from "../../pages/admin/Application";
 import { AllHousingPage } from "../../pages/admin/AllHousingPage";
