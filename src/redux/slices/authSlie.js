@@ -5,8 +5,9 @@ export const authSlice = createSlice({
   initialState: {
     name: "Aiturgan",
     email: "",
-    token: null,
-    role: "USER",
+    token:
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NDAwNjE2OTUsImlhdCI6MTczOTgwMjQ5NSwidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.jDIYRC4_AAibgRYcbwKaa_QUhNTEB7Oc45UQC9UlhyM",
+    role: "ADMIN",
     isAuthorized: true,
   },
 
