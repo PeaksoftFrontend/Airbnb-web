@@ -6,15 +6,20 @@ import { Icons } from "../../../assets";
 import { Input } from "../../UI/Input";
 import { Box, Typography } from "@mui/material";
 import { AccountMenu } from "./AccountMenu";
+import { useDispatch, useSelector } from "react-redux";
+import { useGoogleLoginMutation } from "../../../redux/slices/authSlie";
+import { authGoogle, provider } from "../../../redux/fireBase";
+import { showToast } from "../../../utils/helpers/showToast";
+import { setUserRole } from "../../../redux/slices/authSlie";
 
-export const HeaderModal = ({ showAvatarModal }) => {
+export const HeaderModal = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
-
+  const dispatch = useDispatch();
+  const [googleLogin] = useGoogleLoginMutation();
   const handleOpen = () => {
     setModalOpen(true);
   };
-
   const handleClose = () => {
     setModalOpen(false);
   };
@@ -22,7 +27,37 @@ export const HeaderModal = ({ showAvatarModal }) => {
     setAdminOpen(true);
   };
   const handleAdminClose = () => {
-    setAdminOpen(true);
+    setAdminOpen(false);
+  };
+
+  const role = useSelector((state) => state.auth.role);
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await authGoogle.signInWithPopup(provider);
+      const token = await result.user.getIdToken();
+
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 7);
+      const expires = expirationDate.toUTCString();
+
+      document.cookie = `token=${token}; path=/; expires=${expires}; secure; `;
+
+      const response = await googleLogin(token).unwrap();
+
+      console.log(response, "жопа");
+
+      if (response.success) {
+        showToast.success("Успешно!!!");
+        location.href = "/profile";
+        dispatch(setUserRole("USER"));
+      } else {
+        showToast.error("Ошибка авторизации: " + response.message);
+      }
+    } catch (error) {
+      showToast.error(
+        "Ошибка входа: " + (error.message || "Неизвестная ошибка")
+      );
+    }
   };
 
   return (
@@ -30,7 +65,7 @@ export const HeaderModal = ({ showAvatarModal }) => {
       <StyledIconsLogo />
       <StyledDiv>
         <StyledLink>leave an ad</StyledLink>
-        {showAvatarModal ? (
+        {role === "GUEST" ? (
           <StyledButton variant="outlined" onClick={handleOpen}>
             join us
           </StyledButton>
@@ -50,7 +85,9 @@ export const HeaderModal = ({ showAvatarModal }) => {
             variant="contained"
             color="primary"
             fullWidth
-            onClick={() => {}}
+            onClick={() => {
+              handleGoogleLogin;
+            }}
           >
             {<Icons.Google />} Google
           </StyledGoogleButton>
