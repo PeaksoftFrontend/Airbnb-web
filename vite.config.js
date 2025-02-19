@@ -6,5 +6,4 @@ export const viteConfig = defineConfig({
   plugins: [react(), svgr()],
 });
 
-// Убедитесь, что Vite получает правильный объект
 export default viteConfig;
