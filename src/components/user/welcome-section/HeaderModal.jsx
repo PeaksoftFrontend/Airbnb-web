@@ -6,17 +6,36 @@ import { Icons } from "../../../assets";
 import { Input } from "../../UI/Input";
 import { Box, Typography } from "@mui/material";
 import { AccountMenu } from "./AccountMenu";
-import { useDispatch, useSelector } from "react-redux";
-import { useGoogleLoginMutation } from "../../../redux/slices/authSlie";
-import { authGoogle, provider } from "../../../redux/fireBase";
-import { showToast } from "../../../utils/helpers/showToast";
-import { setUserRole } from "../../../redux/slices/authSlie";
+import { useSelector } from "react-redux";
+import { useGoogleLogin } from "../../../hooks/useGoogleLogin";
+import { validationSignIn } from "../../../utils/constants/validation";
+import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../../../redux/slices/authSlie";
 
 export const HeaderModal = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
-  const dispatch = useDispatch();
-  const [googleLogin] = useGoogleLoginMutation();
+  const { signIn } = useGoogleLogin();
+  const [login] = useLoginMutation();
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [validationError, setValidationError] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      await validationSignIn.validate({ email, password });
+      setValidationError("");
+      const result = await login({ email, password });
+      if (result.data) {
+        navigate("/admin");
+      }
+    } catch (err) {
+      setValidationError(err.message);
+    }
+  };
+
   const handleOpen = () => {
     setModalOpen(true);
   };
@@ -31,41 +50,13 @@ export const HeaderModal = () => {
   };
 
   const role = useSelector((state) => state.auth.role);
-  const handleGoogleLogin = async () => {
-    try {
-      const result = await authGoogle.signInWithPopup(provider);
-      const token = await result.user.getIdToken();
-
-      const expirationDate = new Date();
-      expirationDate.setDate(expirationDate.getDate() + 7);
-      const expires = expirationDate.toUTCString();
-
-      document.cookie = `token=${token}; path=/; expires=${expires}; secure; `;
-
-      const response = await googleLogin(token).unwrap();
-
-      console.log(response, "жопа");
-
-      if (response.success) {
-        showToast.success("Успешно!!!");
-        location.href = "/profile";
-        dispatch(setUserRole("USER"));
-      } else {
-        showToast.error("Ошибка авторизации: " + response.message);
-      }
-    } catch (error) {
-      showToast.error(
-        "Ошибка входа: " + (error.message || "Неизвестная ошибка")
-      );
-    }
-  };
 
   return (
     <StyledHeader>
       <StyledIconsLogo />
       <StyledDiv>
         <StyledLink>leave an ad</StyledLink>
-        {role === "GUEST" ? (
+        {role === "ADMIN" ? (
           <StyledButton variant="outlined" onClick={handleOpen}>
             join us
           </StyledButton>
@@ -85,9 +76,7 @@ export const HeaderModal = () => {
             variant="contained"
             color="primary"
             fullWidth
-            onClick={() => {
-              handleGoogleLogin;
-            }}
+            onClick={signIn}
           >
             {<Icons.Google />} Google
           </StyledGoogleButton>
@@ -101,17 +90,39 @@ export const HeaderModal = () => {
           <StyledFistBox>
             <StyledFirstTypography> Sign in</StyledFirstTypography>
             <StyledInputBox>
-              <StyledInput type="text" placeholder="Login" size="small" />
-              <div>
+              <InputWrapper>
+                <StyledInput
+                  type="text"
+                  placeholder="Login"
+                  size="small"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {validationError && (
+                  <StyledErrorContainer>{validationError}</StyledErrorContainer>
+                )}
+              </InputWrapper>
+
+              <InputWrapper>
                 <StyledInput
                   type="password"
                   placeholder="Password"
                   size="small"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-              </div>
+                {validationError && (
+                  <StyledErrorContainer>{validationError}</StyledErrorContainer>
+                )}
+              </InputWrapper>
             </StyledInputBox>
           </StyledFistBox>
-          <Button variant="outlined" sx={{ width: "414px", height: "37px" }}>
+
+          <Button
+            variant="outlined"
+            sx={{ width: "414px", height: "37px" }}
+            onClick={handleLogin}
+          >
             Sign in
           </Button>
         </StyledBox>
@@ -119,6 +130,24 @@ export const HeaderModal = () => {
     </StyledHeader>
   );
 };
+
+const StyledErrorContainer = styled(Box)({
+  position: "absolute",
+  top: "100%",
+  left: 0,
+  width: "100%",
+  fontSize: "14px",
+  color: "red",
+  textAlign: "left",
+  minHeight: "20px",
+  display: "flex",
+  alignItems: "center",
+});
+
+const InputWrapper = styled(Box)({
+  position: "relative",
+  width: "414px",
+});
 
 const StyledHeader = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -197,14 +226,14 @@ export const StyledModal = styled(Modal)(({ theme }) => ({
 const StyledFistBox = styled(Box)({
   display: "flex",
   flexDirection: "column",
-  gap: "24px",
+  gap: "18px",
   justifyContent: "center",
   alignItems: "center",
 });
 const StyledInputBox = styled(Box)({
   display: "flex",
   flexDirection: "column",
-  gap: "16px",
+  gap: "20px",
 });
 const StyledInput = styled(Input)({
   width: "414px",

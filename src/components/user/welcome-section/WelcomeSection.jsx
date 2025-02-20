@@ -3,9 +3,13 @@ import { SearchInput } from "../../UI/SearchInput";
 import { Checkbox } from "../../UI/Checkbox";
 import { HeaderModal } from "./HeaderModal";
 import Backround from "../../../assets/image/backgroundimage-img.png";
+import { useSelector } from "react-redux";
 
 export const WelcomeSection = () => {
+  const role = useSelector((state) => state.auth.role);
+
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
+
   return (
     <StyledBox>
       <StyledHeaderWrapper>
@@ -22,11 +26,12 @@ export const WelcomeSection = () => {
             size="small"
             placeholder="Region, city, apartment, house..."
           />
-
-          <StyledCheckBox>
-            <CustomCheckbox {...label} />
-            <StyledSpan>Искать поблизости</StyledSpan>
-          </StyledCheckBox>
+          {role === "GUEST" ? (
+            <StyledCheckBox>
+              <CustomCheckbox {...label} />
+              <StyledSpan>Искать поблизости</StyledSpan>
+            </StyledCheckBox>
+          ) : null}
         </StyledDiv>
       </StyledSearchBox>
     </StyledBox>

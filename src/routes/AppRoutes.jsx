@@ -1,12 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { PrivateRoute } from "./PrivateRoute";
+import { PrivateRoute } from "./private/PrivateRoute";
 import { PATHS } from "../utils/constants/paths";
 import { useSelector } from "react-redux";
-import { AdminRoutes } from "../routes/admin/AdminRoutes";
-import { UserLayout } from "../layout/user/UserLayout";
 import { UserRoutes } from "./user/UserRoutes";
-import { LandingPAge } from "../pages/user/LandingPAge";
+import { UserLayout } from "../layout/user/UserLayout";
 import { AdminLayout } from "../layout/admin/AdminLayout";
+import { AdminRoutes } from "./admin/AdminRoutes";
+import { LandingPAge } from "../pages/user/LandingPAge";
 
 export const AppRoutes = () => {
   const { isAuthorized, role } = useSelector((state) => state.auth);

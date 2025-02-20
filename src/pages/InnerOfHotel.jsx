@@ -182,13 +182,13 @@ export const InnerOfHotel = () => {
   );
 };
 
-const StyleSelect = styled(Select)(() => ({
+const StyleSelect = styled(Select)({
   width: "271px",
   height: "42px",
   "& fieldset": {
     borderRadius: "0",
   },
-}));
+});
 
 const StyleSelects = styled("div")({
   display: "flex",

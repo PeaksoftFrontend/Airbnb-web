@@ -1,14 +1,15 @@
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState } from "react";
 import { Box, styled } from "@mui/material";
 import { Icons } from "../../../assets";
 import { styled as muiStyled } from "@mui/material/styles";
-import { useSelector } from "react-redux";
-
-import { useDispatch } from "react-redux";
-import { authSlice } from "../../../redux/slices/authSlie";
+import { useSelector, useDispatch } from "react-redux";
+import { signOut } from "firebase/auth";
+import { authGoogle } from "../../../redux/fireBase";
+import { logout } from "../../../redux/slices/authSlie";
+import Cookies from "js-cookie";
 
 export const AccountMenu = () => {
   const anchorRef = useRef(null);
@@ -25,21 +26,26 @@ export const AccountMenu = () => {
     setAvatarOpen(false);
   };
 
-  const logout = useCallback(() => {
-    dispatch(authSlice.actions.logout());
-  }, [dispatch]);
-
   const getInitials = (fullName) => {
-    const names = fullName.split(" ");
-    let initials = "";
-    if (names.length > 0 && names[0]) {
-      initials += names[0].charAt(0).toUpperCase();
-    }
-
-    return initials;
+    if (!fullName) return "A";
+    const names = fullName.trim().split(" ");
+    return names
+      .slice(0, 2)
+      .map((name) => name.charAt(0).toUpperCase())
+      .join("");
   };
 
-  const initials = isAuthorized ? getInitials(name) : "A";
+  const handleLogout = async () => {
+    try {
+      await signOut(authGoogle);
+      Cookies.remove("authToken");
+      dispatch(logout());
+    } catch (error) {
+      error("Ошибка при выходе:", error);
+    }
+  };
+
+  const initials = isAuthorized && name ? getInitials(name) : "A";
 
   return (
     <>
@@ -63,7 +69,7 @@ export const AccountMenu = () => {
           Добавить еще одну учетную запись
         </MenuItem>
         <MenuItem onClick={handleAvatarClose}>Настройки</MenuItem>
-        <MenuItem onClick={logout}>Выход</MenuItem>
+        <MenuItem onClick={handleLogout}>Выход</MenuItem>
       </StyledMenu>
     </>
   );

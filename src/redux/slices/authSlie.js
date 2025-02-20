@@ -1,14 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQuery } from "../../api/api-base-query";
+import Cookies from "js-cookie";
 
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
     name: "Aiturgan",
     email: "",
-    token: null,
-    role: "GUEST",
-    isAuthorized: false,
+    token:
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NDAwNjE2OTUsImlhdCI6MTczOTgwMjQ5NSwidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.jDIYRC4_AAibgRYcbwKaa_QUhNTEB7Oc45UQC9UlhyM",
+    role: "ADMIN",
+    isAuthorized: true,
   },
 
   reducers: {
@@ -18,32 +21,21 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       state.isAuthorized = false;
-      state.role = "GUEST";
-    },
-    setUserRole: (state, action) => {
-      state.role = action.payload;
+      state.role = "USER";
     },
   },
 });
 
 export const { login, logout, setUserRole } = authSlice.actions;
 
-const BASE_URL = "http://18.185.84.235/api";
-// const BASE_URL = import.meta.env.VITE_USERS_TABLE_FOR_ADMIN;
-
 export const apiSlice = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-  }),
+  baseQuery: baseQuery,
   endpoints: (builder) => ({
     googleLogin: builder.mutation({
       query: (token) => ({
         url: "/auth/google",
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: { token },
       }),
     }),
@@ -51,3 +43,23 @@ export const apiSlice = createApi({
 });
 
 export const { useGoogleLoginMutation } = apiSlice;
+
+export const adminAuthApi = createApi({
+  reducerPath: "adminAuthApi",
+  baseQuery: baseQuery,
+  endpoints: (builder) => ({
+    login: builder.mutation({
+      query: ({ email, password }) => ({
+        url: "/auth/signIn",
+        method: "POST",
+        body: { email, password },
+      }),
+      transformResponse: (response) => {
+        Cookies.set("token", response.token, { expires: 7 });
+        return response;
+      },
+    }),
+  }),
+});
+
+export const { useLoginMutation } = adminAuthApi;

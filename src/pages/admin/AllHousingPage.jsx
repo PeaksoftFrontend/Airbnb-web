@@ -328,7 +328,6 @@ const FilterContainer = styled(Box)(({ theme }) => ({
   gridTemplateColumns: "repeat(auto-fit, minmax(271px, auto))",
   justifyContent: "flex-start",
   alignItems: "center",
-  margin: theme.spacing(1),
   paddingBottom: theme.spacing(1),
   margin: "40px",
 }));
@@ -341,7 +340,6 @@ const StyledAllHousingH1 = styled("h1")({
 const StyledInputs = styled("span")({
   marginLeft: "21px",
 });
-const StyledMenuItem = styled("div")({});
 const StyledOutlinedInput = styled(OutlinedInput)({
   width: "271px",
   height: "42px",
@@ -420,11 +418,11 @@ const ValueWrapper = styled(Box)(({ theme }) => ({
   transform: "translateY(-50%)",
 }));
 
-const LabelValueWrapper = styled(Box)(({ theme }) => ({
+const LabelValueWrapper = styled(Box)({
   display: "flex",
   alignItems: "center",
   whiteSpace: "nowrap",
-}));
+});
 
 const HousingCardContainer = styled(Box)({
   display: "grid",
