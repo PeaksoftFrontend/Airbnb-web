@@ -6,9 +6,17 @@ import { useState } from "react";
 import { Button } from "../../components/UI/Button";
 import { Booking } from "../../components/UI/Booking";
 import { MyAnnouncement } from "../../components/UI/MyAnnouncement";
+import { useGetUserByIdQuery } from "../../redux/api/users.service";
+import { useParams } from "react-router-dom";
 export const UserDetail = () => {
   const [tabValue, setTabValue] = useState(0);
   const [showButton, setShowButton] = useState(false);
+
+  const { id: userId } = useParams(); // Берём userId из URL
+  const { data: user, error, isLoading } = useGetUserByIdQuery(userId);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>error</p>;
 
   const handleChange = (event, newValue) => {
     event.preventDefault();
@@ -33,11 +41,11 @@ export const UserDetail = () => {
       <StyledDivContent>
         <StyledProfileBox>
           <Profile
-            name={"Медер"}
-            fullName={"Медербеков"}
-            email={"mederbekov@gmail.com"}
+            name={user?.name}
+            fullName={user?.fullName}
+            email={user?.email}
             isAuth={false}
-            role={"ADMIN"}
+            role={user?.role}
           />
           {showButton && (
             <StyledButton variant="outlined">

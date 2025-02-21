@@ -1,6 +1,8 @@
 import { Avatar, Box, styled, Tooltip, Typography } from "@mui/material";
+import { useGetUserByIdQuery } from "../../redux/api/users.service";
 
 export const Profile = ({ name, email, fullName, avatar, isAuth, role }) => {
+ 
   const handleLogout = () => {};
   return (
     <StyledBox>
