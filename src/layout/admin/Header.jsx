@@ -1,10 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import { Icons } from "../../assets";
 import { styled } from "@mui/material";
+import { PATHS } from "../../utils/constants/paths";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  const navigate = useNavigate();
+
+  const handleUserHeaderIdClick = () => {
+    navigate(PATHS.ADMIN.USERS);
+  };
 
   const toggleText = () => {
     setIsOpen(!isOpen);
@@ -31,7 +39,9 @@ export const Header = () => {
       </StyleLogo>
       <StyledLiTogether>
         <StyledA href="#">Application</StyledA>
-        <StyledA href="#">Users</StyledA>
+        <StyledA onClick={handleUserHeaderIdClick} href="#">
+          Users
+        </StyledA>
         <StyledA href="#">All housing</StyledA>
       </StyledLiTogether>
       <StyleEnd>
