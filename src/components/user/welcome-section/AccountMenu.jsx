@@ -5,18 +5,13 @@ import { useRef, useState } from "react";
 import { Box, styled } from "@mui/material";
 import { Icons } from "../../../assets";
 import { styled as muiStyled } from "@mui/material/styles";
-import { useSelector, useDispatch } from "react-redux";
-import { signOut } from "firebase/auth";
-import { authGoogle } from "../../../redux/fireBase";
-import { logout } from "../../../redux/slices/authSlie";
-import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
 
 export const AccountMenu = () => {
   const anchorRef = useRef(null);
   const [avatarOpen, setAvatarOpen] = useState(false);
   const name = useSelector((state) => state.auth.name);
   const isAuthorized = useSelector((state) => state.auth.isAuthorized);
-  const dispatch = useDispatch();
 
   const handleAvatarOpen = () => {
     setAvatarOpen(true);
@@ -33,16 +28,6 @@ export const AccountMenu = () => {
       .slice(0, 2)
       .map((name) => name.charAt(0).toUpperCase())
       .join("");
-  };
-
-  const handleLogout = async () => {
-    try {
-      await signOut(authGoogle);
-      Cookies.remove("authToken");
-      dispatch(logout());
-    } catch (error) {
-      error("Ошибка при выходе:", error);
-    }
   };
 
   const initials = isAuthorized && name ? getInitials(name) : "A";
@@ -69,7 +54,7 @@ export const AccountMenu = () => {
           Добавить еще одну учетную запись
         </MenuItem>
         <MenuItem onClick={handleAvatarClose}>Настройки</MenuItem>
-        <MenuItem onClick={handleLogout}>Выход</MenuItem>
+        <MenuItem onClick={handleAvatarClose}>Выход</MenuItem>
       </StyledMenu>
     </>
   );

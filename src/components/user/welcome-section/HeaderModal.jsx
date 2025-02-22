@@ -7,18 +7,17 @@ import { Input } from "../../UI/Input";
 import { Box, Typography } from "@mui/material";
 import { AccountMenu } from "./AccountMenu";
 import { useSelector } from "react-redux";
-import { useGoogleLogin } from "../../../hooks/useGoogleLogin";
 import { validationSignIn } from "../../../utils/constants/validation";
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../../../redux/slices/authSlie";
+import { useLoginMutation } from "../../../redux/api/auth.servers";
+import { useGoogleAuth } from "../../../hooks/useGoogleAuth";
 
 export const HeaderModal = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
-  const { signIn } = useGoogleLogin();
+  const { loginWithGoogle } = useGoogleAuth();
   const [login] = useLoginMutation();
   const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState("");
@@ -27,15 +26,27 @@ export const HeaderModal = () => {
     try {
       await validationSignIn.validate({ email, password });
       setValidationError("");
-      const result = await login({ email, password });
-      if (result.data) {
+      const result = await login({ email, password }).unwrap();
+      if (result) {
         navigate("/admin");
       }
     } catch (err) {
-      setValidationError(err.message);
+      if (err?.data?.message) {
+        setValidationError(err.data.message);
+      } else {
+        setValidationError(err.message);
+      }
     }
   };
+  const handleGoogleLogin = async () => {
+    try {
+      await loginWithGoogle();
 
+      navigate("/user");
+    } catch (error) {
+      error();
+    }
+  };
   const handleOpen = () => {
     setModalOpen(true);
   };
@@ -56,7 +67,7 @@ export const HeaderModal = () => {
       <StyledIconsLogo />
       <StyledDiv>
         <StyledLink>leave an ad</StyledLink>
-        {role === "ADMIN" ? (
+        {role === "GUEST" ? (
           <StyledButton variant="outlined" onClick={handleOpen}>
             join us
           </StyledButton>
@@ -76,7 +87,7 @@ export const HeaderModal = () => {
             variant="contained"
             color="primary"
             fullWidth
-            onClick={signIn}
+            onClick={handleGoogleLogin}
           >
             {<Icons.Google />} Google
           </StyledGoogleButton>
@@ -206,6 +217,7 @@ const StyledGoogleButton = styled(Button)({
   color: "#000000",
   display: "flex",
   gap: "16px",
+  boxShadow: "none",
 });
 const StyledModalTypography = styled(Typography)({
   fontSize: "14px",
