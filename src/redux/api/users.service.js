@@ -9,7 +9,7 @@ export const usersApi = createApi({
       query: () => "/users",
     }),
     getUserById: builder.query({
-      query: (id) => `/users/${id}`,
+      query: (id) => `/users/get/${id}?value=bookings`,
     }),
     removeUser: builder.mutation({
       query: (id) => ({

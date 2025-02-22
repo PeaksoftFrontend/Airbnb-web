@@ -6,7 +6,7 @@ export const authSlice = createSlice({
     name: "Aiturgan",
     email: "",
     token:
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NDAwNjE2OTUsImlhdCI6MTczOTgwMjQ5NSwidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.jDIYRC4_AAibgRYcbwKaa_QUhNTEB7Oc45UQC9UlhyM",
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NDA0MjM0ODgsImlhdCI6MTc0MDE2NDI4OCwidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.OYM2zNpUHyvC1pqMmWcI647X6lmZS6nO4yML3jt169U",
     role: "ADMIN",
     isAuthorized: true,
   },

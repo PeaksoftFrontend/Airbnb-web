@@ -25,7 +25,7 @@ export const AppRoutes = () => {
       path: PATHS.USER.ROOT,
       element: (
         <PrivateRoute
-          Component={<UserLayout />}
+          Component={UserLayout}
           isAuthorized={isAuthorized && role === "USER"}
           fallBackPath={pathRole[role] || PATHS.USER.ROOT}
         />
@@ -36,7 +36,7 @@ export const AppRoutes = () => {
       path: PATHS.ADMIN.ROOT,
       element: (
         <PrivateRoute
-          Component={<AdminLayout />}
+          Component={AdminLayout}
           isAuthorized={isAuthorized && role === "ADMIN"}
           fallBackPath={pathRole[role] || PATHS.ADMIN.ROOT}
         />

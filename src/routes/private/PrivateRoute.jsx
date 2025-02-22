@@ -5,5 +5,5 @@ export const PrivateRoute = ({ Component, isAuthorized, fallBackPath }) => {
     return <Navigate to={fallBackPath} />;
   }
 
-  return Component;
+  return <Component />;
 };

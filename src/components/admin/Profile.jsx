@@ -1,8 +1,8 @@
 import { Avatar, Box, styled, Tooltip, Typography } from "@mui/material";
-import { useGetUserByIdQuery } from "../../redux/api/users.service";
 
 export const Profile = ({ name, email, fullName, avatar, isAuth, role }) => {
- 
+  console.log("Profile props:", { name, fullName, avatar });
+
   const handleLogout = () => {};
   return (
     <StyledBox>
@@ -14,11 +14,15 @@ export const Profile = ({ name, email, fullName, avatar, isAuth, role }) => {
       <StyledContainer>
         <StyledAvatar>
           {avatar ? (
-            <StyledImg src={avatar} alt={`${name}'s avatar`} />
+            <StyledImg
+              src={avatar}
+              alt={`${name || fullName || "User"}'s avatar`}
+            />
           ) : (
-            name.charAt(0).toUpperCase()
+            (name || fullName || "User").charAt(0)?.toUpperCase() || "U"
           )}
         </StyledAvatar>
+
         <StyledText>
           <StyledRow>
             <StyledLabel>Name:</StyledLabel>

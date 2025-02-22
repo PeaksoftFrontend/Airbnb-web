@@ -12,7 +12,8 @@ export const UserDetail = () => {
   const [tabValue, setTabValue] = useState(0);
   const [showButton, setShowButton] = useState(false);
 
-  const { id: userId } = useParams(); // Берём userId из URL
+  const { userId } = useParams();
+  console.log("User ID from URL:", userId);
   const { data: user, error, isLoading } = useGetUserByIdQuery(userId);
 
   if (isLoading) return <p>Loading...</p>;

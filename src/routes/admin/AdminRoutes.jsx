@@ -30,7 +30,7 @@ export const AdminRoutes = () => {
         />
       ),
     },
- 
+
     {
       path: PATHS.ADMIN.USERS_DETAIL,
       element: (
@@ -46,7 +46,7 @@ export const AdminRoutes = () => {
       path: PATHS.ADMIN.APPLICATION_ALLHOUSING,
       element: (
         <PrivateRoute
-          Component={<AllHousingPage />}
+          Component={AllHousingPage}
           isAuthorized={true}
           fallBackPath={PATHS.ADMIN.ROOT}
         />

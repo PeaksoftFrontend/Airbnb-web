@@ -17,13 +17,11 @@ import {
   useGetUsersQuery,
   useRemoveUserMutation,
 } from "../../redux/api/users.service";
-import { useNavigate, useParams } from "react-router-dom";
-// import { PATHS } from "../../utils/constants/paths";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../utils/constants/paths";
 
 export const UsersPage = () => {
   const { data, error, isLoading } = useGetUsersQuery();
-  const { userId } = useParams(); // Получаем userId из URL
-  console.log("User ID from URL:", userId);
   const [removeUser] = useRemoveUserMutation();
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
@@ -33,7 +31,7 @@ export const UsersPage = () => {
   if (error) return <p>Error loading data.</p>;
 
   const handleUserIdClick = (userId) => {
-    navigate(`/admin/users/${userId}`);
+    navigate(PATHS.ADMIN.USERS_DETAIL.replace(":userId", userId));
   };
 
   const handleOpen = (event, id) => {
