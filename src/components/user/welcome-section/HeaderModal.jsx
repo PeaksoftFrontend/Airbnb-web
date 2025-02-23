@@ -6,47 +6,95 @@ import { Icons } from "../../../assets";
 import { Input } from "../../UI/Input";
 import { Box, Typography } from "@mui/material";
 import { AccountMenu } from "./AccountMenu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { validationSignIn } from "../../../utils/constants/validation";
+import {
+  useGoogleLoginMutation,
+  useLoginAdminMutation,
+} from "../../../redux/api/auth.servers";
+import { signInWithGoogle } from "../../../redux/fireBase";
+import { login } from "../../../redux/slices/authSlie";
+import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../../../redux/api/auth.servers";
-import { useGoogleAuth } from "../../../hooks/useGoogleAuth";
+import { useFormik } from "formik";
 
 export const HeaderModal = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
-  const { loginWithGoogle } = useGoogleAuth();
-  const [login] = useLoginMutation();
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState("");
-
-  const handleLogin = async () => {
-    try {
-      await validationSignIn.validate({ email, password });
-      setValidationError("");
-      const result = await login({ email, password }).unwrap();
-      if (result) {
-        navigate("/admin");
-      }
-    } catch (err) {
-      if (err?.data?.message) {
-        setValidationError(err.data.message);
-      } else {
-        setValidationError(err.message);
-      }
-    }
-  };
+  const [googleLogin] = useGoogleLoginMutation();
+  const [loginAdmin, { isLoading, error }] = useLoginAdminMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleGoogleLogin = async () => {
     try {
-      await loginWithGoogle();
-
-      navigate("/user");
+      const result = await signInWithGoogle();
+      const user = result.user;
+      const token = await user.getIdToken();
+      const response = await googleLogin(token).unwrap();
+      const updatedRole = response.role || "USER";
+      dispatch(
+        login({
+          role: updatedRole,
+          name: user.displayName,
+          email: user.email,
+          token: token,
+        })
+      );
+      Cookies.set(
+        "user",
+        JSON.stringify({
+          role: updatedRole,
+          name: user.displayName,
+          email: user.email,
+          token: token,
+        }),
+        { expires: 7 }
+      );
     } catch (error) {
-      error();
+      error;
     }
   };
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: validationSignIn,
+    onSubmit: async (values) => {
+      try {
+        const response = await loginAdmin(values).unwrap();
+
+        dispatch(
+          login({
+            role: response.role,
+            name: response.name,
+            email: response.email,
+            token: response.token,
+          })
+        );
+
+        Cookies.set(
+          "admin",
+          JSON.stringify({
+            role: response.role,
+            name: response.name,
+            email: response.email,
+            token: response.token,
+          }),
+          { expires: 7 }
+        );
+
+        setValidationError("");
+
+        navigate("/admin");
+      } catch (err) {
+        setValidationError("Ошибка при аутентификации: " + err.message);
+      }
+    },
+  });
+
   const handleOpen = () => {
     setModalOpen(true);
   };
@@ -103,27 +151,33 @@ export const HeaderModal = () => {
             <StyledInputBox>
               <InputWrapper>
                 <StyledInput
-                  type="text"
+                  type="email"
+                  name="email"
                   placeholder="Login"
                   size="small"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
                 />
-                {validationError && (
-                  <StyledErrorContainer>{validationError}</StyledErrorContainer>
+                {formik.touched.email && formik.errors.email && (
+                  <StyledErrorContainer>
+                    {formik.errors.email}
+                  </StyledErrorContainer>
                 )}
               </InputWrapper>
 
               <InputWrapper>
                 <StyledInput
                   type="password"
+                  name="password"
                   placeholder="Password"
                   size="small"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
                 />
-                {validationError && (
-                  <StyledErrorContainer>{validationError}</StyledErrorContainer>
+                {formik.touched.password && formik.errors.password && (
+                  <StyledErrorContainer>
+                    {formik.errors.password}
+                  </StyledErrorContainer>
                 )}
               </InputWrapper>
             </StyledInputBox>
@@ -132,10 +186,20 @@ export const HeaderModal = () => {
           <Button
             variant="outlined"
             sx={{ width: "414px", height: "37px" }}
-            onClick={handleLogin}
+            type="submit"
+            onClick={formik.handleSubmit}
+            disabled={isLoading}
           >
             Sign in
           </Button>
+          {validationError && (
+            <StyledErrorContainer>{validationError}</StyledErrorContainer>
+          )}
+          {error && (
+            <StyledErrorContainer>
+              {error.message || "Произошла ошибка!"}
+            </StyledErrorContainer>
+          )}
         </StyledBox>
       </StyledModal>
     </StyledHeader>

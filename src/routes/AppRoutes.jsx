@@ -10,6 +10,7 @@ import { LandingPAge } from "../pages/user/LandingPAge";
 
 export const AppRoutes = () => {
   const { isAuthorized, role } = useSelector((state) => state.auth);
+  console.log(isAuthorized, role);
 
   const pathRole = {
     ADMIN: PATHS.ADMIN.ROOT,

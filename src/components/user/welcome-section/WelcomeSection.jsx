@@ -112,7 +112,6 @@ const StyledSpan = styled("p")({
 });
 const CustomCheckbox = styled(Checkbox)(() => ({
   "& .MuiSvgIcon-root": {
-    border: "2px solid #FBFBFB",
     marginLeft: "8px",
   },
 }));

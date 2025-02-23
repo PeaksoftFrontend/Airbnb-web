@@ -18,6 +18,7 @@
     "axios": "^1.7.9",
     "firebase": "^11.3.1",
     "firebase-tools": "^13.30.0",
+    "formik": "^2.4.6",
     "js-cookie": "^3.0.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

@@ -5,13 +5,34 @@ import { useRef, useState } from "react";
 import { Box, styled } from "@mui/material";
 import { Icons } from "../../../assets";
 import { styled as muiStyled } from "@mui/material/styles";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import Cookies from "js-cookie";
+import { authGoogle } from "../../../redux/fireBase";
+import { logout } from "../../../redux/slices/authSlie";
 
 export const AccountMenu = () => {
   const anchorRef = useRef(null);
   const [avatarOpen, setAvatarOpen] = useState(false);
   const name = useSelector((state) => state.auth.name);
   const isAuthorized = useSelector((state) => state.auth.isAuthorized);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(authGoogle);
+
+      Cookies.remove("user");
+
+      dispatch(logout());
+
+      navigate("/landing-page");
+    } catch (error) {
+      error;
+    }
+  };
 
   const handleAvatarOpen = () => {
     setAvatarOpen(true);
@@ -54,7 +75,7 @@ export const AccountMenu = () => {
           Добавить еще одну учетную запись
         </MenuItem>
         <MenuItem onClick={handleAvatarClose}>Настройки</MenuItem>
-        <MenuItem onClick={handleAvatarClose}>Выход</MenuItem>
+        <MenuItem onClick={handleLogout}>Выход</MenuItem>
       </StyledMenu>
     </>
   );
