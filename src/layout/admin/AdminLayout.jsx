@@ -14,7 +14,6 @@ export const AdminLayout = () => {
       <Header />
       <main>
         <Outlet />
-        <Publish />
       </main>
     </div>
   );

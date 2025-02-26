@@ -9,7 +9,7 @@ export const usersApi = createApi({
       query: () => "/users",
     }),
     getUserById: builder.query({
-      query: (id) => `/users/get/${id}?value=bookings`,
+      query: ({ id, value }) => `/users/get/${id}?value=${value}`,
     }),
     removeUser: builder.mutation({
       query: (id) => ({
@@ -17,8 +17,18 @@ export const usersApi = createApi({
         method: "DELETE",
       }),
     }),
+    blockAnnouncement: builder.mutation({
+      query: (announcementId) => ({
+        url: `/admin/blockedAnnouncementsById?announcementId=${announcementId}`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
-export const { useGetUsersQuery, useGetUserByIdQuery, useRemoveUserMutation } =
-  usersApi;
+export const {
+  useGetUsersQuery,
+  useGetUserByIdQuery,
+  useRemoveUserMutation,
+  useBlockAnnouncementMutation,
+} = usersApi;

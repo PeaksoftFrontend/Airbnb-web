@@ -5,25 +5,49 @@ import { TabsPanel } from "../../components/UI/tabs/TabsPanel";
 import { useState } from "react";
 import { Button } from "../../components/UI/Button";
 import { Booking } from "../../components/UI/Booking";
+import { useEffect } from "react";
+
 import { MyAnnouncement } from "../../components/UI/MyAnnouncement";
-import { useGetUserByIdQuery } from "../../redux/api/users.service";
+import {
+  useBlockAnnouncementMutation,
+  useGetUserByIdQuery,
+} from "../../redux/api/users.service";
 import { useParams } from "react-router-dom";
 export const UserDetail = () => {
-  const [tabValue, setTabValue] = useState(0);
+  const [tabValue, setTabValue] = useState("booking");
   const [showButton, setShowButton] = useState(false);
-
+  const [blockAnnouncement, { isLoading: isBlocking }] =
+    useBlockAnnouncementMutation();
   const { userId } = useParams();
-  console.log("User ID from URL:", userId);
-  const { data: user, error, isLoading } = useGetUserByIdQuery(userId);
+  const {
+    data: user,
+    error,
+    isLoading,
+  } = useGetUserByIdQuery({ id: userId, value: tabValue });
+
+  const handleChange = (_, newIndex) => {
+    const selectedTab = tabs[newIndex];
+    if (selectedTab) {
+      setTabValue(selectedTab.value);
+    }
+  };
+
+  useEffect(() => {
+    setShowButton(tabValue === "announcements");
+  }, [tabValue]);
+
+  const handleBlockAnnouncements = async () => {
+    try {
+      await blockAnnouncement(userId).unwrap();
+      alert("All announcements blocked successfully!");
+    } catch (error) {
+      console.error("Failed to block announcements:", error);
+      alert("Error blocking announcements");
+    }
+  };
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>error</p>;
-
-  const handleChange = (event, newValue) => {
-    event.preventDefault();
-    setTabValue(newValue);
-    setShowButton(newValue === 1);
-  };
 
   const path = [
     { id: 1, url: "/user", title: "Users" },
@@ -31,9 +55,14 @@ export const UserDetail = () => {
   ];
 
   const tabs = [
-    { label: "Bookings", content: <Booking /> },
-    { label: "My announcement", content: <MyAnnouncement /> },
+    { label: "Bookings", value: "booking", content: <Booking /> },
+    {
+      label: "My announcement",
+      value: "announcements",
+      content: <MyAnnouncement />,
+    },
   ];
+
   return (
     <StyledBox>
       <div>
@@ -49,13 +78,21 @@ export const UserDetail = () => {
             role={user?.role}
           />
           {showButton && (
-            <StyledButton variant="outlined">
+            <StyledButton
+              variant="outlined"
+              onClick={handleBlockAnnouncements}
+              disabled={isBlocking}
+            >
               block all announcement
             </StyledButton>
           )}
         </StyledProfileBox>
         <Box>
-          <TabsPanel tabs={tabs} onChange={handleChange} value={tabValue} />
+          <TabsPanel
+            tabs={tabs}
+            onChange={handleChange}
+            value={tabs.findIndex((tab) => tab.value === tabValue)}
+          />
         </Box>
       </StyledDivContent>
     </StyledBox>
