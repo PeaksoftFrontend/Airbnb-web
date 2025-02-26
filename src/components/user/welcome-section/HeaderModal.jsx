@@ -23,7 +23,7 @@ export const HeaderModal = () => {
   const [adminOpen, setAdminOpen] = useState(false);
   const [validationError, setValidationError] = useState("");
   const [googleLogin] = useGoogleLoginMutation();
-  const [loginAdmin, { isLoading, error }] = useLoginAdminMutation();
+  const [loginAdmin] = useLoginAdminMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleGoogleLogin = async () => {
@@ -182,24 +182,18 @@ export const HeaderModal = () => {
               </InputWrapper>
             </StyledInputBox>
           </StyledFistBox>
-
           <Button
             variant="outlined"
             sx={{ width: "414px", height: "37px" }}
             type="submit"
             onClick={formik.handleSubmit}
-            disabled={isLoading}
           >
             Sign in
           </Button>
           {validationError && (
             <StyledErrorContainer>{validationError}</StyledErrorContainer>
           )}
-          {error && (
-            <StyledErrorContainer>
-              {error.message || "Произошла ошибка!"}
-            </StyledErrorContainer>
-          )}
+          ъ
         </StyledBox>
       </StyledModal>
     </StyledHeader>
