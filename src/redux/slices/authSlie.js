@@ -7,7 +7,7 @@ export const authSlice = createSlice({
     email: "",
     token:
       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NDAwNjE2OTUsImlhdCI6MTczOTgwMjQ5NSwidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.jDIYRC4_AAibgRYcbwKaa_QUhNTEB7Oc45UQC9UlhyM",
-    role: "ADMIN",
+    role: "USER",
     isAuthorized: true,
   },
 

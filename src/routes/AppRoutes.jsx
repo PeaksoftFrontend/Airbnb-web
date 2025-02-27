@@ -19,7 +19,7 @@ export const AppRoutes = () => {
   const router = createBrowserRouter([
     {
       path: PATHS.GUEST.ROOT,
-      element: <AdminLayout />,
+      element: <UserLayout />,
     },
     {
       path: PATHS.USER.ROOT,

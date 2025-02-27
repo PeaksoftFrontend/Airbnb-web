@@ -16,14 +16,40 @@ import { Modal } from "../../UI/Modal";
 import { Icons } from "../../../assets";
 import { useDropzone } from "react-dropzone";
 import { Textarea } from "@mui/joy";
+import { useSubmitAnAdMutation } from "../../../redux/api/submitAdd.service";
 
 export const Publish = () => {
   const [radioValue, setRadioValue] = useState("");
   const radioRef = useRef(null);
   const [files, setFiles] = useState([]);
+  const [submitAnAd, { isLoading, error }] = useSubmitAnAdMutation();
+  console.log(submitAnAd);
 
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
+  };
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append("homeType", radioValue);
+    formData.append("maxGuests", 5);
+    formData.append("price", 100);
+    formData.append("title", "Пример заголовка");
+    formData.append("description", "Описание вашего объявления");
+    formData.append("region", "Bishkek");
+    formData.append("town", "Some Town");
+    formData.append("address", "Some Address");
+
+    files.forEach((file) => {
+      formData.append("images", file);
+    });
+
+    try {
+      await submitAnAd(formData).unwrap();
+      console.log("Объявление успешно отправлено!");
+    } catch (error) {
+      console.error("Ошибка при отправке объявления:", error);
+    }
   };
 
   const onDrop = (acceptedFiles) => {
@@ -34,6 +60,8 @@ export const Publish = () => {
     }
   };
 
+  if (error) return <p>error</p>;
+  if (isLoading) return <p>Loading...</p>;
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     maxFiles: 4,
@@ -58,14 +86,14 @@ export const Publish = () => {
   };
 
   const options = [
-    { value: "Batken", label: "Batken" },
-    { value: "Jalalabat", label: "Jalalabat" },
-    { value: "Naryn", label: "Naryn" },
-    { value: "Issyk-Kul", label: "Issyk-Kul" },
-    { value: "Talas", label: "Talas" },
-    { value: "Osh", label: "Osh" },
-    { value: "Chui", label: "Chui" },
-    { value: "Bishkek", label: "Bishkek" },
+    { value: "Batken", label: "BATKEN" },
+    { value: "Jalalabat", label: "JALALABAD" },
+    { value: "Naryn", label: "NARYN" },
+    { value: "Issyk-Kul", label: "ISSSYK-KUL" },
+    { value: "Talas", label: "TALAS" },
+    { value: "Osh", label: "OSH" },
+    { value: "Chui", label: "CHUI" },
+    { value: "Bishkek", label: "BISHKEK" },
   ];
 
   return (
@@ -196,7 +224,12 @@ export const Publish = () => {
         </StyledBox>
       </StyledBoxContainer>
       <StyledButtonDiv>
-        <StyledButton type="submit" variant="outlined">
+        <StyledButton
+          type="submit"
+          onClick={handleSubmit}
+          disabled={isLoading}
+          variant="outlined"
+        >
           Submit
         </StyledButton>
       </StyledButtonDiv>
