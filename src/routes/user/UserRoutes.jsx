@@ -1,63 +1,70 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { PrivateRoute } from "../private/PrivateRoute";
+import { Outlet } from "react-router-dom";
 import { PATHS } from "../../utils/constants/paths";
 import { NotFoundPage } from "../../pages/user/NotFoundPage";
 import { MyAnnouncement } from "../../pages/user/MyAnnouncement";
 import { Profiles } from "../../pages/user/Profiles";
 import { InnerHotelPage } from "../../pages/user/InnerHotelPage";
+import { LandingPAge } from "../../pages/user/LandingPAge";
+import { PrivateAuthRouteByRole } from "../private/PrivateAuthByRole";
+import { InnerOfHotel } from "../../pages/InnerOfHotel";
 
-export const UserRoutes = () => {
+export const UserRoutes = (role) => {
   return [
     {
-      path: PATHS.USER.ROOT,
+      index: true,
       element: (
-        <PrivateRoute
-          Component={<Navigate to={PATHS.USER.MY_ANNOUNCEMENT} />}
-          isAuthorized={true}
-          fallBackPath={PATHS.USER.ROOT}
+        <PrivateAuthRouteByRole
+          RouteComponent={<LandingPAge />}
+          role={role}
+          roles={["USER", "GUEST"]}
+          fallBackPath={PATHS.GUEST.ROOT}
         />
       ),
     },
     {
       path: PATHS.USER.MY_ANNOUNCEMENT,
       element: (
-        <PrivateRoute
-          Component={<MyAnnouncement />}
-          isAuthorized={true}
-          fallBackPath={PATHS.USER.ROOT}
+        <PrivateAuthRouteByRole
+          RouteComponent={<MyAnnouncement />}
+          role={role}
+          roles={["USER", "GUEST"]}
+          fallBackPath={PATHS.GUEST.ROOT}
         />
       ),
     },
     {
       path: PATHS.USER.NOT_FOUND_OF_HOTEL,
       element: (
-        <PrivateRoute
-          Component={<NotFoundPage />}
-          isAuthorized={true}
-          fallBackPath={PATHS.USER.ROOT}
+        <PrivateAuthRouteByRole
+          RouteComponent={<NotFoundPage />}
+          role={role}
+          roles={["USER", "GUEST"]}
+          fallBackPath={PATHS.GUEST.ROOT}
         />
       ),
     },
     {
       path: PATHS.USER.INNER_HOTEL_OF_REGIONS,
       element: (
-        <PrivateRoute
-          Component={
+        <PrivateAuthRouteByRole
+          RouteComponent={
             <h1>
               <Outlet />
             </h1>
           }
-          isAuthorized={true}
+          role={role}
+          roles={["GUEST", "USER"]}
           fallBackPath={PATHS.USER.ROOT}
         />
       ),
       children: [
         {
-          path: ":hotelId",
+          path: ":regionId",
           element: (
-            <PrivateRoute
-              Component={<InnerHotelPage />}
-              isAuthorized={true}
+            <PrivateAuthRouteByRole
+              RouteComponent={<InnerOfHotel />}
+              role={role}
+              roles={["GUEST", "USER"]}
               fallBackPath={PATHS.USER.ROOT}
             />
           ),
@@ -65,11 +72,23 @@ export const UserRoutes = () => {
       ],
     },
     {
+      path: "/user/inner-hotel-of-regions/:regionId/:hotelId",
+      element: (
+        <PrivateAuthRouteByRole
+          RouteComponent={<InnerHotelPage />}
+          role={role}
+          roles={["GUEST", "USER"]}
+          fallBackPath={PATHS.USER.ROOT}
+        />
+      ),
+    },
+    {
       path: PATHS.USER.PROFILES_USER,
       element: (
-        <PrivateRoute
-          Component={<Profiles />}
-          isAuthorized={true}
+        <PrivateAuthRouteByRole
+          RouteComponent={<Profiles />}
+          role={role}
+          roles={["GUEST", "USER"]}
           fallBackPath={PATHS.USER.ROOT}
         />
       ),

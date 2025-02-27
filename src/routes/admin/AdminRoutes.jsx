@@ -9,7 +9,7 @@ import { UserDetail } from "../../pages/admin/UserDetail";
 export const AdminRoutes = () => {
   return [
     {
-      path: PATHS.ADMIN.ROOT,
+      index: true,
       element: (
         <PrivateRoute
           Component={<Navigate to={PATHS.ADMIN.APPLICATION_ADMIN} />}

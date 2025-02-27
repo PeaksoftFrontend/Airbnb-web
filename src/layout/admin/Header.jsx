@@ -50,19 +50,19 @@ export const Header = () => {
         </StyleLogo>
         <StyledLiTogether>
           <StyledLink
-            to="/application"
+            to="/admin/application"
             active={location.pathname === "/admin/application" ? 1 : 0}
           >
             Application
           </StyledLink>
           <StyledLink
-            to="/users"
+            to="/admin/users"
             active={location.pathname === "/admin/users" ? 1 : 0}
           >
             Users
           </StyledLink>
           <StyledLink
-            to="/all-housing"
+            to="/admin/all-housing"
             active={location.pathname === "/admin/all-housing" ? 1 : 0}
           >
             All housing

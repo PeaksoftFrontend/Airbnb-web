@@ -1,13 +1,17 @@
 import { useState } from "react";
+import { validationSignIn } from "../../../utils/constants/validation";
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
+
 import { Button } from "../../UI/Button";
 import { Modal } from "../../UI/Modal";
 import { Icons } from "../../../assets";
 import { Input } from "../../UI/Input";
 import { Box, Typography } from "@mui/material";
 import { AccountMenu } from "./AccountMenu";
-import { useDispatch, useSelector } from "react-redux";
-import { validationSignIn } from "../../../utils/constants/validation";
+
 import {
   useGoogleLoginMutation,
   useLoginAdminMutation,
@@ -15,44 +19,49 @@ import {
 import { signInWithGoogle } from "../../../redux/fireBase";
 import { login } from "../../../redux/slices/authSlie";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
+import { PATHS } from "../../../utils/constants/paths";
 
 export const HeaderModal = () => {
+  const role = useSelector((state) => state.auth.role);
+
   const [modalOpen, setModalOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
   const [validationError, setValidationError] = useState("");
-  const [googleLogin] = useGoogleLoginMutation();
-  const [loginAdmin] = useLoginAdminMutation();
+  const handleOpen = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
+  const handleAdminClose = () => setAdminOpen(false);
+
+  const [googleLogin, { isLoading: isGoogleLoading }] =
+    useGoogleLoginMutation();
+  const [loginAdmin, { isLoading: isAdminLoading }] = useLoginAdminMutation();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithGoogle();
       const user = result.user;
       const token = await user.getIdToken();
-      const response = await googleLogin(token).unwrap();
-      const updatedRole = response.role || "USER";
-      dispatch(
-        login({
-          role: updatedRole,
-          name: user.displayName,
-          email: user.email,
-          token: token,
-        })
-      );
-      Cookies.set(
-        "user",
-        JSON.stringify({
-          role: updatedRole,
-          name: user.displayName,
-          email: user.email,
-          token: token,
-        }),
-        { expires: 7 }
-      );
+      const params = new URLSearchParams({ token });
+      const response = await googleLogin(params).unwrap();
+
+      const userData = {
+        role: response || "USER",
+        name: user.displayName,
+        email: user.email,
+        token: token,
+      };
+
+      dispatch(login(userData));
+
+      Cookies.set("authUser", JSON.stringify(userData), { expires: 7 });
+
+      setModalOpen(false);
     } catch (error) {
-      error;
+      setValidationError(
+        "Error during Google login. Please try again." + error
+      );
     }
   };
 
@@ -66,49 +75,32 @@ export const HeaderModal = () => {
       try {
         const response = await loginAdmin(values).unwrap();
 
-        dispatch(
-          login({
-            role: response.role,
-            name: response.name,
-            email: response.email,
-            token: response.token,
-          })
-        );
+        const userData = {
+          role: response.role,
+          name: response.name,
+          email: response.email,
+          token: response.token,
+        };
 
-        Cookies.set(
-          "admin",
-          JSON.stringify({
-            role: response.role,
-            name: response.name,
-            email: response.email,
-            token: response.token,
-          }),
-          { expires: 7 }
-        );
+        dispatch(login(userData));
+
+        Cookies.set("authUser", JSON.stringify(userData), { expires: 7 });
 
         setValidationError("");
-
-        navigate("/admin");
+        setAdminOpen(false);
+        navigate(PATHS[response.role]);
       } catch (err) {
-        setValidationError("Ошибка при аутентификации: " + err.message);
+        const errorMessage =
+          err.data?.message || err.message || "Authentication failed";
+        setValidationError("Error: " + errorMessage);
       }
     },
   });
 
-  const handleOpen = () => {
-    setModalOpen(true);
-  };
-  const handleClose = () => {
-    setModalOpen(false);
-  };
   const handleAdminOpen = () => {
     setAdminOpen(true);
+    setModalOpen(false);
   };
-  const handleAdminClose = () => {
-    setAdminOpen(false);
-  };
-
-  const role = useSelector((state) => state.auth.role);
 
   return (
     <StyledHeader>
@@ -136,18 +128,20 @@ export const HeaderModal = () => {
             color="primary"
             fullWidth
             onClick={handleGoogleLogin}
+            disabled={isGoogleLoading}
           >
-            {<Icons.Google />} Google
+            {<Icons.Google />} {isGoogleLoading ? "Signing in..." : "Google"}
           </StyledGoogleButton>
           <StyledModalTypography variant="body2" onClick={handleAdminOpen}>
             Log in as admin
           </StyledModalTypography>
         </StyledBox>
       </StyledModal>
+
       <StyledModal open={adminOpen} onClose={handleAdminClose}>
         <StyledBox>
           <StyledFistBox>
-            <StyledFirstTypography> Sign in</StyledFirstTypography>
+            <StyledFirstTypography>Sign in</StyledFirstTypography>
             <StyledInputBox>
               <InputWrapper>
                 <StyledInput
@@ -157,6 +151,7 @@ export const HeaderModal = () => {
                   size="small"
                   value={formik.values.email}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
                 {formik.touched.email && formik.errors.email && (
                   <StyledErrorContainer>
@@ -173,6 +168,7 @@ export const HeaderModal = () => {
                   size="small"
                   value={formik.values.password}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
                 {formik.touched.password && formik.errors.password && (
                   <StyledErrorContainer>
@@ -187,13 +183,13 @@ export const HeaderModal = () => {
             sx={{ width: "414px", height: "37px" }}
             type="submit"
             onClick={formik.handleSubmit}
+            disabled={isAdminLoading || !formik.isValid}
           >
-            Sign in
+            {isAdminLoading ? "Signing in..." : "Sign in"}
           </Button>
           {validationError && (
             <StyledErrorContainer>{validationError}</StyledErrorContainer>
           )}
-          ъ
         </StyledBox>
       </StyledModal>
     </StyledHeader>
@@ -236,7 +232,7 @@ const StyledDiv = styled(Box)({
 });
 
 const StyledLink = styled(Box)({
-  fontfamily: "Inter",
+  fontFamily: "Inter", // Fixed typo: fontfamily -> fontFamily
   fontSize: "18px",
   fontWeight: "500",
   color: "#FFF",

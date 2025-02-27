@@ -1,15 +1,14 @@
 export const PATHS = {
   GUEST: {
     ROOT: "/",
-    LANDING_PAGE: "/landing-page",
   },
   USER: {
-    ROOT: "/user",
-    FAVORITE_USER: "/user/favorite",
-    INNER_HOTEL_OF_REGIONS: "/user/inner-hotel-of-regions/*",
-    PROFILE_INNER_PAGE_HOTEL: "/user/inner-hotel-of-regions/:hotelId",
-    MY_ANNOUNCEMENT: "/user/my-announcement",
-    PROFILES_USER: "/user/profiles",
+    ROOT: "/",
+    FAVORITE_USER: "/favorite",
+    INNER_HOTEL_OF_REGIONS: "/inner-hotel-of-regions",
+    PROFILE_INNER_PAGE_HOTEL: "/inner-hotel-of-regions/:regionId",
+    MY_ANNOUNCEMENT: "/my-announcement",
+    PROFILES_USER: "/profiles",
   },
   ADMIN: {
     ROOT: "/admin",
