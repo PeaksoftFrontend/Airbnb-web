@@ -12,7 +12,6 @@ import {
   MenuItem,
 } from "@mui/material";
 import { Icons } from "../../assets";
-import { Header } from "../../layout/admin/Header";
 export const AllHousingPage = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -237,7 +236,6 @@ export const AllHousingPage = () => {
   ];
   return (
     <div>
-      <Header />
       <FilterContainer>
         <StyledAllHousingH1>All Housing</StyledAllHousingH1>
         {allHousing.map((filter, index) => (
