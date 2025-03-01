@@ -5,3 +5,4 @@ import svgr from "vite-plugin-svgr";
 export const viteConfig = defineConfig({
   plugins: [react(), svgr()],
 });
+export default viteConfig;

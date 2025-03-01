@@ -6,6 +6,7 @@ import { UserRoutes } from "./user/UserRoutes";
 import { UserLayout } from "../layout/user/UserLayout";
 import { AdminLayout } from "../layout/admin/AdminLayout";
 import { AdminRoutes } from "./admin/AdminRoutes";
+import { LandingPAge } from "../pages/user/LandingPAge";
 
 export const AppRoutes = () => {
   const { isAuthorized, role } = useSelector((state) => state.auth);
@@ -19,7 +20,7 @@ export const AppRoutes = () => {
   const router = createBrowserRouter([
     {
       path: PATHS.GUEST.ROOT,
-      element: <AdminLayout />,
+      element: <LandingPAge />,
     },
     {
       path: PATHS.USER.ROOT,
