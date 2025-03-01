@@ -3,13 +3,17 @@ import { SearchInput } from "../../UI/SearchInput";
 import { Checkbox } from "../../UI/Checkbox";
 import { HeaderModal } from "./HeaderModal";
 import Backround from "../../../assets/image/backgroundimage-img.png";
+import { useSelector } from "react-redux";
 
 export const WelcomeSection = () => {
+  const role = useSelector((state) => state.auth.role);
+
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
+
   return (
     <StyledBox>
       <StyledHeaderWrapper>
-        <HeaderModal showAvatarModal={true} />
+        <HeaderModal />
       </StyledHeaderWrapper>
       <StyledSearchBox>
         <StyledTwoBox variant="h3">
@@ -22,11 +26,12 @@ export const WelcomeSection = () => {
             size="small"
             placeholder="Region, city, apartment, house..."
           />
-
-          <StyledCheckBox>
-            <CustomCheckbox {...label} defaultChecked />
-            <StyledSpan>Искать поблизости</StyledSpan>
-          </StyledCheckBox>
+          {role === "GUEST" ? (
+            <StyledCheckBox>
+              <CustomCheckbox {...label} />
+              <StyledSpan>Искать поблизости</StyledSpan>
+            </StyledCheckBox>
+          ) : null}
         </StyledDiv>
       </StyledSearchBox>
     </StyledBox>
@@ -34,7 +39,7 @@ export const WelcomeSection = () => {
 };
 
 export const StyledBox = styled(Box)({
-  backgroundImage: `url(${"https://s3-alpha-sig.figma.com/img/881d/982b/7e4c3296da11913f9e1154a99cf7f812?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=YxiVq4KQCsojOuP-3kv2OE3i9tpYF9bp3BwrqscHJfIPtuYhgQbeO6kJzsD6C20cVfBoEdfTEAXk-RDP1TU0O2HDRyrYCNZpoJ4jeahOuVg9MfUjP7QfBwaj4V10Q9hyzCi~9oSwBErHCMpk15Gfdi8I7erll0dWNvLrDdKly1EvxCYY0uMvt~v-Mdo3wV5tOTmJGZSvfBMJNmmK2Rsi1JswJY9vpwlDq4SXkydb2aiIq619SrwOT20x~8Pyg-AXfArmvWz7OtMAYak-LPIv4Hd7bJ-zyeQ4ERTEbP~RCsq1-hTsLriwQhGmz~lEhhMvmazMkuJ5Ue6LlzbYdVPWSQ__"})`,
+  backgroundImage: `url(${Backround})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -105,12 +110,8 @@ const StyledSpan = styled("p")({
   color: "#EDEDED",
   marginRight: "8px",
 });
-const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
-  "&.Mui-checked": {
-    color: theme.palette.primary.main,
-  },
+const CustomCheckbox = styled(Checkbox)(() => ({
   "& .MuiSvgIcon-root": {
-    border: "2px solid #FBFBFB",
     marginLeft: "8px",
   },
 }));
