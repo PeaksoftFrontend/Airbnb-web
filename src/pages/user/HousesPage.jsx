@@ -1,39 +1,9 @@
 import { Box, styled } from "@mui/material";
 import { Icons } from "../../assets";
-import { useGetPopularsApartments } from "../../redux/api/houses.service";
-
-// const properties = [
-//   {
-//     id: 1,
-//     name: "Asman guest house",
-//     location: "723510 Osh Muzurbek Alimbekov 9/7",
-//     price: "$26 / ",
-//     rating: 3.4,
-//     image:
-//       "https://s3-alpha-sig.figma.com/img/0262/e146/c386a7b3971406286b2dce8e892dd438?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=pV6F4X2AHi9rdhfIn-tpsD2DgoI02B3pfs7keWf0dqQnrWsG4yfLQ~LSp8QXih33dnjNHutcX5R7uhzzPCCNM6T34~dY4QZUb2YG0~i9DHXBoA6giJcA5ERgINOoVyJZvhGlsTDrkhtNOm8sj3tgiqbxgkWUOPhU1519czWErABBChTK4-kL~fxoimsA5ucZKQcsPY7gJrhKJ8zcwEgrf-pSbQ5dxNQt8qEJWLJGebtP3KGleEHMYtMlNqDI1NpXIXsqwzhXUpvbiYAoAnGPJre~2GDzT3nyPKWk~ypwd9cdQ~WuBILVaiBWoOAXOZTCOlnG-zjgH6zsILW2fjGttg__",
-//   },
-//   {
-//     id: 2,
-//     name: "Asman guest house",
-//     location: "723510 Osh Muzurbek Alimbekov 9/7",
-//     price: "$26 / ",
-//     rating: 3.4,
-//     image:
-//       "https://s3-alpha-sig.figma.com/img/0262/e146/c386a7b3971406286b2dce8e892dd438?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=pV6F4X2AHi9rdhfIn-tpsD2DgoI02B3pfs7keWf0dqQnrWsG4yfLQ~LSp8QXih33dnjNHutcX5R7uhzzPCCNM6T34~dY4QZUb2YG0~i9DHXBoA6giJcA5ERgINOoVyJZvhGlsTDrkhtNOm8sj3tgiqbxgkWUOPhU1519czWErABBChTK4-kL~fxoimsA5ucZKQcsPY7gJrhKJ8zcwEgrf-pSbQ5dxNQt8qEJWLJGebtP3KGleEHMYtMlNqDI1NpXIXsqwzhXUpvbiYAoAnGPJre~2GDzT3nyPKWk~ypwd9cdQ~WuBILVaiBWoOAXOZTCOlnG-zjgH6zsILW2fjGttg__",
-//   },
-//   {
-//     id: 3,
-//     name: "Asman guest house",
-//     location: "723510 Osh Muzurbek Alimbekov 9/7",
-//     price: "$26 / ",
-//     rating: 3.4,
-//     image:
-//       "https://s3-alpha-sig.figma.com/img/0262/e146/c386a7b3971406286b2dce8e892dd438?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=pV6F4X2AHi9rdhfIn-tpsD2DgoI02B3pfs7keWf0dqQnrWsG4yfLQ~LSp8QXih33dnjNHutcX5R7uhzzPCCNM6T34~dY4QZUb2YG0~i9DHXBoA6giJcA5ERgINOoVyJZvhGlsTDrkhtNOm8sj3tgiqbxgkWUOPhU1519czWErABBChTK4-kL~fxoimsA5ucZKQcsPY7gJrhKJ8zcwEgrf-pSbQ5dxNQt8qEJWLJGebtP3KGleEHMYtMlNqDI1NpXIXsqwzhXUpvbiYAoAnGPJre~2GDzT3nyPKWk~ypwd9cdQ~WuBILVaiBWoOAXOZTCOlnG-zjgH6zsILW2fjGttg__",
-//   },
-// ];
+import { useGetPopularsApartmentsQuery } from "../../redux/api/houses.service";
 
 export const HousesPage = () => {
-  const { data, error, isLoading, refetch } = useGetPopularsApartments();
+  const { data, error, isLoading, refetch } = useGetPopularsApartmentsQuery();
 
   if (error) return <p>error data</p>;
   if (isLoading) return <p>Loading...</p>;

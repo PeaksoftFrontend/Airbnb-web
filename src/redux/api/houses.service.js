@@ -22,6 +22,6 @@ export const housesApi = createApi({
 
 export const {
   useGetLatestAnnouncementsQuery,
-  useGetPopularsApartments,
-  getPopularsHouses,
+  useGetPopularsApartmentsQuery,
+  useGetPopularsHousesQuery,
 } = housesApi;

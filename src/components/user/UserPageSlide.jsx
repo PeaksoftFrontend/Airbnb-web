@@ -11,31 +11,7 @@ import { Box, styled } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../utils/constants/paths";
-import { useGetPopularsApartments } from "../../redux/api/houses.service";
-
-// const POPULAR_REGIONS = [
-//   {
-//     title: "POPULAR APARTAMENTS",
-//     url: "https://shorturl.at/3IY2D",
-//     text: "Aska Lara Resort & Spa Hotel",
-//     description:
-//       "The Aska Lara Resort & Spa Hotel, which operates on an all-inclusive system, occupies 2 plots separated by a road. The hotel is located in the Lara district, 500 meters from the sea.",
-//     gps: "723510 Osh Muzurbek Alimbekov 9/7",
-//     information: "Read more",
-//     detail: "View all",
-//     images: [
-//       "https://shorturl.at/3IY2D",
-//       "https://shorturl.at/3IY2D",
-//       "https://shorturl.at/3IY2D",
-//       "https://shorturl.at/3IY2D",
-//       "https://shorturl.at/3IY2D",
-//       "https://shorturl.at/3IY2D",
-//       "https://shorturl.at/3IY2D",
-//       "https://shorturl.at/3IY2D",
-//       "https://shorturl.at/3IY2D",
-//     ],
-//   },
-// ];
+import { useGetPopularsApartmentsQuery } from "../../redux/api/houses.service";
 
 export const UserPageSlide = () => {
   const navigate = useNavigate();
@@ -43,7 +19,12 @@ export const UserPageSlide = () => {
   const [currentSlide, setCurrentSlide] = useState(1);
   const [totalSlides, setTotalSlides] = useState(0);
 
-  const { datas, error, isLoading, refetch } = useGetPopularsApartments();
+  const {
+    data = [],
+    error,
+    isLoading,
+    refetch,
+  } = useGetPopularsApartmentsQuery();
 
   if (error) return <p>error data</p>;
   if (isLoading) return <p>Loading...</p>;
@@ -73,7 +54,7 @@ export const UserPageSlide = () => {
 
   return (
     <StyleContainer>
-      {datas.map((item) => (
+      {data.map((item) => (
         <StyleBox key={item.id} {...item}>
           <StyleImageGlobal>
             <p>{item.title}</p>
