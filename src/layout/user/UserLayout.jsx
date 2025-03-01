@@ -1,15 +1,16 @@
 import { Publish } from "../../components/user/puplish/Publish";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 export const UserLayout = () => {
+  const { pathname } = useLocation();
+  console.log(pathname);
   return (
     <div>
-      <Header />
+      {pathname === "/" ? null : <Header />}
       <main>
         <Outlet />
-        <Publish />
       </main>
       <Footer />
     </div>

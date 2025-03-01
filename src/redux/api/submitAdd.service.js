@@ -7,12 +7,24 @@ export const submitAdApi = createApi({
   endpoints: (builder) => ({
     submitAnAd: builder.mutation({
       query: (formData) => ({
-        url: "/submit-ad",
+        url: "vendor/submitAnAd",
         method: "POST",
         body: formData,
       }),
     }),
+
+    submitFile: builder.mutation({
+      query: (file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        return {
+          url: "/api/file",
+          method: "POST",
+          body: formData,
+        };
+      },
+    }),
   }),
 });
 
-export const { useSubmitAnAdMutation } = submitAdApi;
+export const { useSubmitAnAdMutation, useSubmitFileMutation } = submitAdApi;

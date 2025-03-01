@@ -16,52 +16,73 @@ import { Modal } from "../../UI/Modal";
 import { Icons } from "../../../assets";
 import { useDropzone } from "react-dropzone";
 import { Textarea } from "@mui/joy";
-import { useSubmitAnAdMutation } from "../../../redux/api/submitAdd.service";
+import {
+  useSubmitAnAdMutation,
+  useSubmitFileMutation,
+} from "../../../redux/api/submitAdd.service";
 
 export const Publish = () => {
   const [radioValue, setRadioValue] = useState("");
   const radioRef = useRef(null);
   const [files, setFiles] = useState([]);
-  const [submitAnAd, { isLoading, error }] = useSubmitAnAdMutation();
-  console.log(submitAnAd);
+  const [submitFile] = useSubmitFileMutation();
+  const [submitAnAd, { isLoading, isError, error }] = useSubmitAnAdMutation();
 
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
   };
 
-  const handleSubmit = async () => {
-    const formData = new FormData();
-    formData.append("homeType", radioValue);
-    formData.append("maxGuests", 5);
-    formData.append("price", 100);
-    formData.append("title", "Пример заголовка");
-    formData.append("description", "Описание вашего объявления");
-    formData.append("region", "Bishkek");
-    formData.append("town", "Some Town");
-    formData.append("address", "Some Address");
-
-    files.forEach((file) => {
-      formData.append("images", file);
-    });
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = {
+      homeType: radioValue,
+      maxGuests: 4,
+      price: 100,
+      title: "Пример заголовка",
+      description: "Описание вашего объявления",
+      region: "BATKEN",
+      town: "Some Town",
+      address: "Some Address",
+    };
 
     try {
-      await submitAnAd(formData).unwrap();
-      console.log("Объявление успешно отправлено!");
-    } catch (error) {
-      console.error("Ошибка при отправке объявления:", error);
+      const response = await submitAnAd(data).unwrap();
+      console.log("✅ Объявление успешно отправлено:", response);
+      return <p>отправлено</p>;
+    } catch (err) {
+      console.log("❌ Ошибка при отправке объявления:", err);
+      return <p>ошибка!</p>;
     }
   };
 
-  const onDrop = (acceptedFiles) => {
-    if (files.length + acceptedFiles.length <= 4) {
-      setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
-    } else {
-      Error;
+  // const onDrop = (acceptedFiles) => {
+  //   if (files.length + acceptedFiles.length <= 4) {
+  //     setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
+  //   } else {
+  //     console.error("You can only upload up to 4 files.");
+  //   }
+  // };
+
+  const onDrop = async (acceptedFiles) => {
+    const uploadedFiles = acceptedFiles.map((file) => {
+      return {
+        file,
+        preview: URL.createObjectURL(file),
+      };
+    });
+
+    setFiles((prevFiles) => [...prevFiles, ...uploadedFiles]);
+
+    for (const fileObj of uploadedFiles) {
+      try {
+        const response = await submitFile(fileObj.file).unwrap();
+        console.log("✅ Файл загружен:", response);
+      } catch (error) {
+        console.error("❌ Ошибка загрузки файла:", error);
+      }
     }
   };
 
-  if (error) return <p>error</p>;
-  if (isLoading) return <p>Loading...</p>;
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     maxFiles: 4,
@@ -81,9 +102,20 @@ export const Publish = () => {
       "video/*": [],
     },
   });
+
   const removeFile = (fileToRemove) => {
     setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToRemove));
   };
+
+  if (isError) {
+    console.log("Ошибка при отправке объявления:", error);
+    console.log("Полная ошибка:", JSON.stringify(error, null, 2));
+    return <p>Ошибка при отправке объявления.</p>;
+  }
+  if (isLoading) {
+    console.log("Loading..");
+    return <p>Загрузка...</p>;
+  }
 
   const options = [
     { value: "Batken", label: "BATKEN" },
@@ -138,13 +170,13 @@ export const Publish = () => {
               </StyledTextBox>
             </StyledFotoBox>
             <StyledImagesContainer>
-              {files.map((file) => (
+              {files.map(({ file, preview }) => (
                 <StyledImagesContainer key={file.name}>
                   <StyledImage
-                    src={URL.createObjectURL(file)}
+                    src={preview}
                     alt={`Uploaded file ${file.name}`}
                   />
-                  <Icons.Cancellation onClick={() => removeFile(file)} />
+                  <Icons.Cancellation onClick={() => removeFile(file.name)} />
                 </StyledImagesContainer>
               ))}
             </StyledImagesContainer>
@@ -224,12 +256,7 @@ export const Publish = () => {
         </StyledBox>
       </StyledBoxContainer>
       <StyledButtonDiv>
-        <StyledButton
-          type="submit"
-          onClick={handleSubmit}
-          disabled={isLoading}
-          variant="outlined"
-        >
+        <StyledButton type="submit" onClick={handleSubmit} variant="outlined">
           Submit
         </StyledButton>
       </StyledButtonDiv>
