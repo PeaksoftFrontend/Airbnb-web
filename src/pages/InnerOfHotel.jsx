@@ -6,6 +6,7 @@ import { Icons } from "../assets";
 import { CardUser } from "../components/user/CardUser";
 import { Data } from "../utils/constants/cardUser";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useGetAnnouncementsFilterQuery } from "../redux/api/auth.servers";
 
 const main = [
   { id: 1, url: "/main", title: "Main" },
@@ -13,22 +14,17 @@ const main = [
 ];
 
 export const InnerOfHotel = () => {
+  const { data, error, isLoading } = useGetAnnouncementsFilterQuery();
   const { region } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const categoryFromURL = params.get("category") || "";
-
   const [page, setPages] = useState(1);
   const [select1, setSelect1] = useState("");
   const [select2, setSelect2] = useState(categoryFromURL || "");
   const [select3, setSelect3] = useState("");
   const [select4, setSelect4] = useState("");
-  // const [showApartment, setShowApartment] = useState(false);
-
-  // useEffect(() => {
-  //   setSelect2(categoryFromURL);
-  // }, [categoryFromURL]);
 
   useEffect(() => {
     if (categoryFromURL) {
@@ -40,28 +36,38 @@ export const InnerOfHotel = () => {
     setSelect2(value);
     navigate(`${location.pathname}?category=${value}`);
   };
+  const options1 = data ? [...new Set(data.map((item) => item.region))] : [];
+  const options2 = data ? [...new Set(data.map((item) => item.category))] : [];
+  const options3 = data ? [...new Set(data.map((item) => item.type))] : [];
+  const options4 = data
+    ? [...new Set(data.map((item) => item.priceRange))]
+    : [];
+  if (isLoading) return <div>Загрузка...</div>;
+  if (error) return <div>Ошибка загрузки данных</div>;
 
-  const options = [
-    { value: "Batken", label: "Batken" },
-    { value: "Jalalabat", label: "Jalalabat" },
-    { value: "Naryn", label: "Naryn" },
-    { value: "Issyk-Kul", label: "Issyk-Kul" },
-    { value: "Talas", label: "Talas" },
-    { value: "Osh", label: "Osh" },
-    { value: "Chui", label: "Chui" },
-    { value: "Bishkek", label: "Bishkek" },
-  ];
+  // const options = [
+  //   { value: "Batken", label: "Batken" },
+  //   { value: "Jalalabat", label: "Jalalabat" },
+  //   { value: "Naryn", label: "Naryn" },
+  //   { value: "Issyk-Kul", label: "Issyk-Kul" },
+  //   { value: "Talas", label: "Talas" },
+  //   { value: "Osh", label: "Osh" },
+  //   { value: "Chui", label: "Chui" },
+  //   { value: "Bishkek", label: "Bishkek" },
+  // ];
 
-  const option2 = [
-    { value: "popular", label: "popular" },
-    { value: "apartment", label: "apartment" },
-  ];
-
-  // const option2 = Data.map((item) => ({
-  //   value: item.id, // Берем id из данных
-  //   label: item.title, // Можно использовать другое поле, например title
-  // }));
-
+  // const option2 = [
+  //   { value: "popular", label: "popular" },
+  //   { value: "The lastest", label: "The lastest" },
+  // ];
+  // const option3 = [
+  //   { value: "House", label: "House" },
+  //   { value: "apartment", label: "apartment" },
+  // ];
+  // const option4 = [
+  //   { value: "Low to high", label: "Low to high" },
+  //   { value: "High to low", label: "High to low" },
+  // ];
   const handleSelectChange = (event, select) => {
     const value = event.target.value;
     if (select === "select1") {
@@ -91,9 +97,9 @@ export const InnerOfHotel = () => {
 
   const cardsPerPage = 16;
 
-  const totalPages = Math.ceil(Data.length / cardsPerPage);
+  const totalPages = Math.ceil(data.length / cardsPerPage);
 
-  const currentCards = Data.slice(
+  const currentCards = data.slice(
     (page - 1) * cardsPerPage,
     page * cardsPerPage
   );
@@ -115,29 +121,41 @@ export const InnerOfHotel = () => {
           <StyleDiv>
             <StyleSelects>
               <StyleSelect
-                options={options}
+                options={options1.map((option) => ({
+                  value: option,
+                  label: option,
+                }))}
                 value={select1}
                 onChange={(value) => handleSelectChange(value, "select1")}
                 placeholder="Sort by:"
               ></StyleSelect>
               <StyleSelect
-                options={option2}
+                options={options2.map((option) => ({
+                  value: option,
+                  label: option,
+                }))}
                 value={select2}
                 onChange={(event) => handleCategoryChange(event.target.value)}
                 placeholder={select2 || "Sort by:"}
               />
 
               <StyleSelect
-                options={options}
+                options={options3.map((option) => ({
+                  value: option,
+                  label: option,
+                }))}
                 value={select3}
                 onChange={(value) => handleSelectChange(value, "select3")}
-                placeholder="Sort by:"
+                placeholder={select3 || "Filter by home type:"}
               ></StyleSelect>
               <StyleSelect
-                options={options}
+                options={options4.map((option) => ({
+                  value: option,
+                  label: option,
+                }))}
                 value={select4}
                 onChange={(value) => handleSelectChange(value, "select4")}
-                placeholder="Sort by:"
+                placeholder={select4 || "Filter by price:"}
               ></StyleSelect>
             </StyleSelects>
             <StyleOptions>
@@ -185,15 +203,10 @@ export const InnerOfHotel = () => {
 const StyleSelect = styled(Select)({
   width: "271px",
   height: "42px",
-  "& fieldset": {
-    borderRadius: "0",
-  },
+  "& fieldset": { borderRadius: "0" },
 });
 
-const StyleSelects = styled("div")({
-  display: "flex",
-  gap: "10px",
-});
+const StyleSelects = styled("div")({ display: "flex", gap: "10px" });
 
 const StyleDiv = styled("div")({
   display: "flex",
@@ -201,15 +214,9 @@ const StyleDiv = styled("div")({
   flexDirection: "column",
 });
 
-const StyleOptions = styled("div")({
-  display: "flex",
-  gap: "10px",
-});
+const StyleOptions = styled("div")({ display: "flex", gap: "10px" });
 
-const StyleRegionNameandSlect = styled("div")({
-  display: "flex",
-  gap: "10px",
-});
+const StyleRegionNameandSlect = styled("div")({ display: "flex", gap: "10px" });
 
 const StyleSelectText1 = styled("p")(({ hasText }) => ({
   background: hasText ? "#F3F3F3" : "transparent",
@@ -217,11 +224,12 @@ const StyleSelectText1 = styled("p")(({ hasText }) => ({
   display: hasText ? "flex" : "none",
   alignItems: "center",
   cursor: "pointer",
-
+  fontSize: "16px",
+  fontWeight: "400",
+  color: "#828282",
+  textTransform: "uppercase",
   gap: "5px",
-  "&:hover": {
-    background: "#C4C4C4",
-  },
+  "&:hover": { background: "#C4C4C4" },
 }));
 
 const StyleSelectText2 = styled("p")(({ hasText }) => ({
@@ -231,9 +239,11 @@ const StyleSelectText2 = styled("p")(({ hasText }) => ({
   alignItems: "center",
   cursor: "pointer",
   gap: "5px",
-  "&:hover": {
-    background: "#C4C4C4",
-  },
+  fontSize: "16px",
+  fontWeight: "400",
+  color: "#828282",
+  textTransform: "uppercase",
+  "&:hover": { background: "#C4C4C4" },
 }));
 
 const StyleSelectText3 = styled("p")(({ hasText }) => ({
@@ -243,9 +253,11 @@ const StyleSelectText3 = styled("p")(({ hasText }) => ({
   alignItems: "center",
   cursor: "pointer",
   gap: "5px",
-  "&:hover": {
-    background: "#C4C4C4",
-  },
+  fontSize: "16px",
+  fontWeight: "400",
+  color: "#828282",
+  textTransform: "uppercase",
+  "&:hover": { background: "#C4C4C4" },
 }));
 
 const StyleSelectText4 = styled("p")(({ hasText }) => ({
@@ -255,9 +267,11 @@ const StyleSelectText4 = styled("p")(({ hasText }) => ({
   alignItems: "center",
   cursor: "pointer",
   gap: "5px",
-  "&:hover": {
-    background: "#C4C4C4",
-  },
+  fontSize: "16px",
+  fontWeight: "400",
+  color: "#828282",
+  textTransform: "uppercase",
+  "&:hover": { background: "#C4C4C4" },
 }));
 
 const StyleHeadElements = styled("div")({
@@ -286,14 +300,9 @@ const StylePogination = styled(Box)({
     color: "#BDBDBD",
     fontSize: "16px",
     fontWeight: 500,
-    "&:hover": {
-      background: "none",
-    },
+    "&:hover": { background: "none" },
   },
-  "& .Mui-selected": {
-    background: "none",
-    color: "#DD8A08",
-  },
+  "& .Mui-selected": { background: "none", color: "#DD8A08" },
   "& .MuiPaginationItem-icon": {
     fill: "#DD8A08",
     width: "25px",
@@ -305,9 +314,5 @@ const StyleTitle = styled("p")({
   fontSize: "20px",
   fontWeight: 500,
   color: "#000000",
-  "& span": {
-    color: "#646464",
-    fontSize: "18px",
-    fontWeight: 400,
-  },
+  "& span": { color: "#646464", fontSize: "18px", fontWeight: 400 },
 });

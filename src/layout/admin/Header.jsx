@@ -19,7 +19,7 @@ export const Header = () => {
 
       dispatch(logout());
 
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       error;
     }

@@ -4,7 +4,7 @@ import { Outlet, useLocation } from "react-router-dom";
 
 export const UserLayout = () => {
   const { pathname } = useLocation();
-  console.log(pathname);
+
   return (
     <div>
       {pathname === "/" ? null : <Header />}

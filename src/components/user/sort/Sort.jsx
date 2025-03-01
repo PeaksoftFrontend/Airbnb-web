@@ -1,21 +1,19 @@
-import { Button, IconButton, Box, styled } from "@mui/material";
+import { IconButton, Box, styled } from "@mui/material";
 import { Icons } from "../../../assets";
 import { Select as MySelect } from "../../UI/Select";
 
 export const Sort = ({
-  allSelectedValues,
-  selectedRaiting,
-  setSelectedRaiting,
+  selected,
+  setSelected,
   homeType,
   setHomeType,
-  onClear,
   options,
 }) => {
   const handleChange = (event) => {
     const selectedValue = event.target.value;
     const selectedOption = options.find((item) => item.value === selectedValue);
     if (selectedOption) {
-      setSelectedRaiting(selectedOption.label);
+      setSelected(selectedOption.label);
       setHomeType("");
     }
   };
@@ -34,16 +32,13 @@ export const Sort = ({
       </SelectBox>
       <BoxValue>
         <StyledBox>
-          {selectedRaiting && (
+          {selected && (
             <SelectedValue>
-              <IconButton onClick={() => setSelectedRaiting("")} size="small">
+              <IconButton onClick={() => setSelected("")} size="small">
                 <StyledIcons />
               </IconButton>
-              {selectedRaiting}
+              {selected}
             </SelectedValue>
-          )}
-          {allSelectedValues.length > 0 && (
-            <StyledClearButton onClick={onClear}>Clear all</StyledClearButton>
           )}
         </StyledBox>
       </BoxValue>
@@ -62,10 +57,7 @@ const StyledFromControl = styled(Box)({
   flexDirection: "column",
   gap: "16px",
 });
-const SelectBox = styled(Box)({
-  display: "flex",
-  gap: "10px",
-});
+const SelectBox = styled(Box)({ display: "flex", gap: "10px" });
 const StyledBox = styled(Box)({
   display: "flex",
   flexDirection: "",
@@ -73,13 +65,7 @@ const StyledBox = styled(Box)({
   alignItems: "flex-start",
   gap: "16px",
 });
-const StyledClearButton = styled(Button)({
-  color: "#828282",
-  height: "32px",
-  fontSize: "16px",
-  textDecoration: "underline",
-  textTransform: "capitalize",
-});
+
 const SelectedValue = styled(Box)({
   display: "flex",
   alignItems: "center",
@@ -106,20 +92,12 @@ const StyleSelect = styled(MySelect)({
     backgroundColor: "transparent",
     borderColor: "#C4C4C4",
   },
-  "& .MuiInputBase-root": {
-    padding: 0,
-  },
-  "& .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#C4C4C4",
-  },
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#C4C4C4",
-  },
+  "& .MuiInputBase-root": { padding: 0 },
+  "& .MuiOutlinedInput-notchedOutline": { borderColor: "#C4C4C4" },
+  "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#C4C4C4" },
   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
     borderColor: "#C4C4C4",
     borderWidth: "2px",
   },
-  "&:active .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#C4C4C4",
-  },
+  "&:active .MuiOutlinedInput-notchedOutline": { borderColor: "#C4C4C4" },
 });

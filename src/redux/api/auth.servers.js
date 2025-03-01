@@ -18,7 +18,20 @@ export const authApi = createApi({
         body: { email, password },
       }),
     }),
+    getAnnouncementsFilter: builder.query({
+      query: () => "/vendor/announcements-filter",
+      providesTags: () => [{ type: "Announcements", id: "FILTERS" }],
+    }),
+    favorite: builder.mutation({
+      query: (announcementId) => ({ url: `/favorites/${announcementId}` }),
+      method: "POST",
+    }),
   }),
 });
 
-export const { useGoogleLoginMutation, useLoginAdminMutation } = authApi;
+export const {
+  useGoogleLoginMutation,
+  useLoginAdminMutation,
+  useFavoriteMutation,
+  useGetAnnouncementsFilterQuery,
+} = authApi;
