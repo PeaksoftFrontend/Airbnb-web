@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import { InputAdornment, styled, TextField } from "@mui/material";
 import { Icons } from "../../assets";
 
@@ -24,7 +24,6 @@ export const SearchInput = forwardRef(
     );
   }
 );
-
 const SearchTextField = styled(TextField)(() => ({
   border: "1px solid #C4C4C4",
   borderRadius: "2px",
@@ -41,6 +40,9 @@ const SearchTextField = styled(TextField)(() => ({
     "&:hover .MuiOutlinedInput-notchedOutline": {
       borderColor: "#C4C4C4",
     },
+  },
+  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#C4C4C4 !important",
   },
   "& input": {
     color: "#939292",
