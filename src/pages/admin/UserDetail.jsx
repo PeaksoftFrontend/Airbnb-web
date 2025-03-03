@@ -6,7 +6,19 @@ import { useState } from "react";
 import { Button } from "../../components/UI/Button";
 import { Booking } from "../../components/UI/Booking";
 import { MyAnnouncement } from "../../components/UI/MyAnnouncement";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useGetUsersDetailsQuery } from "../../redux/api/users.service";
+import { useBlockUserMutation } from "../../redux/api/application.service";
+
 export const UserDetail = () => {
+  const { userId } = useParams();
+  const [searchParams] = useSearchParams();
+  const { data = null } = useGetUsersDetailsQuery({
+    id: userId,
+    value: searchParams.get("name"),
+  });
+  const [blockUser] = useBlockUserMutation();
+
   const [tabValue, setTabValue] = useState(0);
   const [showButton, setShowButton] = useState(false);
 
@@ -17,13 +29,18 @@ export const UserDetail = () => {
   };
 
   const path = [
-    { id: 1, url: "/user", title: "Users" },
-    { id: 1, url: "/user", title: "Медер Медеров" },
+    { id: 1, url: "/admin/users", title: "Users" },
+    { id: 1, url: "#", title: data?.fullName },
   ];
 
   const tabs = [
-    { label: "Bookings", content: <Booking /> },
-    { label: "My announcement", content: <MyAnnouncement /> },
+    { label: "Bookings", content: <Booking bookingUser={data?.bookingUser} /> },
+    {
+      label: "My announcement",
+      content: (
+        <MyAnnouncement announcementResponses={data?.announcementResponses} />
+      ),
+    },
   ];
   return (
     <StyledBox>
@@ -33,14 +50,14 @@ export const UserDetail = () => {
       <StyledDivContent>
         <StyledProfileBox>
           <Profile
-            name={"Медер"}
-            fullName={"Медербеков"}
-            email={"mederbekov@gmail.com"}
+            name={data?.fullName || "Nooruz"}
+            email={data?.email}
+            avatar={data?.avatar}
             isAuth={false}
             role={"ADMIN"}
           />
           {showButton && (
-            <StyledButton variant="outlined">
+            <StyledButton variant="outlined" onClick={() => blockUser(userId)}>
               block all announcement
             </StyledButton>
           )}

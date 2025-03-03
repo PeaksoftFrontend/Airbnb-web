@@ -1,21 +1,17 @@
 import { Box, Pagination, styled } from "@mui/material";
 import { CardAdmin } from "../../components/UI/admin/CardAdmin";
-import { Data } from "../../utils/constants/cardAdmin";
 import { useState } from "react";
+import { useGetApplicationQuery } from "../../redux/api/application.service";
 
 export const Application = () => {
-  const [page, setPages] = useState(1);
-  const cardsPerPage = 15;
-
-  const totalPages = Math.ceil(Data.length / cardsPerPage);
-
-  const currentCards = Data.slice(
-    (page - 1) * cardsPerPage,
-    page * cardsPerPage
-  );
+  const [page, setPages] = useState({
+    page: 1,
+    size: 12,
+  });
+  const { data } = useGetApplicationQuery(page);
 
   const handlePageChange = (_, value) => {
-    setPages(value);
+    setPages({ ...page, page: Number(value) });
   };
 
   return (
@@ -27,14 +23,16 @@ export const Application = () => {
       >
         APPLICATION
       </StyleText>
-      <CardAdmin cards={currentCards} />
-      <StylePogination>
-        <Pagination
-          count={totalPages}
-          page={page}
-          onChange={handlePageChange}
-        />
-      </StylePogination>
+      <CardAdmin cards={data?.announcementResponses} />
+      {data?.announcementResponses?.length > 0 && (
+        <StylePogination>
+          <Pagination
+            count={data?.pageSize}
+            page={data?.currentPage}
+            onChange={handlePageChange}
+          />
+        </StylePogination>
+      )}
     </StyledContainer>
   );
 };

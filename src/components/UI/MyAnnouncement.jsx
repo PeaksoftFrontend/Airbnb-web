@@ -1,5 +1,9 @@
-import { Typography } from "@mui/material";
+import { CardAdmin } from "./admin/CardAdmin";
 
-export const MyAnnouncement = () => {
-  return <Typography>My announcement</Typography>;
+export const MyAnnouncement = ({ announcementResponses = [] }) => {
+  return (
+    <div>
+      <CardAdmin cards={announcementResponses} />
+    </div>
+  );
 };
