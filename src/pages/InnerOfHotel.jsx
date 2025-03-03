@@ -14,17 +14,24 @@ const main = [
 ];
 
 export const InnerOfHotel = () => {
-  const { data, error, isLoading } = useGetAnnouncementsFilterQuery();
   const { region } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const categoryFromURL = params.get("category") || "";
   const [page, setPages] = useState(1);
-  const [select1, setSelect1] = useState("");
+  const [select1, setSelect1] = useState(region || "");
   const [select2, setSelect2] = useState(categoryFromURL || "");
   const [select3, setSelect3] = useState("");
   const [select4, setSelect4] = useState("");
+
+  const { data, error, isLoading } = useGetAnnouncementsFilterQuery({
+    region: select1,
+    category: select2,
+    type: select3,
+    priceRange: select4,
+    page: page,
+  });
 
   useEffect(() => {
     if (categoryFromURL) {
@@ -32,52 +39,34 @@ export const InnerOfHotel = () => {
     }
   }, [categoryFromURL]);
 
+  const handleRegionChange = (value) => {
+    setSelect1(value);
+    navigate(`?region=${value}&category=${select2}&page=${page}`);
+  };
+
   const handleCategoryChange = (value) => {
     setSelect2(value);
-    navigate(`${location.pathname}?category=${value}`);
+    navigate(`?region=${select1}&category=${value}&page=${page}`);
   };
-  const options1 = data ? [...new Set(data.map((item) => item.region))] : [];
-  const options2 = data ? [...new Set(data.map((item) => item.category))] : [];
-  const options3 = data ? [...new Set(data.map((item) => item.type))] : [];
-  const options4 = data
-    ? [...new Set(data.map((item) => item.priceRange))]
-    : [];
-  if (isLoading) return <div>Загрузка...</div>;
-  if (error) return <div>Ошибка загрузки данных</div>;
 
-  // const options = [
-  //   { value: "Batken", label: "Batken" },
-  //   { value: "Jalalabat", label: "Jalalabat" },
-  //   { value: "Naryn", label: "Naryn" },
-  //   { value: "Issyk-Kul", label: "Issyk-Kul" },
-  //   { value: "Talas", label: "Talas" },
-  //   { value: "Osh", label: "Osh" },
-  //   { value: "Chui", label: "Chui" },
-  //   { value: "Bishkek", label: "Bishkek" },
-  // ];
-
-  // const option2 = [
-  //   { value: "popular", label: "popular" },
-  //   { value: "The lastest", label: "The lastest" },
-  // ];
-  // const option3 = [
-  //   { value: "House", label: "House" },
-  //   { value: "apartment", label: "apartment" },
-  // ];
-  // const option4 = [
-  //   { value: "Low to high", label: "Low to high" },
-  //   { value: "High to low", label: "High to low" },
-  // ];
   const handleSelectChange = (event, select) => {
     const value = event.target.value;
     if (select === "select1") {
       setSelect1(value);
+      navigate(`?region=${value}&category=${select2}&page=${page}`);
     } else if (select === "select2") {
       setSelect2(value);
+      navigate(`?region=${select1}&category=${value}&page=${page}`);
     } else if (select === "select3") {
       setSelect3(value);
+      navigate(
+        `?region=${select1}&category=${select2}&type=${value}&page=${page}`
+      );
     } else if (select === "select4") {
       setSelect4(value);
+      navigate(
+        `?region=${select1}&category=${select2}&priceRange=${value}&page=${page}`
+      );
     }
   };
 
@@ -86,6 +75,7 @@ export const InnerOfHotel = () => {
     setSelect2("");
     setSelect3("");
     setSelect4("");
+    navigate(`?page=${page}`);
   };
 
   const deletetext = (select) => {
@@ -93,20 +83,29 @@ export const InnerOfHotel = () => {
     if (select === "select2") setSelect2("");
     if (select === "select3") setSelect3("");
     if (select === "select4") setSelect4("");
+    navigate(`?region=${select1}&category=${select2}&page=${page}`);
   };
 
   const cardsPerPage = 16;
-
-  const totalPages = Math.ceil(data.length / cardsPerPage);
-
-  const currentCards = data.slice(
-    (page - 1) * cardsPerPage,
-    page * cardsPerPage
-  );
+  const totalPages = data ? Math.ceil(data.length / cardsPerPage) : 0;
+  const currentCards = data
+    ? data.slice((page - 1) * cardsPerPage, page * cardsPerPage)
+    : [];
 
   const handlePageChange = (_, value) => {
     setPages(value);
+    navigate(`?region=${select1}&category=${select2}&page=${value}`);
   };
+
+  if (isLoading) return <div>Загрузка...</div>;
+  if (error) return <div>Ошибка загрузки данных</div>;
+
+  const options1 = data ? [...new Set(data.map((item) => item.region))] : [];
+  const options2 = data ? [...new Set(data.map((item) => item.category))] : [];
+  const options3 = data ? [...new Set(data.map((item) => item.type))] : [];
+  const options4 = data
+    ? [...new Set(data.map((item) => item.priceRange))]
+    : [];
 
   return (
     <div>
@@ -114,7 +113,7 @@ export const InnerOfHotel = () => {
         <Breadcrumbs path={main} />
         <StyleRegionNameandSlect>
           <StyleTitle>
-            {region}
+            {select1 || region}
             <span>({Data.length})</span>
           </StyleTitle>
 
@@ -126,8 +125,8 @@ export const InnerOfHotel = () => {
                   label: option,
                 }))}
                 value={select1}
-                onChange={(value) => handleSelectChange(value, "select1")}
-                placeholder="Sort by:"
+                onChange={(e) => handleRegionChange(e.target.value)}
+                placeholder="Sort by region:"
               ></StyleSelect>
               <StyleSelect
                 options={options2.map((option) => ({
@@ -135,18 +134,17 @@ export const InnerOfHotel = () => {
                   label: option,
                 }))}
                 value={select2}
-                onChange={(event) => handleCategoryChange(event.target.value)}
-                placeholder={select2 || "Sort by:"}
+                onChange={(e) => handleCategoryChange(e.target.value)}
+                placeholder="Sort by category:"
               />
-
               <StyleSelect
                 options={options3.map((option) => ({
                   value: option,
                   label: option,
                 }))}
                 value={select3}
-                onChange={(value) => handleSelectChange(value, "select3")}
-                placeholder={select3 || "Filter by home type:"}
+                onChange={(e) => handleSelectChange(e, "select3")}
+                placeholder="Filter by home type:"
               ></StyleSelect>
               <StyleSelect
                 options={options4.map((option) => ({
@@ -154,8 +152,8 @@ export const InnerOfHotel = () => {
                   label: option,
                 }))}
                 value={select4}
-                onChange={(value) => handleSelectChange(value, "select4")}
-                placeholder={select4 || "Filter by price:"}
+                onChange={(e) => handleSelectChange(e, "select4")}
+                placeholder="Filter by price:"
               ></StyleSelect>
             </StyleSelects>
             <StyleOptions>
@@ -188,7 +186,9 @@ export const InnerOfHotel = () => {
           </StyleDiv>
         </StyleRegionNameandSlect>
       </StyleHeadElements>
+
       <CardUser cards={currentCards} />
+
       <StylePogination>
         <Pagination
           count={totalPages}

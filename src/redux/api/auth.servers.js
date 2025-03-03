@@ -19,7 +19,16 @@ export const authApi = createApi({
       }),
     }),
     getAnnouncementsFilter: builder.query({
-      query: () => "/vendor/announcements-filter",
+      query: ({ region, category, type, priceRange, page }) => {
+        const params = new URLSearchParams();
+        if (region) params.append("region", region);
+        if (category) params.append("category", category);
+        if (type) params.append("type", type);
+        if (priceRange) params.append("priceRange", priceRange);
+        if (page) params.append("page", page);
+
+        return `/vendor/announcements-filter?${params.toString()}`;
+      },
       providesTags: () => [{ type: "Announcements", id: "FILTERS" }],
     }),
     favorite: builder.mutation({
