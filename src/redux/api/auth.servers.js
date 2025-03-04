@@ -19,18 +19,27 @@ export const authApi = createApi({
       }),
     }),
     getAnnouncementsFilter: builder.query({
-      query: ({ region, category, type, priceRange, page }) => {
-        const params = new URLSearchParams();
-        if (region) params.append("region", region);
-        if (category) params.append("category", category);
-        if (type) params.append("type", type);
-        if (priceRange) params.append("priceRange", priceRange);
-        if (page) params.append("page", page);
-
-        return `/vendor/announcements-filter?${params.toString()}`;
+      query: ({ region, category, houseType, price, currentPage }) => {
+        const url = `/vendor/announcements-filter?${new URLSearchParams({
+          ...(region && { region }),
+          ...(category && { category }),
+          ...(houseType && { houseType }),
+          ...(price && { price }),
+          ...(currentPage && { currentPage }),
+        }).toString()}`;
+        return url;
       },
-      providesTags: () => [{ type: "Announcements", id: "FILTERS" }],
+
+      transformResponse: (response) => {
+        return {
+          announcementResponses: response.announcementResponses || [],
+          currentPage: response.currentPage,
+          pageSize: response.pageSize || 16,
+        };
+      },
+      providesTags: ["announcement"],
     }),
+
     favorite: builder.mutation({
       query: (announcementId) => ({ url: `/favorites/${announcementId}` }),
       method: "POST",
