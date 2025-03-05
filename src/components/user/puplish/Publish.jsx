@@ -16,17 +16,17 @@ import { Modal } from "../../UI/Modal";
 import { Icons } from "../../../assets";
 import { useDropzone } from "react-dropzone";
 import { Textarea } from "@mui/joy";
-import {
-  useSubmitAnAdMutation,
-  useSubmitFileMutation,
-} from "../../../redux/api/submitAdd.service";
+import { useSubmitAnAdMutation } from "../../../redux/api/submitAdd.service";
+import { usePosts3File } from "../../../hooks/usePosts3File";
+import { OPTIONS_REGIONS } from "../../../utils/constants";
 
 export const Publish = () => {
   const [radioValue, setRadioValue] = useState("");
   const radioRef = useRef(null);
   const [files, setFiles] = useState([]);
-  const [submitFile] = useSubmitFileMutation();
   const [submitStatus, setSubmitStatus] = useState("");
+  const { posts3File } = usePosts3File();
+
   const [formData, setFormData] = useState({
     houseType: "",
     maxGuests: "",
@@ -34,17 +34,17 @@ export const Publish = () => {
     title: "",
     description: "",
     region: "",
-    town: "",
+    province: "",
     address: "",
   });
-  const [submitAnAd, { isLoading, isError, error }] = useSubmitAnAdMutation();
+  const [submitAnAd] = useSubmitAnAdMutation();
 
   const handleRadioChange = (event) => {
     const value = event.target.value;
     setRadioValue(value);
     setFormData((prevData) => ({
       ...prevData,
-      homeType: value,
+      houseType: value,
     }));
   };
   const handleChange = (event) => {
@@ -58,92 +58,36 @@ export const Publish = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await submitAnAd({
+      await submitAnAd({
         ...formData,
         image: [
           "https://www.isradon.com/image/cache/data/new/img_1184490-500x500.sa.webp",
         ],
       }).unwrap();
-      console.log("✅ Объявление успешно отправлено:", response);
-      setSubmitStatus("Объявление успешно отправлено!");
     } catch (err) {
-      console.error("❌ Ошибка при отправке объявления:", err);
+      console.log(err);
+
       setSubmitStatus("Ошибка при отправке.");
     }
   };
 
-  // const onDrop = (acceptedFiles) => {
-  //   if (files.length + acceptedFiles.length <= 4) {
-  //     setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
-  //   } else {
-  //     console.error("You can only upload up to 4 files.");
-  //   }
-  // };
-
-  const onDrop = async (acceptedFiles) => {
-    const uploadedFiles = acceptedFiles.map((file) => {
-      return {
-        file,
-        preview: URL.createObjectURL(file),
-      };
-    });
-
-    setFiles((prevFiles) => [...prevFiles, ...uploadedFiles]);
-
-    for (const fileObj of uploadedFiles) {
-      try {
-        const response = await submitFile(fileObj.file).unwrap();
-        console.log("Файл загружен:", response);
-      } catch (error) {
-        console.error("Ошибка загрузки файла:", error);
-      }
+  const onDrop = (acceptedFiles) => {
+    const file = acceptedFiles[0];
+    if (file && ["image/jpeg", "image/png", "image/gif"].includes(file.type)) {
+      posts3File(file);
     }
   };
 
   const { getRootProps, getInputProps } = useDropzone({
+    accept: { "image/jpeg": [], "image/png": [], "image/gif": [] },
     onDrop,
-    maxFiles: 4,
-    accept: {
-      "image/*": [],
-      "application/pdf": [],
-      "text/*": [],
-      "application/msword": [],
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-        [],
-      "application/vnd.ms-excel": [],
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [],
-      "application/vnd.ms-powerpoint": [],
-      "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-        [],
-      "audio/*": [],
-      "video/*": [],
-    },
+    multiple: false,
+    maxFiles: 1,
   });
 
   const removeFile = (fileToRemove) => {
     setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToRemove));
   };
-
-  if (isError) {
-    console.log("Ошибка при отправке объявления:", error);
-    console.log("Полная ошибка:", JSON.stringify(error, null, 2));
-    return <p>Ошибка при отправке объявления.</p>;
-  }
-  if (isLoading) {
-    console.log("Loading..");
-    return <p>Загрузка...</p>;
-  }
-
-  const options = [
-    { value: "Batken", label: "BATKEN" },
-    { value: "Jalalabat", label: "JALALABAD" },
-    { value: "Naryn", label: "NARYN" },
-    { value: "Issyk-Kul", label: "ISSSYK-KUL" },
-    { value: "Talas", label: "TALAS" },
-    { value: "Osh", label: "OSH" },
-    { value: "Chui", label: "CHUI" },
-    { value: "Bishkek", label: "BISHKEK" },
-  ];
 
   return (
     <StyledContainer>
@@ -224,7 +168,7 @@ export const Publish = () => {
                   ref={radioRef}
                   value="HOUSE"
                   variant="house"
-                  checked={radioValue === "house"}
+                  checked={radioValue === "HOUSE"}
                   onChange={handleRadioChange}
                   sx={{
                     "&.Mui-checked": {
@@ -286,7 +230,7 @@ export const Publish = () => {
             <Select
               name="region"
               placeholder="Please, select the region"
-              options={options}
+              options={OPTIONS_REGIONS}
               size="small"
               value={formData.region}
               onChange={handleChange}
@@ -295,7 +239,7 @@ export const Publish = () => {
           <StyledSection>
             <StyledTypography>Town / Province</StyledTypography>
             <Input
-              name="town"
+              name="province"
               type="text"
               placeholder="Enter town"
               value={formData.town}

@@ -74,6 +74,7 @@ export const HeaderModal = () => {
     onSubmit: async (values) => {
       try {
         const response = await loginAdmin(values).unwrap();
+        console.log(response);
 
         const userData = {
           role: response.role,
