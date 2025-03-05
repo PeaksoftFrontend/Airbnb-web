@@ -26,32 +26,49 @@ export const Publish = () => {
   const radioRef = useRef(null);
   const [files, setFiles] = useState([]);
   const [submitFile] = useSubmitFileMutation();
+  const [submitStatus, setSubmitStatus] = useState("");
+  const [formData, setFormData] = useState({
+    houseType: "",
+    maxGuests: "",
+    price: "",
+    title: "",
+    description: "",
+    region: "",
+    town: "",
+    address: "",
+  });
   const [submitAnAd, { isLoading, isError, error }] = useSubmitAnAdMutation();
 
   const handleRadioChange = (event) => {
-    setRadioValue(event.target.value);
+    const value = event.target.value;
+    setRadioValue(value);
+    setFormData((prevData) => ({
+      ...prevData,
+      homeType: value,
+    }));
+  };
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = {
-      homeType: radioValue,
-      maxGuests: 4,
-      price: 100,
-      title: "Пример заголовка",
-      description: "Описание вашего объявления",
-      region: "BATKEN",
-      town: "Some Town",
-      address: "Some Address",
-    };
-
     try {
-      const response = await submitAnAd(data).unwrap();
+      const response = await submitAnAd({
+        ...formData,
+        image: [
+          "https://www.isradon.com/image/cache/data/new/img_1184490-500x500.sa.webp",
+        ],
+      }).unwrap();
       console.log("✅ Объявление успешно отправлено:", response);
-      return <p>отправлено</p>;
+      setSubmitStatus("Объявление успешно отправлено!");
     } catch (err) {
-      console.log("❌ Ошибка при отправке объявления:", err);
-      return <p>ошибка!</p>;
+      console.error("❌ Ошибка при отправке объявления:", err);
+      setSubmitStatus("Ошибка при отправке.");
     }
   };
 
@@ -76,9 +93,9 @@ export const Publish = () => {
     for (const fileObj of uploadedFiles) {
       try {
         const response = await submitFile(fileObj.file).unwrap();
-        console.log("✅ Файл загружен:", response);
+        console.log("Файл загружен:", response);
       } catch (error) {
-        console.error("❌ Ошибка загрузки файла:", error);
+        console.error("Ошибка загрузки файла:", error);
       }
     }
   };
@@ -188,11 +205,11 @@ export const Publish = () => {
             <StyledRadiosDiv>
               <StyledRadios>
                 <Radio
-                  label="Apartment"
-                  value="apartment"
+                  label="APARTMENT"
+                  value="APARTMENT"
                   ref={radioRef}
-                  variant="apartment"
-                  checked={radioValue === "apartment"}
+                  variant="APARTMENT"
+                  checked={radioValue === "APARTMENT"}
                   onChange={handleRadioChange}
                   sx={{
                     "&.Mui-checked": {
@@ -203,11 +220,11 @@ export const Publish = () => {
               </StyledRadios>
               <StyledRadios>
                 <Radio
-                  label="Home"
+                  label="House"
                   ref={radioRef}
-                  value="home"
-                  variant="home"
-                  checked={radioValue === "home"}
+                  value="HOUSE"
+                  variant="house"
+                  checked={radioValue === "house"}
                   onChange={handleRadioChange}
                   sx={{
                     "&.Mui-checked": {
@@ -221,41 +238,86 @@ export const Publish = () => {
           <StyledSectionTwo>
             <StyledPriceDiv>
               <StyledTypography>Max of Guests</StyledTypography>
-              <StyledInputMini type="number" placeholder="0" size="small" />
+              <StyledInputMini
+                type="number"
+                name="maxGuests"
+                placeholder="0"
+                value={formData.maxGuests}
+                onChange={handleChange}
+                size="small"
+              />
             </StyledPriceDiv>
 
             <StyledPriceDiv>
               <StyledTypography>Price</StyledTypography>
-              <StyledInputMini type="number" placeholder="$ 0" size="small" />
+              <StyledInputMini
+                type="number"
+                name="price"
+                placeholder="$ 0"
+                size="small"
+                value={formData.price}
+                onChange={handleChange}
+              />
             </StyledPriceDiv>
           </StyledSectionTwo>
           <StyledSection>
             <StyledTypography>Title</StyledTypography>
-            <Input type="text" size="small" />
-          </StyledSection>
-          <StyledSection>
-            <StyledTypography>Description of listing</StyledTypography>
-            <StyledTextarea minRows={3} />
-          </StyledSection>
-          <StyledSection>
-            <StyledTypography>Region</StyledTypography>
-            <Select
-              placeholder="Please, select the region"
-              options={options}
+            <Input
+              type="text"
+              name="title"
+              placeholder="Enter title"
+              value={formData.title}
+              onChange={handleChange}
               size="small"
             />
           </StyledSection>
           <StyledSection>
+            <StyledTypography>Description of listing</StyledTypography>
+            <StyledTextarea
+              minRows={3}
+              name="description"
+              placeholder="Describe your listing"
+              value={formData.description}
+              onChange={handleChange}
+            />
+          </StyledSection>
+          <StyledSection>
+            <StyledTypography>Region</StyledTypography>
+            <Select
+              name="region"
+              placeholder="Please, select the region"
+              options={options}
+              size="small"
+              value={formData.region}
+              onChange={handleChange}
+            />
+          </StyledSection>
+          <StyledSection>
             <StyledTypography>Town / Province</StyledTypography>
-            <Input type="text" size="small" />
+            <Input
+              name="town"
+              type="text"
+              placeholder="Enter town"
+              value={formData.town}
+              onChange={handleChange}
+              size="small"
+            />
           </StyledSection>
           <StyledSection>
             <StyledTypography>Address</StyledTypography>
-            <Input type="text" size="small" />
+            <Input
+              type="text"
+              name="address"
+              placeholder="Enter address"
+              value={formData.address}
+              onChange={handleChange}
+              size="small"
+            />
           </StyledSection>
         </StyledBox>
       </StyledBoxContainer>
       <StyledButtonDiv>
+        {submitStatus && <p>{submitStatus}</p>}
         <StyledButton type="submit" onClick={handleSubmit} variant="outlined">
           Submit
         </StyledButton>

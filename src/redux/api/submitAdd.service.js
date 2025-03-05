@@ -18,7 +18,7 @@ export const submitAdApi = createApi({
         const formData = new FormData();
         formData.append("file", file);
         return {
-          url: "/api/file",
+          url: "/file",
           method: "POST",
           body: formData,
         };
