@@ -5,6 +5,7 @@ import { ProductDetail } from "../../pages/admin/ProductDetail";
 import { Application } from "../../pages/admin/Application";
 import { AllHousingPage } from "../../pages/admin/AllHousingPage";
 import { UserDetail } from "../../pages/admin/UserDetail";
+import { UsersPage } from "../../pages/admin/UsersPage";
 
 export const AdminRoutes = () => {
   return [
@@ -33,6 +34,16 @@ export const AdminRoutes = () => {
       element: (
         <PrivateRoute
           Component={<UserDetail />}
+          isAuthorized={true}
+          fallBackPath={PATHS.ADMIN.ROOT}
+        />
+      ),
+    },
+    {
+      path: PATHS.ADMIN.USERS,
+      element: (
+        <PrivateRoute
+          Component={<UsersPage />}
           isAuthorized={true}
           fallBackPath={PATHS.ADMIN.ROOT}
         />

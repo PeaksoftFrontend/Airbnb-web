@@ -19,7 +19,7 @@ export const Header = () => {
 
       dispatch(logout());
 
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       error;
     }
@@ -51,19 +51,19 @@ export const Header = () => {
         <StyledLiTogether>
           <StyledLink
             to="/admin/application"
-            active={location.pathname === "/admin/application" ? 1 : 0}
+            active={location.pathname.includes("application") ? 1 : 0}
           >
             Application
           </StyledLink>
           <StyledLink
             to="/admin/users"
-            active={location.pathname === "/admin/users" ? 1 : 0}
+            active={location.pathname.includes("users") ? 1 : 0}
           >
             Users
           </StyledLink>
           <StyledLink
             to="/admin/all-housing"
-            active={location.pathname === "/admin/all-housing" ? 1 : 0}
+            active={location.pathname.includes("all-housing") ? 1 : 0}
           >
             All housing
           </StyledLink>

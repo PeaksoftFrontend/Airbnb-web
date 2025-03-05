@@ -8,9 +8,15 @@ import { Icons } from "../../../assets";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../../utils/constants/paths";
+import {
+  useAcceptedAnnouncementMutation,
+  useBlockingAnnouncementMutation,
+} from "../../../redux/api/application.service";
 
-export const CardAdmin = ({ cards }) => {
+export const CardAdmin = ({ cards = [] }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [acceptedAnnouncement] = useAcceptedAnnouncementMutation();
+  const [blockingAnnouncement] = useBlockingAnnouncementMutation();
   const navigate = useNavigate();
 
   const open = Boolean(anchorEl);
@@ -30,9 +36,9 @@ export const CardAdmin = ({ cards }) => {
   };
   return (
     <StyleContainer>
-      {cards.map((item) => (
+      {cards?.map((item) => (
         <StyledBox key={item.id} onClick={() => handleNavigate(item.id)}>
-          <StyleAll isNew={item.isNew}>
+          <StyleAll>
             <StyleSwiper
               mousewheel={true}
               navigation={{
@@ -46,7 +52,7 @@ export const CardAdmin = ({ cards }) => {
               }}
               modules={[Navigation, Pagination]}
             >
-              {item.images.map((images, index) => (
+              {item?.images.images.map((images, index) => (
                 <SwiperSlide key={index}>
                   <StyleImg src={images} alt="" />
                 </SwiperSlide>
@@ -68,7 +74,7 @@ export const CardAdmin = ({ cards }) => {
             <div>
               <StylePieces>
                 <p>
-                  ${item.pieces}/<StyleDay>day</StyleDay>
+                  ${item.price}/<StyleDay>day</StyleDay>
                 </p>
                 <StyledSpanStar>
                   <Icons.Star />
@@ -79,11 +85,11 @@ export const CardAdmin = ({ cards }) => {
                 <p>{item.title}</p>
                 <div>
                   <Icons.Location />
-                  <p>{item.gps}</p>
+                  <p>{item.address}</p>
                 </div>
               </StyleDiv>
               <StyleguesNum>
-                <div>{item.guests} guests</div>
+                <div>{item.maxGuests} guests</div>
                 <StyleMenuItem>
                   <Icons.MIniMenu
                     aria-controls={open ? "fade-menu" : undefined}
@@ -113,17 +119,46 @@ export const CardAdmin = ({ cards }) => {
                       },
                     }}
                     anchorOrigin={{
-                      vertical: "bottom",
+                      vertical: "top",
                       horizontal: "right",
                     }}
                     transformOrigin={{
-                      vertical: "bottom",
+                      vertical: "top",
                       horizontal: "right",
                     }}
                   >
-                    <MenuItem onClick={handleClose}>Accept</MenuItem>
-                    <MenuItem onClick={handleClose}>Reject</MenuItem>
-                    <MenuItem onClick={handleClose}>Delete</MenuItem>
+                    <MenuItem
+                      onClick={(event) => {
+                        blockingAnnouncement(item.id);
+                        handleClose(event);
+                      }}
+                    >
+                      Accept
+                    </MenuItem>
+                    <MenuItem
+                      onClick={(event) => {
+                        acceptedAnnouncement({
+                          id: item?.id,
+                          value: "reject",
+                          message: "admin rejected your announcement",
+                        });
+                        handleClose(event);
+                      }}
+                    >
+                      Reject
+                    </MenuItem>
+                    <MenuItem
+                      onClick={(event) => {
+                        acceptedAnnouncement({
+                          id: item?.id,
+                          value: "delete",
+                          message: "admin deleted your announcement",
+                        });
+                        handleClose(event);
+                      }}
+                    >
+                      Delete
+                    </MenuItem>
                   </Menu>
                 </StyleMenuItem>
               </StyleguesNum>
