@@ -238,10 +238,10 @@ const StyledDiv = styled(Box)({
 });
 
 const StyledLink = styled(Box)({
-  fontFamily: "Inter", // Fixed typo: fontfamily -> fontFamily
   fontSize: "18px",
   fontWeight: "500",
   color: "#FFF",
+  cursor: "pointer",
 });
 
 const StyledButton = styled(Button)({

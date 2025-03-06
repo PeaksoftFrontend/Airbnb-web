@@ -91,12 +91,12 @@ export const Publish = () => {
 
   return (
     <StyledContainer>
-      <StyledStartText variant="h6">
-        Hi! Let's get started listing your place.
-      </StyledStartText>
       <StyledBoxContainer>
+        <StyledStartText>
+          HI! LET'S GET STARTED LISTING YOUR PLACE.
+        </StyledStartText>
         <StyledCreateDiv>
-          <StyledInfoText variant="h6">
+          <StyledInfoText>
             In this form, we'll collect some basic and additional information
             about your listing.
           </StyledInfoText>
@@ -145,11 +145,11 @@ export const Publish = () => {
         </StyledCreateDiv>
         <StyledBox>
           <StyledSection>
-            <StyledTypography variant="h6">Home type</StyledTypography>
+            <StyledTypography>Home type</StyledTypography>
             <StyledRadiosDiv>
               <StyledRadios>
                 <Radio
-                  label="APARTMENT"
+                  label="Apartment"
                   value="APARTMENT"
                   ref={radioRef}
                   variant="APARTMENT"
@@ -206,13 +206,12 @@ export const Publish = () => {
           </StyledSectionTwo>
           <StyledSection>
             <StyledTypography>Title</StyledTypography>
-            <Input
+            <StyleInputTitle
               type="text"
               name="title"
               placeholder="Enter title"
               value={formData.title}
               onChange={handleChange}
-              size="small"
             />
           </StyledSection>
           <StyledSection>
@@ -227,18 +226,17 @@ export const Publish = () => {
           </StyledSection>
           <StyledSection>
             <StyledTypography>Region</StyledTypography>
-            <Select
+            <STyleSelectRegion
               name="region"
               placeholder="Please, select the region"
               options={OPTIONS_REGIONS}
-              size="small"
               value={formData.region}
               onChange={handleChange}
             />
           </StyledSection>
           <StyledSection>
             <StyledTypography>Town / Province</StyledTypography>
-            <Input
+            <StyleInputTitle
               name="province"
               type="text"
               placeholder="Enter town"
@@ -249,28 +247,43 @@ export const Publish = () => {
           </StyledSection>
           <StyledSection>
             <StyledTypography>Address</StyledTypography>
-            <Input
+            <StyleInputTitle
               type="text"
               name="address"
               placeholder="Enter address"
               value={formData.address}
               onChange={handleChange}
-              size="small"
             />
+            <StyledButtonDiv>
+              {submitStatus && <p>{submitStatus}</p>}
+              <StyledButton
+                type="submit"
+                onClick={handleSubmit}
+                variant="outlined"
+              >
+                Submit
+              </StyledButton>
+            </StyledButtonDiv>
           </StyledSection>
         </StyledBox>
       </StyledBoxContainer>
-      <StyledButtonDiv>
-        {submitStatus && <p>{submitStatus}</p>}
-        <StyledButton type="submit" onClick={handleSubmit} variant="outlined">
-          Submit
-        </StyledButton>
-      </StyledButtonDiv>
     </StyledContainer>
   );
 };
+const STyleSelectRegion = styled(Select)({
+  width: "610px",
+  height: "39px",
+  borderRadius: "2px",
+});
+const StyleInputTitle = styled("input")({
+  display: "flex",
+  width: "610px",
+  height: "39px",
+  paddingLeft: "10px",
+});
+
 const StyledTextarea = styled(Textarea)(() => ({
-  width: "100%",
+  width: "610px",
   height: "104px",
   borderRadius: "2px",
   border: `1px solid #C4C4C4`,
@@ -309,25 +322,22 @@ export const StyledModal = styled(Modal)(({ theme }) => ({
 }));
 
 const StyledContainer = styled(Container)({
-  display: "flex",
-  gap: "20px",
-  flexDirection: "column",
+  width: "100%",
   backgroundColor: "#F5F5F5",
-  height: "100%",
-  width: "610px",
+  display: "flex",
+  justifyContent: "center",
+  padding: "40px 0 150px 0",
 });
 
 const StyledStartText = styled(Typography)({
   fontSize: "16px",
-  fontWeight: "500",
-  fontFamily: "Inter,sans-serif",
+  fontWeight: "550",
   color: "#363636",
 });
 
 const StyledInfoText = styled(Typography)({
   fontSize: "16px",
   fontWeight: "400",
-  fontFamily: "Inter,sans-serif",
   color: "#646464",
 });
 const StyledCreateDiv = styled("div")({
@@ -359,7 +369,6 @@ const StyledRadios = styled("div")({
 const StyledSpan = styled("span")({
   fontSize: "16px",
   fontWeight: "400",
-  fontFamily: "Inter, sans-serif",
   color: "#363636",
 });
 const StyledBox = styled(Box)({
@@ -369,9 +378,8 @@ const StyledBox = styled(Box)({
 });
 const StyledTypography = styled(Typography)({
   fontSize: "16px",
-  fontWeight: "500",
+  fontWeight: "550",
   color: "#363636",
-  fontFamily: "Inter, sans-serif",
 });
 const StyledSectionTwo = styled("section")({
   display: "flex",
@@ -403,7 +411,6 @@ const StyledBoxSpan = styled(Box)({ display: "flex", gap: "8px" });
 const StyledMaxSpan = styled("span")({
   fontSize: "16px",
   fontWeight: "400",
-  fontFamily: "Inter, sans-serif",
   color: "#A9A9A9",
 });
 const StyledFotoBox = styled(Box)({ display: "flex", gap: "16px" });
@@ -425,11 +432,10 @@ const StyledAddTypography = styled(Typography)({
   fontSize: "16px",
   fontWeight: "500",
   color: "#266BD3",
-  fontFamily: "Inter, sans-serif",
 });
 const StyledFotoText = styled(Typography)({
+  width: "420px",
   fontSize: "16px",
   fontWeight: "500",
   color: "#828282",
-  fontFamily: "Inter, sans-serif",
 });
