@@ -5,6 +5,10 @@ export const housesApi = createApi({
   reducerPath: "housesApi",
   baseQuery: baseQuery,
   endpoints: (builder) => ({
+    getPopularsHouses: builder.query({
+      query: () => "/announcements/getPopularHouses",
+      providesTags: ["Annoncements"],
+    }),
     getLatestAnnouncements: builder.query({
       query: () => "/announcements/latestAnnouncement",
       providesTags: ["Announcements"],
@@ -13,15 +17,11 @@ export const housesApi = createApi({
       query: () => "/announcements/getPopularApartment",
       providesTags: ["Announcements"],
     }),
-    getPopularsHouses: builder.query({
-      query: () => "/announcements/getPopularHouses",
-      providesTags: ["Annoncements"],
-    }),
   }),
 });
 
 export const {
+  useGetPopularsApartmentsQuery,
   useGetLatestAnnouncementsQuery,
-  useGetPopularsApartments,
-  getPopularsHouses,
+  useGetPopularsHousesQuery,
 } = housesApi;

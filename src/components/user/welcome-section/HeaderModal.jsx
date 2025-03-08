@@ -17,7 +17,7 @@ import {
   useLoginAdminMutation,
 } from "../../../redux/api/auth.servers";
 import { signInWithGoogle } from "../../../redux/fireBase";
-import { login } from "../../../redux/slices/authSlie";
+import { login } from "../../../redux/slices/authSlice";
 import Cookies from "js-cookie";
 import { PATHS } from "../../../utils/constants/paths";
 

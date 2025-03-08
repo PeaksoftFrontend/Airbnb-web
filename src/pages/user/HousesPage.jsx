@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/material";
 import { Icons } from "../../assets";
-import { useGetPopularsApartments } from "../../redux/api/houses.service";
+import { useGetPopularsApartmentsQuery } from "../../redux/api/houses.service";
 
 // const properties = [
 //   {
@@ -33,7 +33,7 @@ import { useGetPopularsApartments } from "../../redux/api/houses.service";
 // ];
 
 export const HousesPage = () => {
-  const { data, error, isLoading, refetch } = useGetPopularsApartments();
+  const { data, error, isLoading, refetch } = useGetPopularsApartmentsQuery();
 
   if (error) return <p>error data</p>;
   if (isLoading) return <p>Loading...</p>;

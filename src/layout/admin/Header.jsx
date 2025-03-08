@@ -3,7 +3,7 @@ import { Icons } from "../../assets";
 import { Box, Menu, MenuItem, styled } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logout } from "../../redux/slices/authSlie";
+import { logout } from "../../redux/slices/authSlice";
 import Cookies from "js-cookie";
 
 export const Header = () => {
