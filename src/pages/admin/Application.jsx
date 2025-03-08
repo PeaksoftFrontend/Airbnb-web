@@ -9,11 +9,18 @@ export const Application = () => {
     size: 12,
   });
 
-  const { data, isLoading } = useGetApplicationQuery(page);
-
+  const { data = [], error, isLoading } = useGetApplicationQuery(page);
   const handlePageChange = (_, value) => {
     setPages({ ...page, page: Number(value) });
   };
+  if (isLoading)
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+        <CircularProgress />
+      </Box>
+    );
+
+  if (error) return <p>Error loading data.</p>;
 
   return (
     <StyledContainer>
@@ -42,7 +49,7 @@ export const Application = () => {
 
 const StyledContainer = styled("div")({
   width: "100%",
-  padding: "0px 40px",
+  margin: "40px",
 });
 
 const StylePogination = styled(Box)({
@@ -73,6 +80,8 @@ const StyleText = styled("p")({
   fontSize: "20px",
   fontWeight: 500,
   color: "#000000",
+  marginTop: "50px",
+  marginLeft: "6px",
 });
 
 const LoadingContainer = styled(Box)({
