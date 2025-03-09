@@ -1,6 +1,7 @@
+import { FavoritePage } from "../../pages/user/FavoritePage";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { Outlet, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export const UserLayout = () => {
   const { pathname } = useLocation();
@@ -9,7 +10,8 @@ export const UserLayout = () => {
     <div>
       {pathname === "/" ? null : <Header />}
       <main>
-        <Outlet />
+        {/* <Outlet /> */}
+        <FavoritePage />
       </main>
       <Footer />
     </div>

@@ -3,54 +3,9 @@ import { Box, Typography, styled } from "@mui/material";
 import { Icons } from "../../assets";
 import { Footer } from "../../layout/user/Footer";
 import { Button } from "../../components/UI/Button";
+import { useGetFavoritesQuery } from "../../redux/api/auth.servers";
 export const FavoritePage = ({ initial }) => {
-  const housingData = [
-    {
-      imageUrl:
-        "https://s3-alpha-sig.figma.com/img/4ead/278d/f2c77b81821bdcc661f356c3cdd00ef8?Expires=1737936000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=br3Go9w1KXrm0JDFJNvJ6MTD~gUS2--79d6i8VrAsNcSr4E0WHhzMSXd91VMPwpeRiiaEZtK9gyRUx9PXJvtHJiLjAenWd1WN-eYOOR0ehZ3KX7inFocdYLhdPn5wfaD~00Qz4MFDi6~wp5km7c9-lxceNLrtAPtE3GRyvIsKbvSe2hiq1yfiXOEMrKLuUQ4WmJLIRi4HP1sL0U-rv-SUzDF9a-pHev1EHrPW1Hnas8Z4TCP9dofGUc0g0XGbgsdDOMmSBfvgdetY1ysd0ofCkj9gU8w0zZbbaOmMPxpUJQhl9RT0Z7RYasGSuBPEsrYmXI~qECfbPw0-lfOjGP3JQ__",
-      price: "$26",
-      rating: "3.4",
-      description: "Beautiful and picturesque 2 sto...",
-      location: "12 Morris Ave, Toronto, ON, CA",
-      guests: "2",
-    },
-    {
-      imageUrl:
-        "https://s3-alpha-sig.figma.com/img/4ead/278d/f2c77b81821bdcc661f356c3cdd00ef8?Expires=1737936000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=br3Go9w1KXrm0JDFJNvJ6MTD~gUS2--79d6i8VrAsNcSr4E0WHhzMSXd91VMPwpeRiiaEZtK9gyRUx9PXJvtHJiLjAenWd1WN-eYOOR0ehZ3KX7inFocdYLhdPn5wfaD~00Qz4MFDi6~wp5km7c9-lxceNLrtAPtE3GRyvIsKbvSe2hiq1yfiXOEMrKLuUQ4WmJLIRi4HP1sL0U-rv-SUzDF9a-pHev1EHrPW1Hnas8Z4TCP9dofGUc0g0XGbgsdDOMmSBfvgdetY1ysd0ofCkj9gU8w0zZbbaOmMPxpUJQhl9RT0Z7RYasGSuBPEsrYmXI~qECfbPw0-lfOjGP3JQ__",
-      price: "$26",
-      rating: "3.4",
-      description: "Beautiful and picturesque 2 sto...",
-      location: "12 Morris Ave, Toronto, ON, CA",
-      guests: "2",
-    },
-    {
-      imageUrl:
-        "https://s3-alpha-sig.figma.com/img/4ead/278d/f2c77b81821bdcc661f356c3cdd00ef8?Expires=1737936000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=br3Go9w1KXrm0JDFJNvJ6MTD~gUS2--79d6i8VrAsNcSr4E0WHhzMSXd91VMPwpeRiiaEZtK9gyRUx9PXJvtHJiLjAenWd1WN-eYOOR0ehZ3KX7inFocdYLhdPn5wfaD~00Qz4MFDi6~wp5km7c9-lxceNLrtAPtE3GRyvIsKbvSe2hiq1yfiXOEMrKLuUQ4WmJLIRi4HP1sL0U-rv-SUzDF9a-pHev1EHrPW1Hnas8Z4TCP9dofGUc0g0XGbgsdDOMmSBfvgdetY1ysd0ofCkj9gU8w0zZbbaOmMPxpUJQhl9RT0Z7RYasGSuBPEsrYmXI~qECfbPw0-lfOjGP3JQ__",
-      price: "$26",
-      rating: "3.4",
-      description: "Beautiful and picturesque 2 sto...",
-      location: "12 Morris Ave, Toronto, ON, CA",
-      guests: "2",
-    },
-    {
-      imageUrl:
-        "https://s3-alpha-sig.figma.com/img/4ead/278d/f2c77b81821bdcc661f356c3cdd00ef8?Expires=1737936000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=br3Go9w1KXrm0JDFJNvJ6MTD~gUS2--79d6i8VrAsNcSr4E0WHhzMSXd91VMPwpeRiiaEZtK9gyRUx9PXJvtHJiLjAenWd1WN-eYOOR0ehZ3KX7inFocdYLhdPn5wfaD~00Qz4MFDi6~wp5km7c9-lxceNLrtAPtE3GRyvIsKbvSe2hiq1yfiXOEMrKLuUQ4WmJLIRi4HP1sL0U-rv-SUzDF9a-pHev1EHrPW1Hnas8Z4TCP9dofGUc0g0XGbgsdDOMmSBfvgdetY1ysd0ofCkj9gU8w0zZbbaOmMPxpUJQhl9RT0Z7RYasGSuBPEsrYmXI~qECfbPw0-lfOjGP3JQ__",
-      price: "$26",
-      rating: "3.4",
-      description: "Beautiful and picturesque 2 sto...",
-      location: "12 Morris Ave, Toronto, ON, CA",
-      guests: "2",
-    },
-    {
-      imageUrl:
-        "https://s3-alpha-sig.figma.com/img/4ead/278d/f2c77b81821bdcc661f356c3cdd00ef8?Expires=1737936000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=br3Go9w1KXrm0JDFJNvJ6MTD~gUS2--79d6i8VrAsNcSr4E0WHhzMSXd91VMPwpeRiiaEZtK9gyRUx9PXJvtHJiLjAenWd1WN-eYOOR0ehZ3KX7inFocdYLhdPn5wfaD~00Qz4MFDi6~wp5km7c9-lxceNLrtAPtE3GRyvIsKbvSe2hiq1yfiXOEMrKLuUQ4WmJLIRi4HP1sL0U-rv-SUzDF9a-pHev1EHrPW1Hnas8Z4TCP9dofGUc0g0XGbgsdDOMmSBfvgdetY1ysd0ofCkj9gU8w0zZbbaOmMPxpUJQhl9RT0Z7RYasGSuBPEsrYmXI~qECfbPw0-lfOjGP3JQ__",
-      price: "$26",
-      rating: "3.4",
-      description: "Beautiful and picturesque 2 sto...",
-      location: "12 Morris Ave, Toronto, ON, CA",
-      guests: "2",
-    },
-  ];
+  const { housingData = [] } = useGetFavoritesQuery();
   return (
     <div>
       <HeaderBarContainer>
@@ -75,49 +30,53 @@ export const FavoritePage = ({ initial }) => {
         <FavoriteTitle>
           FAVORITE <StyledSpanLength>({housingData.length})</StyledSpanLength>
         </FavoriteTitle>
-        <HousingCardContainer>
-          {housingData.map((housing, index) => (
-            <HousingCard key={index}>
-              <HousingImage
-                style={{ backgroundImage: `url(${housing.imageUrl})` }}
-              />
-              <HousingContent>
-                <Box sx={{ display: "flex", gap: "3px" }}>
-                  <HousingPrice>{housing.price} /</HousingPrice>
-                  <Typography
-                    sx={{
-                      color: "#6C6C6C",
-                      fontSize: "16px",
-                      marginTop: "1px",
-                    }}
-                  >
-                    day
-                  </Typography>
-                </Box>
-                <HousingRating>
-                  <StyledDivIcon>
-                    <Icons.StarColor />
-                  </StyledDivIcon>
-                  <Typography sx={{ color: "#FFFFFF" }}>
-                    {housing.rating}
-                  </Typography>
-                </HousingRating>
-                <HousingDescription>{housing.description}</HousingDescription>
-                <HousingLocation>
-                  <StyledLocationIcon />
-                  {housing.location}
-                </HousingLocation>
-                <HousingGuests>{housing.guests} guests</HousingGuests>
-              </HousingContent>
-              <StyledDiv>
-                <StyledButton>Book</StyledButton>
-                <StyledIconsHeart>
-                  <Icons.Heart />
-                </StyledIconsHeart>
-              </StyledDiv>
-            </HousingCard>
-          ))}
-        </HousingCardContainer>
+        {housingData.length > 0 ? (
+          <HousingCardContainer>
+            {housingData.map((housing, index) => (
+              <HousingCard key={index}>
+                <HousingImage
+                  style={{ backgroundImage: `url(${housing.imageUrl})` }}
+                />
+                <HousingContent>
+                  <Box sx={{ display: "flex", gap: "3px" }}>
+                    <HousingPrice>{housing.price} /</HousingPrice>
+                    <Typography
+                      sx={{
+                        color: "#6C6C6C",
+                        fontSize: "16px",
+                        marginTop: "1px",
+                      }}
+                    >
+                      day
+                    </Typography>
+                  </Box>
+                  <HousingRating>
+                    <StyledDivIcon>
+                      <Icons.StarColor />
+                    </StyledDivIcon>
+                    <Typography sx={{ color: "#FFFFFF" }}>
+                      {housing.rating}
+                    </Typography>
+                  </HousingRating>
+                  <HousingDescription>{housing.description}</HousingDescription>
+                  <HousingLocation>
+                    <StyledLocationIcon />
+                    {housing.location}
+                  </HousingLocation>
+                  <HousingGuests>{housing.guests} guests</HousingGuests>
+                </HousingContent>
+                <StyledDiv>
+                  <StyledButton>Book</StyledButton>
+                  <StyledIconsHeart>
+                    <Icons.Heart />
+                  </StyledIconsHeart>
+                </StyledDiv>
+              </HousingCard>
+            ))}
+          </HousingCardContainer>
+        ) : (
+          <Typography>No favorites available</Typography>
+        )}
       </MainContainer>
       <StyledFooter>
         <Footer />
