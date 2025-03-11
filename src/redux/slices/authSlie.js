@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 
 const getInitialState = () => {
   const authUserCookie = Cookies.get("authUser");
-  console.log(Cookies.get("authUser"));
 
   if (authUserCookie) {
     try {

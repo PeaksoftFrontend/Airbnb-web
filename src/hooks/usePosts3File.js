@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 
 export const usePosts3File = () => {
   const { token } = useSelector((state) => state.auth);
+  const [state, setState] = useState("");
 
   const posts3File = async (file) => {
     try {
@@ -15,7 +17,10 @@ export const usePosts3File = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
+
+      const result = await response.json();
+      setState(result.Link);
+      return result.Link;
     } catch (error) {
       console.error("File upload error:", error);
       throw error;
@@ -24,5 +29,6 @@ export const usePosts3File = () => {
 
   return {
     posts3File,
+    image: state,
   };
 };

@@ -24,7 +24,17 @@ export const submitAdApi = createApi({
         };
       },
     }),
+    deleteFile: builder.mutation({
+      query: (fileName) => ({
+        method: "DELETED",
+        url: `/api/file?fileName=${fileName}`,
+      }),
+    }),
   }),
 });
 
-export const { useSubmitAnAdMutation, useSubmitFileMutation } = submitAdApi;
+export const {
+  useSubmitAnAdMutation,
+  useSubmitFileMutation,
+  useDeleteFileMutation,
+} = submitAdApi;

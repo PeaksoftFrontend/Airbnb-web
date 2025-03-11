@@ -16,16 +16,19 @@ import { Modal } from "../../UI/Modal";
 import { Icons } from "../../../assets";
 import { useDropzone } from "react-dropzone";
 import { Textarea } from "@mui/joy";
-import { useSubmitAnAdMutation } from "../../../redux/api/submitAdd.service";
+import {
+  useDeleteFileMutation,
+  useSubmitAnAdMutation,
+} from "../../../redux/api/submitAdd.service";
 import { usePosts3File } from "../../../hooks/usePosts3File";
 import { OPTIONS_REGIONS } from "../../../utils/constants";
 
 export const Publish = () => {
   const [radioValue, setRadioValue] = useState("");
   const radioRef = useRef(null);
-  const [files, setFiles] = useState([]);
   const [submitStatus, setSubmitStatus] = useState("");
   const { posts3File } = usePosts3File();
+  const [deleteFile] = useDeleteFileMutation();
 
   const [formData, setFormData] = useState({
     houseType: "",
@@ -35,6 +38,7 @@ export const Publish = () => {
     description: "",
     region: "",
     province: "",
+    image: [],
     address: "",
   });
   const [submitAnAd] = useSubmitAnAdMutation();
@@ -58,12 +62,7 @@ export const Publish = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await submitAnAd({
-        ...formData,
-        image: [
-          "https://www.isradon.com/image/cache/data/new/img_1184490-500x500.sa.webp",
-        ],
-      }).unwrap();
+      await submitAnAd(formData).unwrap();
     } catch (err) {
       console.log(err);
 
@@ -71,22 +70,40 @@ export const Publish = () => {
     }
   };
 
-  const onDrop = (acceptedFiles) => {
+  const onDrop = async (acceptedFiles) => {
     const file = acceptedFiles[0];
-    if (file && ["image/jpeg", "image/png", "image/gif"].includes(file.type)) {
-      posts3File(file);
+    if (
+      file &&
+      ["image/jpeg", "image/png", "image/gif", "image/webp"].includes(file.type)
+    ) {
+      const res = await posts3File(file);
+      console.log(res);
+      setFormData({ ...formData, image: [...formData.image, res] });
     }
   };
 
   const { getRootProps, getInputProps } = useDropzone({
-    accept: { "image/jpeg": [], "image/png": [], "image/gif": [] },
+    accept: {
+      "image/jpeg": [],
+      "image/png": [],
+      "image/gif": [],
+      "image/webp": [],
+    },
     onDrop,
     multiple: false,
     maxFiles: 1,
   });
 
   const removeFile = (fileToRemove) => {
-    setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToRemove));
+    const currentFiltered = formData?.image?.filter(
+      (item) => item !== fileToRemove
+    );
+
+    setFormData({
+      ...formData,
+      image: currentFiltered,
+    });
+    deleteFile(fileToRemove);
   };
 
   return (
@@ -131,13 +148,10 @@ export const Publish = () => {
               </StyledTextBox>
             </StyledFotoBox>
             <StyledImagesContainer>
-              {files.map(({ file, preview }) => (
-                <StyledImagesContainer key={file.name}>
-                  <StyledImage
-                    src={preview}
-                    alt={`Uploaded file ${file.name}`}
-                  />
-                  <Icons.Cancellation onClick={() => removeFile(file.name)} />
+              {formData?.image?.map((item, i) => (
+                <StyledImagesContainer key={i}>
+                  <StyledImage src={item} alt={`Uploaded file ${item}`} />
+                  <Icons.Cancellation onClick={() => removeFile(item)} />
                 </StyledImagesContainer>
               ))}
             </StyledImagesContainer>
