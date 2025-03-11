@@ -16,7 +16,7 @@ const getInitialState = () => {
         isAuthorized: true,
       };
     } catch (error) {
-      console.error("Error parsing auth cookie:", error);
+      error;
     }
   }
 
@@ -62,7 +62,7 @@ export const authSlice = createSlice({
           state.email = userData.email;
           state.token = userData.token;
         } catch (error) {
-          console.error("Error refreshing from cookie:", error);
+          error;
         }
       }
     },

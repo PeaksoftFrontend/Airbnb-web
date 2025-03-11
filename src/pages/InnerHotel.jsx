@@ -3,65 +3,37 @@ import { Button } from "../components/UI/Button";
 import { Sliders } from "../components/admin/Sliders";
 import { Icons } from "../assets";
 
-const DETAIL_PUBLISHES = {
-  type: "Apartement",
-  person: "2 Guests",
-  name: "12 Morris Ave, Toronto, ON, CA",
-  description: `The hotel will provide guests with air-conditioned rooms offering a desk, a kettle, a fridge, a minibar, a safety deposit box, a flat-screen TV and a shared bathroom with a shower. At Garden Hotel & SPA the rooms have bed linen and towels.`,
-  userInfo: {
-    userImage:
-      "https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGF2YXRhcnN8ZW58MHx8MHx8fDA%3D",
-    userName: "Anna",
-    userLastName: "Annova",
-    userEmail: "anna@gmail.com",
-  },
-  images: [
-    "https://shorturl.at/SzvvR",
-    "https://shorturl.at/SzvvR",
-    "https://shorturl.at/SzvvR",
-    "https://shorturl.at/SzvvR",
-    "https://shorturl.at/SzvvR",
-  ],
-};
-
 export const InnerHotel = ({
   onOutlinedFunc,
   onContainedFunc,
   outlined = "",
   contained = "",
+  data,
   payment,
 }) => {
   return (
     <StyleContainer>
       <StyleDIv>
         <p>NAME</p>
-        <Sliders images={DETAIL_PUBLISHES?.images} />
+        <Sliders images={data?.images} />
       </StyleDIv>
       <StyledText>
         <div>
           <StyleGlobal>
-            <StyleApartaments>{DETAIL_PUBLISHES?.type}</StyleApartaments>
-            <StyleGuests>{DETAIL_PUBLISHES?.person}</StyleGuests>
+            <StyleApartaments>{data?.houseType}</StyleApartaments>
+            <StyleGuests>{data?.maxGuests}</StyleGuests>
           </StyleGlobal>
           <StyleGPS>
-            <p>Name of hotel</p>
-            <span>{DETAIL_PUBLISHES?.name}</span>
+            <p>{data?.title}</p>
+            <span>{data?.address}</span>
           </StyleGPS>
           <StyleDiscription>
-            <StyledDescription>
-              {DETAIL_PUBLISHES?.description}
-            </StyledDescription>
+            <StyledDescription>{data?.description}</StyledDescription>
             <StyleProfile>
-              <Avatar
-                src={DETAIL_PUBLISHES?.userInfo?.userImage}
-                alt={DETAIL_PUBLISHES?.userInfo?.userName}
-              />
+              <Avatar src={data?.image} alt={data?.userInfo?.userName} />
               <StyleEmail>
-                <StyleName>
-                  {DETAIL_PUBLISHES?.userInfo?.userName}
-                  {DETAIL_PUBLISHES?.userInfo?.userLastName}
-                </StyleName>
-                <StyleNik>{DETAIL_PUBLISHES?.userInfo?.userEmail}</StyleNik>
+                <StyleName>{data?.fullName}</StyleName>
+                <StyleNik>{data?.email}</StyleNik>
               </StyleEmail>
             </StyleProfile>
           </StyleDiscription>
@@ -92,8 +64,8 @@ export const InnerHotel = ({
           </StyleBox>
         ) : (
           <StyleButtons>
-            <StyleReject onClick={onOutlinedFunc}>{outlined}DELETE</StyleReject>
-            <StyleAccept onClick={onContainedFunc}>{contained}EDIT</StyleAccept>
+            <StyleReject onClick={onOutlinedFunc}>{outlined}</StyleReject>
+            <StyleAccept onClick={onContainedFunc}>{contained}</StyleAccept>
           </StyleButtons>
         )}
       </StyledText>

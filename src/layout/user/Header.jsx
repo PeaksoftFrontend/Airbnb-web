@@ -23,7 +23,12 @@ export const Header = () => {
         <p>Search nearby</p>
       </StyledArticle>
       <StyledSearchInput>
-        <SearchInput value="Search" variant="outlined" size="small" />
+        <SearchInput
+          variant="outlined"
+          size="small"
+          type="search"
+          placeholder="Search"
+        />
       </StyledSearchInput>
       {role === "GUEST" ? (
         <StyledButton>JOIN US</StyledButton>

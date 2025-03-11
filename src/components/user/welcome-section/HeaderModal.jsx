@@ -241,7 +241,6 @@ const StyledLink = styled(Box)({
   fontSize: "18px",
   fontWeight: "500",
   color: "#FFF",
-  cursor: "pointer",
 });
 
 const StyledButton = styled(Button)({

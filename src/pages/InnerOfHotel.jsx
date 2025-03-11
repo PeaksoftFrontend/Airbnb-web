@@ -4,8 +4,8 @@ import { Select } from "../components/UI/Select";
 import { Box, Pagination, styled } from "@mui/material";
 import { Icons } from "../assets";
 import { CardUser } from "../components/user/CardUser";
-import { Data } from "../utils/constants/cardUser";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useGetAnnouncementsFilterQuery } from "../redux/api/auth.servers";
 
 const main = [
   { id: 1, url: "/main", title: "Main" },
@@ -17,90 +17,94 @@ export const InnerOfHotel = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
+
   const categoryFromURL = params.get("category") || "";
+  const regionFromURL = params.get("region") || "";
+  const typeFromURL = params.get("type") || "";
+  const priceFromURL = params.get("price") || "";
+  const pageFromURL = params.get("page") || 1;
 
-  const [page, setPages] = useState(1);
-  const [select1, setSelect1] = useState("");
-  const [select2, setSelect2] = useState(categoryFromURL || "");
-  const [select3, setSelect3] = useState("");
-  const [select4, setSelect4] = useState("");
-  // const [showApartment, setShowApartment] = useState(false);
+  const [filters, setFilters] = useState({
+    region: regionFromURL || region || "",
+    category: categoryFromURL || "",
+    type: typeFromURL || "",
+    price: priceFromURL || "",
+    currentPage: Number(pageFromURL) || 1,
+  });
 
-  // useEffect(() => {
-  //   setSelect2(categoryFromURL);
-  // }, [categoryFromURL]);
+  const { data } = useGetAnnouncementsFilterQuery(filters, {
+    refetchOnMountOrArgChange: true,
+  });
 
   useEffect(() => {
-    if (categoryFromURL) {
-      setSelect2(categoryFromURL);
-    }
-  }, [categoryFromURL]);
+    setFilters((prev) => ({
+      ...prev,
+      region: regionFromURL || prev.region,
+      category: categoryFromURL || prev.category,
+      type: typeFromURL || prev.type,
+      price: priceFromURL || prev.price,
+      currentPage: Number(pageFromURL) || prev.currentPage,
+    }));
+  }, [categoryFromURL, regionFromURL, typeFromURL, priceFromURL, pageFromURL]);
 
-  const handleCategoryChange = (value) => {
-    setSelect2(value);
-    navigate(`${location.pathname}?category=${value}`);
-  };
-
-  const options = [
-    { value: "Batken", label: "Batken" },
-    { value: "Jalalabat", label: "Jalalabat" },
-    { value: "Naryn", label: "Naryn" },
-    { value: "Issyk-Kul", label: "Issyk-Kul" },
-    { value: "Talas", label: "Talas" },
-    { value: "Osh", label: "Osh" },
-    { value: "Chui", label: "Chui" },
-    { value: "Bishkek", label: "Bishkek" },
-  ];
-
-  const option2 = [
-    { value: "popular", label: "popular" },
-    { value: "apartment", label: "apartment" },
-  ];
-
-  // const option2 = Data.map((item) => ({
-  //   value: item.id, // Берем id из данных
-  //   label: item.title, // Можно использовать другое поле, например title
-  // }));
-
-  const handleSelectChange = (event, select) => {
-    const value = event.target.value;
-    if (select === "select1") {
-      setSelect1(value);
-    } else if (select === "select2") {
-      setSelect2(value);
-    } else if (select === "select3") {
-      setSelect3(value);
-    } else if (select === "select4") {
-      setSelect4(value);
-    }
+  const handleFilterChange = (key, value) => {
+    setFilters((prev) => {
+      const newFilters = { ...prev, [key]: value };
+      navigate(`?${new URLSearchParams(newFilters).toString()}`);
+      return newFilters;
+    });
   };
 
   const clearSelections = () => {
-    setSelect1("");
-    setSelect2("");
-    setSelect3("");
-    setSelect4("");
+    setFilters({
+      region: "",
+      category: "",
+      type: "",
+      price: "",
+      currentPage: 1,
+    });
+    navigate(`?currentPage=1`);
   };
 
-  const deletetext = (select) => {
-    if (select === "select1") setSelect1("");
-    if (select === "select2") setSelect2("");
-    if (select === "select3") setSelect3("");
-    if (select === "select4") setSelect4("");
+  const deleteText = (key) => {
+    setFilters((prev) => {
+      const newFilters = { ...prev, [key]: "" };
+      navigate(`?${new URLSearchParams(newFilters).toString()}`);
+      return newFilters;
+    });
   };
 
   const cardsPerPage = 16;
-
-  const totalPages = Math.ceil(Data.length / cardsPerPage);
-
-  const currentCards = Data.slice(
-    (page - 1) * cardsPerPage,
-    page * cardsPerPage
-  );
+  const totalPages = data
+    ? Math.ceil(data.announcementResponses.length / cardsPerPage)
+    : 0;
+  const currentCards = data
+    ? data.announcementResponses.slice(
+        (filters.currentPage - 1) * cardsPerPage,
+        filters.currentPage * cardsPerPage
+      )
+    : [];
 
   const handlePageChange = (_, value) => {
-    setPages(value);
+    setFilters((prev) => {
+      const newFilters = { ...prev, currentPage: value };
+      navigate(`?${new URLSearchParams(newFilters).toString()}`);
+      return newFilters;
+    });
   };
+
+  const options1 = data
+    ? [...new Set(data.announcementResponses.map((item) => item.region))]
+    : [];
+  const options2 = data
+    ? [...new Set(data.announcementResponses.map((item) => item.category))]
+    : [];
+  const options3 = data
+    ? [...new Set(data.announcementResponses.map((item) => item.type))]
+    : [];
+  const options4 = data
+    ? [...new Set(data.announcementResponses.map((item) => item.price))]
+    : [];
 
   return (
     <div>
@@ -108,73 +112,70 @@ export const InnerOfHotel = () => {
         <Breadcrumbs path={main} />
         <StyleRegionNameandSlect>
           <StyleTitle>
-            {region}
-            <span>({Data.length})</span>
+            {filters.region || region}
+            <span>({data ? data.announcementResponses.length : 0})</span>
           </StyleTitle>
 
           <StyleDiv>
             <StyleSelects>
               <StyleSelect
-                options={options}
-                value={select1}
-                onChange={(value) => handleSelectChange(value, "select1")}
-                placeholder="Sort by:"
-              ></StyleSelect>
-              <StyleSelect
-                options={option2}
-                value={select2}
-                onChange={(event) => handleCategoryChange(event.target.value)}
-                placeholder={select2 || "Sort by:"}
+                options={options1.map((option) => ({
+                  value: option,
+                  label: option,
+                }))}
+                value={filters.region}
+                onChange={(e) => handleFilterChange("region", e.target.value)}
+                placeholder="Sort by region:"
               />
-
               <StyleSelect
-                options={options}
-                value={select3}
-                onChange={(value) => handleSelectChange(value, "select3")}
-                placeholder="Sort by:"
-              ></StyleSelect>
+                options={options2.map((option) => ({
+                  value: option,
+                  label: option,
+                }))}
+                value={filters.category}
+                onChange={(e) => handleFilterChange("category", e.target.value)}
+                placeholder="Sort by category:"
+              />
               <StyleSelect
-                options={options}
-                value={select4}
-                onChange={(value) => handleSelectChange(value, "select4")}
-                placeholder="Sort by:"
-              ></StyleSelect>
+                options={options3.map((option) => ({
+                  value: option,
+                  label: option,
+                }))}
+                value={filters.type}
+                onChange={(e) => handleFilterChange("type", e.target.value)}
+                placeholder="Filter by home type:"
+              />
+              <StyleSelect
+                options={options4.map((option) => ({
+                  value: option,
+                  label: option,
+                }))}
+                value={filters.price}
+                onChange={(e) => handleFilterChange("price", e.target.value)}
+                placeholder="Filter by price:"
+              />
             </StyleSelects>
             <StyleOptions>
-              <StyleSelectText1 hasText={select1 !== ""}>
-                {select1 && (
-                  <Icons.Remove onClick={() => deletetext("select1")} />
-                )}
-                {select1}
-              </StyleSelectText1>
-              <StyleSelectText2 hasText={select2 !== ""}>
-                {select2 && (
-                  <Icons.Remove onClick={() => deletetext("select2")} />
-                )}
-                {select2}
-              </StyleSelectText2>
-              <StyleSelectText3 hasText={select3 !== ""}>
-                {select3 && (
-                  <Icons.Remove onClick={() => deletetext("select3")} />
-                )}
-                {select3}
-              </StyleSelectText3>
-              <StyleSelectText4 hasText={select4 !== ""}>
-                {select4 && (
-                  <Icons.Remove onClick={() => deletetext("select4")} />
-                )}
-                {select4}
-              </StyleSelectText4>
+              {["region", "category", "type", "price"].map((key) => (
+                <StyleSelectText key={key} hasText={filters[key] !== ""}>
+                  {filters[key] && (
+                    <Icons.Remove onClick={() => deleteText(key)} />
+                  )}
+                  {filters[key]}
+                </StyleSelectText>
+              ))}
               <StyleClearAll onClick={clearSelections}>Clear all</StyleClearAll>
             </StyleOptions>
           </StyleDiv>
         </StyleRegionNameandSlect>
       </StyleHeadElements>
+
       <CardUser cards={currentCards} />
+
       <StylePogination>
         <Pagination
           count={totalPages}
-          page={page}
+          page={filters.currentPage}
           onChange={handlePageChange}
         />
       </StylePogination>
@@ -185,15 +186,10 @@ export const InnerOfHotel = () => {
 const StyleSelect = styled(Select)({
   width: "271px",
   height: "42px",
-  "& fieldset": {
-    borderRadius: "0",
-  },
+  "& fieldset": { borderRadius: "0" },
 });
 
-const StyleSelects = styled("div")({
-  display: "flex",
-  gap: "10px",
-});
+const StyleSelects = styled("div")({ display: "flex", gap: "10px" });
 
 const StyleDiv = styled("div")({
   display: "flex",
@@ -201,63 +197,22 @@ const StyleDiv = styled("div")({
   flexDirection: "column",
 });
 
-const StyleOptions = styled("div")({
-  display: "flex",
-  gap: "10px",
-});
+const StyleOptions = styled("div")({ display: "flex", gap: "10px" });
 
-const StyleRegionNameandSlect = styled("div")({
-  display: "flex",
-  gap: "10px",
-});
+const StyleRegionNameandSlect = styled("div")({ display: "flex", gap: "10px" });
 
-const StyleSelectText1 = styled("p")(({ hasText }) => ({
+const StyleSelectText = styled("p")(({ hasText }) => ({
   background: hasText ? "#F3F3F3" : "transparent",
   padding: "8px 8px",
   display: hasText ? "flex" : "none",
   alignItems: "center",
   cursor: "pointer",
-
+  fontSize: "16px",
+  fontWeight: "400",
+  color: "#828282",
+  textTransform: "uppercase",
   gap: "5px",
-  "&:hover": {
-    background: "#C4C4C4",
-  },
-}));
-
-const StyleSelectText2 = styled("p")(({ hasText }) => ({
-  background: hasText ? "#F3F3F3" : "transparent",
-  padding: "8px 8px",
-  display: hasText ? "flex" : "none",
-  alignItems: "center",
-  cursor: "pointer",
-  gap: "5px",
-  "&:hover": {
-    background: "#C4C4C4",
-  },
-}));
-
-const StyleSelectText3 = styled("p")(({ hasText }) => ({
-  background: hasText ? "#F3F3F3" : "transparent",
-  padding: "8px 8px",
-  display: hasText ? "flex" : "none",
-  alignItems: "center",
-  cursor: "pointer",
-  gap: "5px",
-  "&:hover": {
-    background: "#C4C4C4",
-  },
-}));
-
-const StyleSelectText4 = styled("p")(({ hasText }) => ({
-  background: hasText ? "#F3F3F3" : "transparent",
-  padding: "8px 8px",
-  display: hasText ? "flex" : "none",
-  alignItems: "center",
-  cursor: "pointer",
-  gap: "5px",
-  "&:hover": {
-    background: "#C4C4C4",
-  },
+  "&:hover": { background: "#C4C4C4" },
 }));
 
 const StyleHeadElements = styled("div")({
@@ -286,14 +241,9 @@ const StylePogination = styled(Box)({
     color: "#BDBDBD",
     fontSize: "16px",
     fontWeight: 500,
-    "&:hover": {
-      background: "none",
-    },
+    "&:hover": { background: "none" },
   },
-  "& .Mui-selected": {
-    background: "none",
-    color: "#DD8A08",
-  },
+  "& .Mui-selected": { background: "none", color: "#DD8A08" },
   "& .MuiPaginationItem-icon": {
     fill: "#DD8A08",
     width: "25px",
@@ -305,9 +255,5 @@ const StyleTitle = styled("p")({
   fontSize: "20px",
   fontWeight: 500,
   color: "#000000",
-  "& span": {
-    color: "#646464",
-    fontSize: "18px",
-    fontWeight: 400,
-  },
+  "& span": { color: "#646464", fontSize: "18px", fontWeight: 400 },
 });
