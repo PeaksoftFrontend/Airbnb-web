@@ -19,6 +19,7 @@ export const store = configureStore({
       usersApi.middleware,
       authApi.middleware,
       submitAdApi.middleware,
-      applicationApi.middleware
+      applicationApi.middleware,
+      submitAdApi.middleware
     ),
 });
