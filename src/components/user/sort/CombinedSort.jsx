@@ -69,9 +69,8 @@ export const CombinedSort = () => {
         </Box>
         <Sort
           options={options}
-          allSelectedValues={allSelectedValues}
-          selectedRaiting={sortRaitingValues}
-          setSelectedRaiting={setSortRaitingValues}
+          selected={sortRaitingValues}
+          setSelected={setSortRaitingValues}
           homeType={homeType}
           onClear={handleClearAll}
           setHomeType={setHomeType}
@@ -103,10 +102,7 @@ export const CombinedSort = () => {
     </StyleBox>
   );
 };
-const BoxStyled = styled(Box)({
-  display: "flex",
-  gap: "15px",
-});
+const BoxStyled = styled(Box)({ display: "flex", gap: "15px" });
 const StyledIcons = styled(Icons.Remove)(({ iconSize }) => ({
   width: iconSize?.width || "14px",
   height: iconSize?.height || "14px",

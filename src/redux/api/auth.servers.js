@@ -18,7 +18,38 @@ export const authApi = createApi({
         body: { email, password },
       }),
     }),
+    getAnnouncementsFilter: builder.query({
+      query: ({ region, category, houseType, price, currentPage }) => {
+        const url = `/vendor/announcements-filter?${new URLSearchParams({
+          ...(region && { region }),
+          ...(category && { category }),
+          ...(houseType && { houseType }),
+          ...(price && { price }),
+          ...(currentPage && { currentPage }),
+        }).toString()}`;
+        return url;
+      },
+
+      transformResponse: (response) => {
+        return {
+          announcementResponses: response.announcementResponses || [],
+          currentPage: response.currentPage,
+          pageSize: response.pageSize || 16,
+        };
+      },
+      providesTags: ["announcement"],
+    }),
+
+    favorite: builder.mutation({
+      query: (announcementId) => ({ url: `/favorites/${announcementId}` }),
+      method: "POST",
+    }),
   }),
 });
 
-export const { useGoogleLoginMutation, useLoginAdminMutation } = authApi;
+export const {
+  useGoogleLoginMutation,
+  useLoginAdminMutation,
+  useFavoriteMutation,
+  useGetAnnouncementsFilterQuery,
+} = authApi;

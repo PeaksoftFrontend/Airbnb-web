@@ -6,6 +6,8 @@ import { Pagination } from "swiper/modules";
 import { Icons } from "../../assets";
 import { Box, styled } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../utils/constants/paths";
 
 const POPULAR_REGIONS = [
   {
@@ -35,7 +37,7 @@ export const UserPageWight = () => {
   const swiperRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(1);
   const [totalSlides, setTotalSlides] = useState(0);
-
+  const navigate = useNavigate();
   const handlePrev = () => {
     if (swiperRef.current) {
       swiperRef.current.slidePrev();
@@ -46,6 +48,11 @@ export const UserPageWight = () => {
     if (swiperRef.current) {
       swiperRef.current.slideNext();
     }
+  };
+  const handleRegions = (region) => {
+    navigate(
+      `${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}?category=the lastest`
+    );
   };
 
   const handleSlideChange = (swiper) => {
@@ -76,7 +83,9 @@ export const UserPageWight = () => {
           </div>
           <StyleLines>
             <StyleDetailsansImages>
-              <StyleMore>{item.detail}</StyleMore>
+              <StyleMore onClick={() => handleRegions("Another")}>
+                {item.detail}
+              </StyleMore>
               <StyleImages>
                 <StyleSwiper
                   onSwiper={(swiper) => {
