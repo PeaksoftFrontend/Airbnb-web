@@ -7,6 +7,7 @@ import { InnerHotelPage } from "../../pages/user/InnerHotelPage";
 import { LandingPAge } from "../../pages/user/LandingPAge";
 import { PrivateAuthRouteByRole } from "../private/PrivateAuthByRole";
 import { InnerOfHotel } from "../../pages/InnerOfHotel";
+import { FavoritePage } from "../../pages/user/FavoritePage";
 
 export const UserRoutes = (role) => {
   return [
@@ -87,6 +88,17 @@ export const UserRoutes = (role) => {
       element: (
         <PrivateAuthRouteByRole
           RouteComponent={<Profiles />}
+          role={role}
+          roles={["GUEST", "USER"]}
+          fallBackPath={PATHS.USER.ROOT}
+        />
+      ),
+    },
+    {
+      path: PATHS.USER.FAVORITE_USER,
+      element: (
+        <PrivateAuthRouteByRole
+          RouteComponent={<FavoritePage />}
           role={role}
           roles={["GUEST", "USER"]}
           fallBackPath={PATHS.USER.ROOT}
