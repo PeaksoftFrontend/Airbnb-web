@@ -1,33 +1,28 @@
 import { Avatar, Box, styled, Tooltip, Typography } from "@mui/material";
 
-export const Profile = ({ name, email, fullName, avatar, isAuth, role }) => {
+export const Profile = ({ name, email, avatar, isAuth, role }) => {
   const handleLogout = () => {};
+
   return (
     <StyledBox>
-      {role === "ADMIN" && (
-        <StyledTypography>
-          {name} {fullName}
-        </StyledTypography>
-      )}
+      {role === "ADMIN" && <StyledTypography>{name}</StyledTypography>}
       <StyledContainer>
         <StyledAvatar>
           {avatar ? (
             <StyledImg src={avatar} alt={`${name}'s avatar`} />
           ) : (
-            name.charAt(0).toUpperCase()
+            name?.charAt(0).toUpperCase()
           )}
         </StyledAvatar>
         <StyledText>
           <StyledRow>
             <StyledLabel>Name:</StyledLabel>
-            <span>
-              {name} {fullName}
-            </span>
+            <span>{name}</span>
           </StyledRow>
           <StyledRow>
             <StyledLabel>Contact:</StyledLabel>
             <StyledTooltip title={email || "No email provided"}>
-              <StyledEmail>{`${email.slice(0, 24)}...`}</StyledEmail>
+              <StyledEmail>{`${email?.slice(0, 26)}${email?.length >= 25 ? "..." : ""}`}</StyledEmail>
             </StyledTooltip>
           </StyledRow>
         </StyledText>

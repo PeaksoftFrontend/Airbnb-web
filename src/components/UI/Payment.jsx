@@ -54,7 +54,10 @@ export const Payment = () => {
         <StyledText>You have to be signed in to book a listing!</StyledText>
       </StyledBoxBooking>
       <StyledTogether>
-        <StyledButton fullWidth onClick={handleOpenModal}>
+        <StyledButton
+          onClick={handleOpenModal}
+          sx={{ width: "420px", height: "37px" }}
+        >
           Request to Book
         </StyledButton>
         <StyledIconsHeart>
@@ -115,9 +118,9 @@ const StyledMain = styled("main")({
   width: "100%",
 });
 const StyledBoxBooking = styled(Box)({
+  marginTop: "20px",
   border: "1px solid #FFFFFF",
   borderRadius: "8px",
-  padding: "20px",
   width: "494px",
   height: "202px",
   backgroundColor: "#FFFFFF",
@@ -155,7 +158,8 @@ const StyledText = styled(Typography)({
 });
 const StyledTogether = styled("div")({
   display: "flex",
-  gap: "20px",
+  marginTop: "20px",
+  gap: "15px",
 });
 const StyledIconsHeart = styled("div")({
   width: "55px",

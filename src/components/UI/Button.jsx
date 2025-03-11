@@ -27,58 +27,85 @@ const StyledButton = styled(MuiButton)(({ variant }) => ({
   color: "#F7F7F7",
   border: "none",
   cursor: "pointer",
+  boxShadow: "none",
+
   ...(variant === "outlined" && {
     background: "#DD8A08",
     fontSize: "14px",
     fontWeight: 500,
+    boxShadow: "none",
 
     "&:hover": {
       backgroundColor: "#BB7200",
       color: "#F7F7F7",
       border: "none",
+      boxShadow: "none",
     },
     "&:active": {
-      backgroundColor: " #F2B75B",
+      backgroundColor: "#F2B75B",
       color: "#F7F7F7",
+      boxShadow: "none",
     },
     ":disabled": {
       border: "none",
       color: "#F7F7F7",
       background: "#C4C4C4",
+      boxShadow: "none",
+    },
+  }),
+
+  ...(variant === "white" && {
+    border: "none",
+    borderRadius: "none",
+    background: "none",
+    color: "#828282",
+    boxShadow: "none",
+    "&:active": {
+      border: "none",
+      borderRadius: "none",
+      background: "none",
+      color: "#828282",
+      boxShadow: "none",
     },
   }),
 
   ...(variant === "contained" && {
     borderRadius: "8px",
     background: "none",
-    color: " #000000",
+    color: "#000000",
     fontSize: "18px",
     fontWeight: 500,
     border: "1px solid #C4C4C4",
+    boxShadow: "none",
 
     "&:hover": {
       border: "1px solid #828282",
+      boxShadow: "none",
     },
     "&:active": {
-      backgroundColor: " #C4C4C433",
+      backgroundColor: "#C4C4C433",
       border: "1px solid #828282",
+      boxShadow: "none",
     },
   }),
 
   ...(variant === "warning" && {
-    color: " #828282",
+    color: "#828282",
     background: "none",
-    border: " 1px solid #7D7D7D",
+    border: "1px solid #7D7D7D",
     fontSize: "16px",
+    boxShadow: "none",
 
     ":hover": {
       border: "1.5px solid #363636",
       color: "#828282",
+      boxShadow: "none",
     },
     ":active": {
       background: "#DD8A08",
       border: "none",
-      color: " #FFFFFF",
+      color: "#FFFFFF",
+      boxShadow: "none",
     },
   }),
 }));

@@ -2,13 +2,18 @@ import { Box, styled } from "@mui/material";
 import { SearchInput } from "../../UI/SearchInput";
 import { Checkbox } from "../../UI/Checkbox";
 import { HeaderModal } from "./HeaderModal";
+import Backround from "../../../assets/image/backgroundimage-img.png";
+import { useSelector } from "react-redux";
 
 export const WelcomeSection = () => {
+  const role = useSelector((state) => state.auth.role);
+
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
+
   return (
     <StyledBox>
       <StyledHeaderWrapper>
-        <HeaderModal showAvatarModal={true} />
+        <HeaderModal />
       </StyledHeaderWrapper>
       <StyledSearchBox>
         <StyledTwoBox variant="h3">
@@ -21,11 +26,12 @@ export const WelcomeSection = () => {
             size="small"
             placeholder="Region, city, apartment, house..."
           />
-
-          <StyledCheckBox>
-            <CustomCheckbox {...label} defaultChecked />
-            <StyledSpan>Искать поблизости</StyledSpan>
-          </StyledCheckBox>
+          {role === "GUEST" ? (
+            <StyledCheckBox>
+              <CustomCheckbox {...label} />
+              <StyledSpan>Искать поблизости</StyledSpan>
+            </StyledCheckBox>
+          ) : null}
         </StyledDiv>
       </StyledSearchBox>
     </StyledBox>
@@ -33,7 +39,7 @@ export const WelcomeSection = () => {
 };
 
 export const StyledBox = styled(Box)({
-  backgroundImage: `url(${"https://shorturl.at/xs8ce"})`,
+  backgroundImage: `url(${Backround})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -77,15 +83,14 @@ export const StyledTwoBox = styled(Box)({
   whiteSpace: "nowrap",
 });
 
-export const StyledSearchBox = styled(Box)(({ theme }) => ({
+export const StyledSearchBox = styled(Box)({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  padding: theme.spacing(2),
   gap: "50px",
-  marginTop: "12.4rem",
-}));
+  marginTop: "8rem",
+});
 
 const StyledCheckBox = styled(Box)({
   display: "flex",
@@ -105,12 +110,8 @@ const StyledSpan = styled("p")({
   color: "#EDEDED",
   marginRight: "8px",
 });
-const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
-  "&.Mui-checked": {
-    color: theme.palette.primary.main,
-  },
+const CustomCheckbox = styled(Checkbox)(() => ({
   "& .MuiSvgIcon-root": {
-    border: "2px solid #FBFBFB",
     marginLeft: "8px",
   },
 }));

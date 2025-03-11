@@ -1,13 +1,19 @@
+import { InnerHotelPage } from "../../pages/user/InnerHotelPage";
+import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 export const UserLayout = () => {
+  const { pathname } = useLocation();
+
   return (
     <div>
-      <Header />
+      {pathname === "/" ? null : <Header />}
       <main>
-        <Outlet />
+        {/* <Outlet /> */}
+        <InnerHotelPage />
       </main>
+      <Footer />
     </div>
   );
 };

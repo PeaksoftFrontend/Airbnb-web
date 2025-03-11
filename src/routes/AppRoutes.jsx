@@ -1,10 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { PrivateRoute } from "./PrivateRoute";
+import { PrivateRoute } from "./private/PrivateRoute";
 import { PATHS } from "../utils/constants/paths";
 import { useSelector } from "react-redux";
-import { AllHousingPage } from "../pages/admin/AllHousingPage";
 import { UserRoutes } from "./user/UserRoutes";
-import { InnerHotelPage } from "../pages/user/InnerHotelPage";
+import { UserLayout } from "../layout/user/UserLayout";
+import { AdminLayout } from "../layout/admin/AdminLayout";
+import { AdminRoutes } from "./admin/AdminRoutes";
 
 export const AppRoutes = () => {
   const { isAuthorized, role } = useSelector((state) => state.auth);
@@ -17,35 +18,26 @@ export const AppRoutes = () => {
 
   const router = createBrowserRouter([
     {
-      path: PATHS.GUEST.ROOT,
-      element: (
-        <PrivateRoute
-          Component={<h1>Guest</h1>}
-          isAuthorized={role === "GUEST"}
-          fallBackPath={pathRole[role] || PATHS.GUEST.ROOT}
-        />
-      ),
-    },
-    {
       path: PATHS.USER.ROOT,
       element: (
         <PrivateRoute
-          Component={<InnerHotelPage/>}
-          isAuthorized={isAuthorized && role === "USER"}
+          Component={<UserLayout />}
+          isAuthorized={role === "USER" || role === "GUEST"}
           fallBackPath={pathRole[role] || PATHS.USER.ROOT}
         />
       ),
-      children: UserRoutes(),
+      children: UserRoutes(role),
     },
     {
       path: PATHS.ADMIN.ROOT,
       element: (
         <PrivateRoute
-          Component={<AllHousingPage />}
+          Component={<AdminLayout />}
           isAuthorized={isAuthorized && role === "ADMIN"}
           fallBackPath={pathRole[role] || PATHS.ADMIN.ROOT}
         />
       ),
+      children: AdminRoutes(),
     },
   ]);
 

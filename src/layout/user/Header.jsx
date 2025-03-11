@@ -2,11 +2,17 @@ import { Icons } from "../../assets";
 import { Checkbox } from "../../components/UI/Checkbox";
 import { styled } from "@mui/material";
 import { SearchInput } from "../../components/UI/SearchInput";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { AccountMenu } from "../../components/user/welcome-section/AccountMenu";
 
 export const Header = () => {
+  const navigate = useNavigate();
+  const { role } = useSelector((state) => state.auth);
+
   return (
     <StyledHeader>
-      <StyledLogo>
+      <StyledLogo onClick={() => navigate("/")}>
         <Icons.LogoColor />
       </StyledLogo>
       <StyledP>leave an ad</StyledP>
@@ -17,9 +23,18 @@ export const Header = () => {
         <p>Search nearby</p>
       </StyledArticle>
       <StyledSearchInput>
-        <SearchInput value="Search" variant="outlined" size="small" />
+        <SearchInput
+          variant="outlined"
+          size="small"
+          type="search"
+          placeholder="Search"
+        />
       </StyledSearchInput>
-      <StyledButton>JOIN US</StyledButton>
+      {role === "GUEST" ? (
+        <StyledButton>JOIN US</StyledButton>
+      ) : (
+        <AccountMenu />
+      )}
     </StyledHeader>
   );
 };

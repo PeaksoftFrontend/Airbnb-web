@@ -30,7 +30,7 @@ const StyledBox = styled(Box)({
   display: "flex",
   gap: "20px",
   flexDirection: "column",
-  width: "400px",
+  width: "380px",
   height: "157px",
   padding: "20px",
   backgroundColor: "#FFFFFF",

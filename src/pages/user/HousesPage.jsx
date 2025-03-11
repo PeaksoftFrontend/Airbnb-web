@@ -1,5 +1,7 @@
 import { Box, styled } from "@mui/material";
 import { Icons } from "../../assets";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../utils/constants/paths";
 
 const properties = [
   {
@@ -9,7 +11,7 @@ const properties = [
     price: "$26 / ",
     rating: 3.4,
     image:
-      "https://s3-alpha-sig.figma.com/img/0262/e146/c386a7b3971406286b2dce8e892dd438?Expires=1736726400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=OYwVrb3ytEehO6G~7EWLupW1r5flhXd93RLf66JfUD6S5BIWwIAji4oRe23IpBzxMKQ9e3en9WmAG-L-KhXBNB2r6YxvwLWrerv3idEvd6pScw~G0kcZ953nGQHYjADBFVKabFGU~BBJZltflvtlzaEQBw-aE3kWsoMD0GC6ByWeBWgO~FZdx9tv0u8FY~nvwviYKOZdz3MDGdL-CAjqV34ZAPXA6NvO22ozf8sWLl6cWLe0RPdQqBNKBUVNfCRIyJ14FBBRYlbDaDGGilpR83j2KbRRtmejtM59psV8pWvnQJVTrVkDW~-XN4iycPRHaVTjyMiSDyRNTTzWBldUmQ__", // Replace with actual image URLs or import paths
+      "https://s3-alpha-sig.figma.com/img/0262/e146/c386a7b3971406286b2dce8e892dd438?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=nbO9LvHYUp40XREh30X9V8Csj7DICptFkeeS4G05Y-VUuErq~u9cJvbNQQwdFDrjE5oAbMcGi4pFUqMJqUffodVj9nHvwgE5Jhum4VXAB3QHQALlC8zwf1PASWMmRUvn6Al5Msfwx7q691PF-wNgSxrOhRTiNAvaIxozH3gFiHAue3FcTqEyziBnSLLE5AornLo3vMdyqHdM1WZm44OSLddrSta8d5ywo8EbUeMqp~i5UtW3ekhQqHfmlbH8pkdy67R8pthgqwOABUBWyNWfRJXquhRrINIEiMQMK8n5M4b-bSPRXhcc3oxfFuZYsZUW~GSKbhb20PaTYNhngaCW5Q__",
   },
   {
     id: 2,
@@ -18,7 +20,7 @@ const properties = [
     price: "$26 / ",
     rating: 3.4,
     image:
-      "https://s3-alpha-sig.figma.com/img/65f5/d71f/91bfdf24c0f08f6cab79a581bccfb36b?Expires=1736726400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bu9qI4r2ttTF-IXyd1fhrWTf~Rih8Lm1Pf~rLEDB4X7FRX5HXN6VeRK6UV55P~bBiLQ8OhMcr8FGP8fyJOhJqIEyjxc~WPzMlervZ85bCzAufcPy2xXP5U0EeJ9lBW7ZBnY290pCsxJ-gNgRp5p0C1s4ajGhuZ2iAvSTw27bLhF7NSA3Rdbwmhx0cJG~WmjbcnNu-nhmQ4l~Lk3KjSUaABFdJDCzNMq2u6gtQ~S4yLrswPlo2KZOpenZTE5zjWhVJzV-PQ0Tw0KtTZZZU2xd6hFaGWNA0P6VMEwhZIZLFInTwR0UEyLl06ES3sOye5oqD1Bf8ZcdNKFE-h0mEt8v6g__",
+      "https://s3-alpha-sig.figma.com/img/65f5/d71f/91bfdf24c0f08f6cab79a581bccfb36b?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=mr7dF12yMs3syRpLhH~j035z8W~TYSH2K6TyYux3bwIqUOMOD8z0wBgHWaXtHsVk97e3Qd1fUIFY6kUeFyw48bZaok18oIlTJzzud~9bfbbqHf0Qd30VsDKKmBT2SZ5xUEZ3GiMOuEMW6w39JHboFmATpWbQyts5awJRrhLoZktSgT-RhAonoozZ8eVCLdOFk3OSWilRWTSwvQIfJm1BpXcB-knjhOQEtLnkaB85j2kkPc3Wcbpf0WiR2hsj7St7t8LRQQpsairaQVz7gW06MFEInNzD3N9wRmcfocDuC1QizYMe0r-1QrEHRPCmub32XI7jkXhxsPH9RWGZZOUg7Q__",
   },
   {
     id: 3,
@@ -27,11 +29,15 @@ const properties = [
     price: "$26 / ",
     rating: 3.4,
     image:
-      "https://s3-alpha-sig.figma.com/img/5f4a/e1c4/3a16ceafbb60eebec045632a920ef12e?Expires=1736726400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=AxQdhca0Hkdfb0SzDSndPEnJVcGa84zPoikDlwPccaH2oRgNRfRnwj7mIH1xGmZeah71-Xfgf~UOBkwYNXqSQSWLBHK40vBN9AvZn4QKgH8-GvlywAHyRpcEmtk-E8SBc0Uj92PywX~y7XElXfEe2aYv6FL57FdWBcaRP3-6dUqsuxpxA9hzrt~DPUohGaFvr5ovrvesxHT~YCU7QxaAK92EvQFdLCABcK9lkDe5oSHdIrgbO3uvBlYPeJB6hbSbjMkO9ft6e3-bW3qQD96ld6-1j~fkxtqyeBPNDBTwlCbxAaDoFzBzvHc4e7J9wSHIVkshJLqYN0CqSseWihQklw__",
+      "https://s3-alpha-sig.figma.com/img/5f4a/e1c4/3a16ceafbb60eebec045632a920ef12e?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=of1j3vpjuVUSzUad0ZIidtjazmpTM4BzesGmfpqYoaNczKwubvf~ShSm0EaC5ci2oedeGbQpPfhBe8LwZ~1Mt47~sNhnZ02ojQBWgf7ZPnBgxnNMmzjYaq5MXr~IfKHvnGhfumUO3I01Li5DnyT92wSqebKo1m9DfBG8hHZBLVX54JLSt-n~LqXQClH~DDvCs8eqBodaBD4sQvjxfXxTVG54urO-Jbqf1-tUoQ97HmywYSBRDWcsDQJKdbZQ65uQT8aZSobvjsYWbCpSEuqdpyhu1RtdnWHCETvLZeFeOC6mC~m0JqquKjRVtQrDdX2iirGxxgZhgOPoJ5U0qRXpjQ__",
   },
 ];
 
 export const HousesPage = () => {
+  const navigate = useNavigate();
+  const handleRegions = (region) => {
+    navigate(`${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}?category=house`);
+  };
   return (
     <StyledBox>
       <StyledPopularHouse variant="h4" fontWeight="bold" gutterBottom>
@@ -64,7 +70,9 @@ export const HousesPage = () => {
           </StyledCard>
         ))}
       </StyledCardContent>
-        <ViewAllButton>View all</ViewAllButton>
+      <ViewAllButton onClick={() => handleRegions("Another")}>
+        View all
+      </ViewAllButton>
     </StyledBox>
   );
 };
@@ -107,10 +115,8 @@ const StyledLocation = styled("p")({
 });
 
 const StyledBox = styled(Box)(() => ({
-  padding: "24px",
+  padding: "20px 100px",
   textAlign: "center",
-  fontFamily: "Roboto, sans-serif",
-  marginLeft: "100px",
 }));
 
 const StyledCard = styled("div")(() => ({
@@ -160,5 +166,5 @@ const ViewAllButton = styled("button")(() => ({
   display: "block",
   position: "relative",
   left: "1012px",
-  bottom: "610px"
+  bottom: "610px",
 }));

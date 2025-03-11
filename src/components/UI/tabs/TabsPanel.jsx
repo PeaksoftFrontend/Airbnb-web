@@ -1,41 +1,64 @@
-import { AppBar, Box, styled, Tab, Tabs } from "@mui/material";
+import { AppBar, Badge, Box, styled, Tab, Tabs } from "@mui/material";
 import { TabPanel } from "./TabPanel";
 
-export const TabsPanel = ({ tabs, value, onChange }) => {
+export const TabsPanel = ({ tabs, value, onChange, isAuth, ...props }) => {
   return (
     <StyledBox>
       <StyledAppBar>
-        <StyledTabs value={value} onChange={onChange}>
+        <StyledTabs value={value} onChange={onChange} {...props}>
           {tabs.map((tab, index) => (
             <StyledTab
               key={index}
               label={
                 <StyledSpan isActive={value === index}>
                   {tab.label}
-                  {`(${tab.count})`}
+                  {isAuth && tab.count > 0 && (
+                    <Badge badgeContent={tab.count} color="secondary" />
+                  )}
                 </StyledSpan>
               }
             />
           ))}
         </StyledTabs>
       </StyledAppBar>
-      {tabs.map((tab, index) => (
-        <TabPanel key={index} value={value} index={index}>
-          {tab.content}
-        </TabPanel>
-      ))}
+      <Box>
+        {tabs.map((tab, index) => (
+          <TabPanel key={index} value={value} index={index}>
+            {tab.content}
+          </TabPanel>
+        ))}
+      </Box>
     </StyledBox>
   );
 };
-const StyledBox = styled(Box)({ width: "100%" });
+const StyledBox = styled(Box)({
+  "&.MuiBox-root": {
+    width: "100%",
+  },
+  "& .MuiTabs-root": {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+  },
+  "& .MuiTabs-scroller": {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+  },
+});
+
 const StyledAppBar = styled(AppBar)({
   position: "static",
+  width: "100%",
   backgroundColor: "#FFF",
   color: "grey",
   boxShadow: "none",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  "&.MuiBox-root": {
+    width: "100%",
+  },
 });
 
 const StyledSpan = styled("span")((props) => ({

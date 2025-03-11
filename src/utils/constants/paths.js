@@ -3,13 +3,20 @@ export const PATHS = {
     ROOT: "/",
   },
   USER: {
-    ROOT: "/user",
-    FAVORITE_USER: "/user/favorite",
-    INNER_HOTEL_OF_REGIONS: "/user/inner-hotel-of-regions",
+    ROOT: "/",
+    FAVORITE_USER: "/favorite",
+    INNER_HOTEL_OF_REGIONS: "/inner-hotel-of-regions",
+    PROFILE_INNER_PAGE_HOTEL: "/inner-hotel-of-regions/:regionId",
+    MY_ANNOUNCEMENT: "/my-announcement",
+    PROFILES_USER: "/profiles",
   },
   ADMIN: {
     ROOT: "/admin",
     APPLICATION_ADMIN: "/admin/application",
+    USERS: "/admin/users",
+    USERS_DETAIL: "/admin/users/:userId",
     APPLICATION_ADMIN_PRODUCT: "/admin/application/:productId",
+    USER_ADMIN_PRODUCT: "/admin/user/:productId",
+    APPLICATION_ALLHOUSING: "/admin/all-housing",
   },
 };

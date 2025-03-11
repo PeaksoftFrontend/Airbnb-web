@@ -3,20 +3,37 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
-import { Box, Container, styled } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 import { Icons } from "../../assets";
 import { Button } from "../UI/Button";
 import { useState } from "react";
+import { useFavoriteMutation } from "../../redux/api/auth.servers";
+import { useSelector } from "react-redux";
+import { AuthModal } from "./welcome-section/AuthModal";
 
 export const CardUser = ({ cards }) => {
   const [favorites, setFavorites] = useState({});
 
-  const handleFavorite = (id) => {
-    setFavorites((prevFavorites) => ({
-      ...prevFavorites,
-      [id]: !prevFavorites[id],
-    }));
+  const [favoriteMutation] = useFavoriteMutation();
+  const [modalOpen, setModalOpen] = useState(false);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  const handleFavorite = async (id) => {
+    if (!isAuthenticated) {
+      setModalOpen(true);
+      return;
+    }
+    try {
+      await favoriteMutation(id);
+      setFavorites((prevFavorites) => ({
+        ...prevFavorites,
+        [id]: !prevFavorites[id],
+      }));
+    } catch (error) {
+      error;
+    }
   };
+
   return (
     <StyleContainer>
       {cards.map((item) => (
@@ -37,16 +54,17 @@ export const CardUser = ({ cards }) => {
             </StyleSwiper>
             <div>
               <StylePieces>
-                <b>
-                  ${item.pieces}/<StyleDay>day</StyleDay>
-                </b>
+                <Styledprise>
+                  <StyledPtag> ${item.pieces}/</StyledPtag>
+                  <StyleDay>day</StyleDay>
+                </Styledprise>
                 <StyledSpanStar>
                   <Icons.Star />
                   {item.rating}
                 </StyledSpanStar>
               </StylePieces>
               <StyleDiv>
-                <p>{item.title}</p>
+                <StyledTypography>{item.title}</StyledTypography>
                 <div>
                   <Icons.Location />
                   {item.gps}
@@ -67,10 +85,12 @@ export const CardUser = ({ cards }) => {
           </StyleAll>
         </Box>
       ))}
+      <AuthModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
     </StyleContainer>
   );
 };
 
+const Styledprise = styled("div")({ display: "flex", flexDirection: "row" });
 const StyleFordButton = styled("button")({
   background: "none",
   border: "none",
@@ -86,6 +106,11 @@ const StyleImg = styled("img")({
   width: "295px",
   height: "191px",
   objectFit: "cover",
+});
+const StyledTypography = styled(Typography)({
+  fontWeight: "400",
+  fontSize: "16px",
+  color: "#2B2B2B",
 });
 
 const StyleSwiper = styled(Swiper)({
@@ -107,12 +132,8 @@ const StyleSwiper = styled(Swiper)({
     color: "#fff",
   },
   "& .swiper-pagination": {},
-  "& .swiper-pagination-bullet": {
-    background: "#F7F7F7",
-  },
-  "& .swiper-pagination-bullet-active": {
-    background: "#FFBE58",
-  },
+  "& .swiper-pagination-bullet": { background: "#F7F7F7" },
+  "& .swiper-pagination-bullet-active": { background: "#FFBE58" },
 });
 
 const StyleContainer = styled("div")({
@@ -124,10 +145,12 @@ const StyleContainer = styled("div")({
 const StylePieces = styled("div")({
   display: "flex",
   justifyContent: "space-between",
+  alignItems: "center",
 });
 const StyleDay = styled("span")({
   fontSize: "16px",
-  fontWeight: 400,
+  fontWeight: "400",
+  color: "#828282",
 });
 const StyledSpanStar = styled("span")({
   display: "flex",
@@ -140,11 +163,14 @@ const StyledSpanStar = styled("span")({
   fontWeight: 500,
   padding: "5px",
 
-  "& svg path": {
-    fill: "#F7D212",
-  },
+  "& svg path": { fill: "#F7D212" },
 });
 
+const StyledPtag = styled("p")({
+  fontWeight: "400",
+  fontSize: "18px",
+  color: "#000000",
+});
 const StyleDiv = styled("div")({
   paddingTop: "18px",
   display: "flex",
@@ -164,14 +190,8 @@ const StyleguesNum = styled("div")({
   justifyContent: "space-between",
   alignItems: "center",
   paddingTop: "23px",
-  "& div": {
-    color: "#939393",
-    fontSize: "14px",
-  },
-  "& svg": {
-    width: "20px",
-    height: "20px",
-  },
+  "& div": { color: "#939393", fontSize: "14px" },
+  "& svg": { width: "20px", height: "20px" },
 });
 const StyledButton = styled(Button)({
   width: "103px",

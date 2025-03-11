@@ -6,11 +6,13 @@ import { Pagination } from "swiper/modules";
 import { Icons } from "../../assets";
 import { Box, styled } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../utils/constants/paths";
 
 const POPULAR_REGIONS = [
   {
     title: "THE LASTEST",
-    url: "https://shorturl.at/LyWva",
+    url: "https://shorturl.at/3IY2D",
     text: "Aska Lara Resort & Spa Hotel",
     description:
       "The Aska Lara Resort & Spa Hotel, which operates on an all-inclusive system, occupies 2 plots separated by a road. The hotel is located in the Lara district, 500 meters from the sea.",
@@ -18,15 +20,15 @@ const POPULAR_REGIONS = [
     information: "Read more",
     detail: "View all",
     images: [
-      "https://shorturl.at/pMxJg",
-      "https://shorturl.at/4U5dB",
-      "https://shorturl.at/ADcKH",
-      "https://shorturl.at/pctcI",
-      "https://shorturl.at/pMxJg",
-      "https://shorturl.at/4U5dB",
-      "https://shorturl.at/ADcKH",
-      "https://shorturl.at/pMxJg",
-      "https://shorturl.at/pMxJg",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
+      "https://shorturl.at/3IY2D",
     ],
   },
 ];
@@ -35,7 +37,7 @@ export const UserPageWight = () => {
   const swiperRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(1);
   const [totalSlides, setTotalSlides] = useState(0);
-
+  const navigate = useNavigate();
   const handlePrev = () => {
     if (swiperRef.current) {
       swiperRef.current.slidePrev();
@@ -46,6 +48,11 @@ export const UserPageWight = () => {
     if (swiperRef.current) {
       swiperRef.current.slideNext();
     }
+  };
+  const handleRegions = (region) => {
+    navigate(
+      `${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}?category=the lastest`
+    );
   };
 
   const handleSlideChange = (swiper) => {
@@ -76,7 +83,9 @@ export const UserPageWight = () => {
           </div>
           <StyleLines>
             <StyleDetailsansImages>
-              <StyleMore>{item.detail}</StyleMore>
+              <StyleMore onClick={() => handleRegions("Another")}>
+                {item.detail}
+              </StyleMore>
               <StyleImages>
                 <StyleSwiper
                   onSwiper={(swiper) => {
@@ -198,7 +207,7 @@ const StyleContainer = styled("div")({
   overflow: "hidden",
   width: "100%",
   maxWidth: "none",
-  padding: "100px 0px",
+  padding: "10px 0px",
 });
 
 const StyleDescriptionText = styled("div")({
