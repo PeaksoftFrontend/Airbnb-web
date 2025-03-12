@@ -60,7 +60,7 @@ export const AuthModal = ({ modalOpen, setModalOpen }) => {
         Cookies.set("authUser", JSON.stringify(userData), { expires: 7 });
         setValidationError("");
         setAdminOpen(false);
-        navigate(PATHS[response.role]);
+        navigate("/admin");
       } catch (err) {
         setValidationError(
           "Error: " + (err.data?.message || "Authentication failed")

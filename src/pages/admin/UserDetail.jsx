@@ -9,6 +9,7 @@ import { MyAnnouncement } from "../../components/UI/MyAnnouncement";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useGetUsersDetailsQuery } from "../../redux/api/users.service";
 import { useBlockUserMutation } from "../../redux/api/application.service";
+import { NoData } from "../../components/UI/NotData";
 
 export const UserDetail = () => {
   const { userId } = useParams();
@@ -19,7 +20,7 @@ export const UserDetail = () => {
   useEffect(() => {
     setSearchParams({ value: tabValue === 1 ? "announcements" : "bookings" });
   }, [tabValue, setSearchParams]);
-  const { data = null } = useGetUsersDetailsQuery({
+  const { data } = useGetUsersDetailsQuery({
     id: userId,
     value: tab,
   });
@@ -38,11 +39,20 @@ export const UserDetail = () => {
   ];
 
   const tabs = [
-    { label: "Bookings", content: <Booking bookingUser={data?.bookingUser} /> },
+    {
+      label: "Bookings",
+      content: data?.bookingUser?.length ? (
+        <Booking bookingUser={data?.bookingUser} />
+      ) : (
+        <NoData message="Booking нет данных" />
+      ),
+    },
     {
       label: "My announcement",
-      content: (
+      content: data?.announcementResponses?.length ? (
         <MyAnnouncement announcementResponses={data?.announcementResponses} />
+      ) : (
+        <NoData message="Announcements нет данных" />
       ),
     },
   ];
