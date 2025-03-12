@@ -1,47 +1,55 @@
-import { Box, Pagination, styled } from "@mui/material";
+import { Box, Pagination, styled, CircularProgress } from "@mui/material";
 import { CardAdmin } from "../../components/UI/admin/CardAdmin";
-import { Data } from "../../utils/constants/cardAdmin";
 import { useState } from "react";
+import { useGetApplicationQuery } from "../../redux/api/application.service";
 
 export const Application = () => {
-  const [page, setPages] = useState(1);
-  const cardsPerPage = 15;
+  const [page, setPages] = useState({
+    page: 1,
+    size: 12,
+  });
 
-  const totalPages = Math.ceil(Data.length / cardsPerPage);
-
-  const currentCards = Data.slice(
-    (page - 1) * cardsPerPage,
-    page * cardsPerPage
-  );
-
+  const { data = [], error, isLoading } = useGetApplicationQuery(page);
   const handlePageChange = (_, value) => {
-    setPages(value);
+    setPages({ ...page, page: Number(value) });
   };
+  if (isLoading)
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+        <CircularProgress />
+      </Box>
+    );
+
+  if (error) return <p>Error loading data.</p>;
 
   return (
     <StyledContainer>
-      <StyleText
-        sx={{
-          padding: "50px 0px 22px 0px",
-        }}
-      >
-        APPLICATION
-      </StyleText>
-      <CardAdmin cards={currentCards} />
-      <StylePogination>
-        <Pagination
-          count={totalPages}
-          page={page}
-          onChange={handlePageChange}
-        />
-      </StylePogination>
+      <StyleText>APPLICATION</StyleText>
+      {isLoading ? (
+        <LoadingContainer>
+          <CircularProgress />
+        </LoadingContainer>
+      ) : (
+        <>
+          <CardAdmin cards={data?.announcementResponses} />
+          {data?.announcementResponses?.length > 0 && (
+            <StylePogination>
+              <Pagination
+                count={data?.pageSize}
+                page={data?.currentPage}
+                onChange={handlePageChange}
+              />
+            </StylePogination>
+          )}
+        </>
+      )}
     </StyledContainer>
   );
 };
 
 const StyledContainer = styled("div")({
   width: "100%",
-  padding: "0px 40px",
+  margin: "40px",
 });
 
 const StylePogination = styled(Box)({
@@ -72,4 +80,13 @@ const StyleText = styled("p")({
   fontSize: "20px",
   fontWeight: 500,
   color: "#000000",
+  marginTop: "50px",
+  marginLeft: "6px",
+});
+
+const LoadingContainer = styled(Box)({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "200px",
 });

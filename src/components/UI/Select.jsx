@@ -44,28 +44,21 @@ const StyledSelect = styled(MuiSelect)(() => ({
   color: "#828282",
   fontSize: "16px",
   fontWeight: "400",
-  "& .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#C4C4C4",
-  },
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#C4C4C4",
-  },
+  "& .MuiOutlinedInput-notchedOutline": { borderColor: "#C4C4C4" },
+  "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#C4C4C4" },
   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
     borderColor: "#C4C4C4",
     borderWidth: "2px",
   },
-  "&:active .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#C4C4C4",
-  },
+  "&:active .MuiOutlinedInput-notchedOutline": { borderColor: "#C4C4C4" },
 }));
 
 const StyledMenuItem = styled(MenuItem)({
   color: "#5D5D5D",
   fontSize: "16px",
   fontWeight: "400",
-  "&:hover": {
-    backgroundColor: "#F3F3F3",
-  },
+  textTransform: "uppercase",
+  "&:hover": { backgroundColor: "#F3F3F3" },
 });
 
 const Placeholder = styled("p")({

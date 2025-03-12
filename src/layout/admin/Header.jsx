@@ -1,10 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { Icons } from "../../assets";
-import { Box, Menu, MenuItem, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+<<<<<<< HEAD
 import { logout } from "../../redux/slices/authSlice";
 import Cookies from "js-cookie";
+=======
+import { logout } from "../../redux/slices/authSlie";
+>>>>>>> 65b4ffb4ad31c6e366be002a8ad4bd7fad5e9c8a
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,14 +18,12 @@ export const Header = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
+    setIsOpen(false);
     try {
-      Cookies.remove("admin");
-
       dispatch(logout());
-
-      navigate("/login");
+      navigate("/");
     } catch (error) {
-      error;
+      console.log(error);
     }
   };
   const toggleText = () => {
@@ -51,19 +53,19 @@ export const Header = () => {
         <StyledLiTogether>
           <StyledLink
             to="/admin/application"
-            active={location.pathname === "/admin/application" ? 1 : 0}
+            active={location.pathname.includes("application") ? 1 : 0}
           >
             Application
           </StyledLink>
           <StyledLink
             to="/admin/users"
-            active={location.pathname === "/admin/users" ? 1 : 0}
+            active={location.pathname.includes("users") ? 1 : 0}
           >
             Users
           </StyledLink>
           <StyledLink
             to="/admin/all-housing"
-            active={location.pathname === "/admin/all-housing" ? 1 : 0}
+            active={location.pathname.includes("all-housing") ? 1 : 0}
           >
             All housing
           </StyledLink>
@@ -71,62 +73,67 @@ export const Header = () => {
       </StyledBox>
 
       <StyleEnd>
-        <StyledArrow ref={dropdownRef}>
-          <StyledDiv StyledDiv onClick={toggleText}>
+        <StyledArrow ref={dropdownRef} onClick={toggleText}>
+          {" "}
+          <StyledDiv>
             Administrator
-            <Icons.ArrowDown />
+            <StyledIconsArrow>
+              <Icons.ArrowDown />
+            </StyledIconsArrow>
           </StyledDiv>
-          <StyledMenu
-            id="account-menu"
-            anchorEl={dropdownRef.current}
-            open={isOpen}
-            onClose={() => setIsOpen(false)}
-            transformOrigin={{ horizontal: "right", vertical: "top" }}
-            anchorOrigin={{ horizontal: "right", vertical: "top" }}
-          >
-            <StyledMenuItem
-              onClick={handleLogout}
-              onClose={() => setIsOpen(false)}
+          {isOpen && (
+            <StyledMenu
+              id="account-menu"
+              anchorEl={dropdownRef.current}
+              open={isOpen}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "top" }}
             >
-              Log out
-            </StyledMenuItem>
-          </StyledMenu>
+              <StyledHoverText>
+                <StyledMenuItem onClick={handleLogout}>Log out</StyledMenuItem>
+              </StyledHoverText>
+            </StyledMenu>
+          )}
         </StyledArrow>
       </StyleEnd>
     </StyledHeader>
   );
 };
-const StyledMenu = styled(Menu)(({ theme }) => ({
-  "& .MuiPaper-root": {
-    elevation: 0,
-    overflow: "visible",
-    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-    marginTop: theme.spacing(4.375),
-    marginLeft: theme.spacing(4.375),
-
-    "&:before": {
-      content: '""',
-      display: "block",
-      position: "absolute",
-      top: 0,
-      right: 14,
-      width: 10,
-      height: 10,
-      bgcolor: theme.palette.background.paper,
-      transform: "translateY(-50%) rotate(45deg)",
-      zIndex: 0,
-    },
-  },
-}));
-const StyledMenuItem = styled(MenuItem)({
-  width: "180px",
-  height: "58px",
+const StyledMenu = styled("nav")({
+  position: "absolute",
+  left: "-45px",
   backgroundColor: "#FFFFFF",
   border: "1px solid #C4C4C4",
-  borderRadius: "2px ",
+  top: "36px",
+  paddingTop: "20px",
+  width: "180px",
+  height: "59px",
+  borderRadius: "2px 0px 0px 0px",
+  zIndex: 1,
+});
+const StyledIconsArrow = styled("p")({
+  paddingLeft: "5px",
+});
+const StyledHoverText = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  height: "27px",
+  cursor: "pointer",
+  ":hover": {
+    backgroundColor: "#F3F3F3",
+  },
+});
+const StyledMenuItem = styled("a")({
+  color: "#5D5D5D",
+  textDecoration: "none",
+  paddingLeft: "20px",
+  cursor: "pointer",
 });
 
-const StyledDiv = styled("div")({ cursor: "pointer" });
+const StyledDiv = styled("div")({
+  cursor: "pointer",
+  display: "flex",
+});
 
 const StyledBox = styled(Box)({
   display: "flex",

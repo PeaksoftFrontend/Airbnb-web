@@ -70,7 +70,9 @@ export const HousesPage = () => {
           </StyledCard>
         ))}
       </StyledCardContent>
-      <ViewAllButton>View all</ViewAllButton>
+      <ViewAllButton onClick={() => handleRegions("Another")}>
+        View all
+      </ViewAllButton>
     </StyledBox>
   );
 };

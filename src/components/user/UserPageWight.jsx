@@ -52,6 +52,11 @@ export const UserPageWight = () => {
       swiperRef.current.slideNext();
     }
   };
+  const handleRegions = (region) => {
+    navigate(
+      `${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}?category=the lastest`
+    );
+  };
 
   const handleSlideChange = (swiper) => {
     setCurrentSlide(swiper.activeIndex + 1);
@@ -81,7 +86,9 @@ export const UserPageWight = () => {
           </div>
           <StyleLines>
             <StyleDetailsansImages>
-              <StyleMore>{item.detail}</StyleMore>
+              <StyleMore onClick={() => handleRegions("Another")}>
+                {item.detail}
+              </StyleMore>
               <StyleImages>
                 <StyleSwiper
                   onSwiper={(swiper) => {
