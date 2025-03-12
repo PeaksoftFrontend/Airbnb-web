@@ -26,17 +26,18 @@ export const AuthModal = ({ modalOpen, setModalOpen }) => {
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithGoogle();
-      const user = result.user;
-      const token = await user.getIdToken();
-      const response = await googleLogin({ token }).unwrap();
+      const firebaseToken = await result.user.getIdToken();
 
+      const response = await googleLogin(firebaseToken).unwrap();
       const userData = {
-        role: response || "USER",
-        name: user.displayName,
-        email: user.email,
-        token,
+        token: firebaseToken,
+        email: response.email,
+        role: response.role,
+        name: response.name,
       };
+
       dispatch(login(userData));
+
       Cookies.set("authUser", JSON.stringify(userData), { expires: 7 });
       setModalOpen(false);
     } catch (error) {
