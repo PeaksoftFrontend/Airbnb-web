@@ -3,7 +3,6 @@ import { Icons } from "../../assets";
 import { Box, styled } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import Cookies from "js-cookie";
 import { logout } from "../../redux/slices/authSlie";
 
 export const Header = () => {
@@ -14,14 +13,12 @@ export const Header = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
+    setIsOpen(false);
     try {
-      Cookies.remove("admin");
-
       dispatch(logout());
-
       navigate("/");
     } catch (error) {
-      error;
+      console.log(error);
     }
   };
   const toggleText = () => {
@@ -84,17 +81,11 @@ export const Header = () => {
               id="account-menu"
               anchorEl={dropdownRef.current}
               open={isOpen}
-              onClose={() => setIsOpen(false)}
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "top" }}
             >
               <StyledHoverText>
-                <StyledMenuItem
-                  onClick={handleLogout}
-                  onClose={() => setIsOpen(false)}
-                >
-                  Log out
-                </StyledMenuItem>
+                <StyledMenuItem onClick={handleLogout}>Log out</StyledMenuItem>
               </StyledHoverText>
             </StyledMenu>
           )}
@@ -120,8 +111,9 @@ const StyledIconsArrow = styled("p")({
 });
 const StyledHoverText = styled("div")({
   display: "flex",
-  alignItems: "center", // Центрируем текст
+  alignItems: "center",
   height: "27px",
+  cursor: "pointer",
   ":hover": {
     backgroundColor: "#F3F3F3",
   },
@@ -130,6 +122,7 @@ const StyledMenuItem = styled("a")({
   color: "#5D5D5D",
   textDecoration: "none",
   paddingLeft: "20px",
+  cursor: "pointer",
 });
 
 const StyledDiv = styled("div")({
