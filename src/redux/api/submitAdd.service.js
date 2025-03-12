@@ -5,6 +5,12 @@ export const submitAdApi = createApi({
   reducerPath: "submitAdApi",
   baseQuery: baseQuery,
   endpoints: (builder) => ({
+    deleteFile: builder.mutation({
+      query: (fileName) => ({
+        method: "DELETED",
+        url: `/api/file?fileName=${fileName}`,
+      }),
+    }),
     submitAnAd: builder.mutation({
       query: (formData) => ({
         url: "vendor/submitAnAd",
@@ -23,12 +29,6 @@ export const submitAdApi = createApi({
           body: formData,
         };
       },
-    }),
-    deleteFile: builder.mutation({
-      query: (fileName) => ({
-        method: "DELETED",
-        url: `/api/file?fileName=${fileName}`,
-      }),
     }),
   }),
 });
