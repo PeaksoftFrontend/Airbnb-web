@@ -13,7 +13,6 @@ export const AppRoutes = () => {
   const pathRole = {
     ADMIN: PATHS.ADMIN.ROOT,
     USER: PATHS.USER.ROOT,
-    GUEST: PATHS.GUEST.ROOT,
   };
 
   const router = createBrowserRouter([
