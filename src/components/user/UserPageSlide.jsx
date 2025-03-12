@@ -23,7 +23,6 @@ export const UserPageSlide = () => {
   const datacurrent = [data];
   if (error) return <p>error data</p>;
   if (isLoading) return <p>Loading...</p>;
-  console.log(data);
 
   // const { data, error, isLoading } = useGetPopularApartmentQuery();
   // const [data, { error, isLoading }] = useGetPopularApartmentQuery();
