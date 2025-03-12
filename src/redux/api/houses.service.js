@@ -13,7 +13,7 @@ export const housesApi = createApi({
       query: () => "/announcements/latestAnnouncement",
       providesTags: ["Announcements"],
     }),
-    getPopularsApartments: builder.query({
+    getPopularApartment: builder.query({
       query: () => "/announcements/getPopularApartment",
       providesTags: ["Announcements"],
     }),
@@ -21,7 +21,7 @@ export const housesApi = createApi({
 });
 
 export const {
-  useGetPopularsApartmentsQuery,
+  useGetPopularApartmentQuery,
   useGetLatestAnnouncementsQuery,
   useGetPopularsHousesQuery,
 } = housesApi;

@@ -59,8 +59,8 @@ export const UserPageWight = () => {
 
   return (
     <StyleContainer>
-      {POPULAR_REGIONS.map((item) => (
-        <StyleBox key={item.id} {...item}>
+      {POPULAR_REGIONS.map((item, index) => (
+        <StyleBox key={index} {...item}>
           <StyleImageGlobal>
             <p>{item.title}</p>
             <img src={item.url} alt="" />
