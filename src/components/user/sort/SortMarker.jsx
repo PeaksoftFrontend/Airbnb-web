@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   IconButton,
   ListItemText,
   ListSubheader,
@@ -38,7 +37,7 @@ export const SortMarker = ({
   setSelectedPrice,
   selectedPrice,
   setSelectedValues,
-  onClear,
+
   //   groupedOptions,
 }) => {
   const handleSortChange = (event, optionValue) => {
@@ -122,9 +121,6 @@ export const SortMarker = ({
             <Typography>{value}</Typography>
           </StyledChip>
         ))}
-        {allSelectedValues.length > 0 && (
-          <StyledClearButton onClick={onClear}>Clear all</StyledClearButton>
-        )}
       </StyledChipContainer>
     </StyledFromControl>
   );
@@ -134,14 +130,6 @@ const StyledFromControl = styled(Box)({
   display: "flex",
   flexDirection: "column",
   gap: "16px",
-});
-const StyledClearButton = styled(Button)({
-  color: "#828282",
-  width: "150px",
-  height: "32px",
-  fontSize: "16px",
-  textDecoration: "underline",
-  textTransform: "capitalize",
 });
 
 const StyledIcons = styled(Icons.Remove)(({ iconSize }) => ({
@@ -163,22 +151,14 @@ const StyledSelect = styled(Select)({
     backgroundColor: "transparent",
     borderColor: "#C4C4C4",
   },
-  "& .MuiInputBase-root": {
-    padding: 0,
-  },
-  "& .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#C4C4C4",
-  },
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#C4C4C4",
-  },
+  "& .MuiInputBase-root": { padding: 0 },
+  "& .MuiOutlinedInput-notchedOutline": { borderColor: "#C4C4C4" },
+  "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#C4C4C4" },
   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
     borderColor: "#C4C4C4",
     borderWidth: "2px",
   },
-  "&:active .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#C4C4C4",
-  },
+  "&:active .MuiOutlinedInput-notchedOutline": { borderColor: "#C4C4C4" },
 });
 
 const StyledPlaceholder = styled(Box)({
