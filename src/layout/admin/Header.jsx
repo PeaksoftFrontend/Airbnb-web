@@ -3,8 +3,8 @@ import { Icons } from "../../assets";
 import { Box, Menu, MenuItem, styled } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logout } from "../../redux/slices/authSlie";
 import Cookies from "js-cookie";
+import { logout } from "../../redux/slices/authSlie";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);

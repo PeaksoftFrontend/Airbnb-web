@@ -1,7 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authSlice } from "./slices/authSlie";
+
 import { usersApi } from "./api/users.service";
 import { authApi } from "./api/auth.servers";
+import { authSlice } from "./slices/authSlie";
+import { submitAdApi } from "./api/submitAdd.service";
 import { applicationApi } from "./api/application.service";
 import { announcementIdApi } from "./api/announcementId.service";
 
@@ -10,6 +12,7 @@ export const store = configureStore({
     auth: authSlice.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
+    [submitAdApi.reducerPath]: submitAdApi.reducer,
     [applicationApi.reducerPath]: applicationApi.reducer,
     [announcementIdApi.reducerPath]: announcementIdApi.reducer,
   },
@@ -18,6 +21,7 @@ export const store = configureStore({
       usersApi.middleware,
       authApi.middleware,
       applicationApi.middleware,
-      announcementIdApi.middleware
+      announcementIdApi.middleware,
+      submitAdApi.middleware
     ),
 });

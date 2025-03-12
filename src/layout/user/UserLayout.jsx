@@ -1,4 +1,3 @@
-import { InnerHotelPage } from "../../pages/user/InnerHotelPage";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Outlet, useLocation } from "react-router-dom";
@@ -10,8 +9,7 @@ export const UserLayout = () => {
     <div>
       {pathname === "/" ? null : <Header />}
       <main>
-        {/* <Outlet /> */}
-        <InnerHotelPage />
+        <Outlet />
       </main>
       <Footer />
     </div>

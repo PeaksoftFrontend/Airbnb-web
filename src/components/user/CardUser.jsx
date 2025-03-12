@@ -24,7 +24,7 @@ export const CardUser = ({ cards }) => {
       return;
     }
     try {
-      await favoriteMutation(id);
+      await favoriteMutation(id).unwrap();
       setFavorites((prevFavorites) => ({
         ...prevFavorites,
         [id]: !prevFavorites[id],

@@ -7,7 +7,7 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     googleLogin: builder.mutation({
       query: (token) => ({
-        url: `/auth/google?token=${token}`,
+        url: `/auth/google?tokenId=${token}`,
         method: "POST",
       }),
     }),
@@ -29,7 +29,6 @@ export const authApi = createApi({
         }).toString()}`;
         return url;
       },
-
       transformResponse: (response) => {
         return {
           announcementResponses: response.announcementResponses || [],
@@ -39,10 +38,14 @@ export const authApi = createApi({
       },
       providesTags: ["announcement"],
     }),
-
     favorite: builder.mutation({
-      query: (announcementId) => ({ url: `/favorites/${announcementId}` }),
-      method: "POST",
+      query: (announcementId) => ({
+        url: `/favorites/${announcementId}`,
+        method: "POST",
+      }),
+    }),
+    getFavorites: builder.query({
+      query: () => "/favorites/getAllFavorites",
     }),
   }),
 });
@@ -52,4 +55,5 @@ export const {
   useLoginAdminMutation,
   useFavoriteMutation,
   useGetAnnouncementsFilterQuery,
+  useGetFavoritesQuery,
 } = authApi;
