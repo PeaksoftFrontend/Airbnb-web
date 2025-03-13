@@ -11,20 +11,32 @@ import {
   Button,
   Popper,
   Box,
+  CircularProgress,
 } from "@mui/material";
 import { Icons } from "../../assets";
 import {
   useGetUsersQuery,
   useRemoveUserMutation,
 } from "../../redux/api/users.service";
+import { useNavigate } from "react-router-dom";
 
 export const UsersPage = () => {
-  const { data, error, isLoading } = useGetUsersQuery();
+  const { data = [], error, isLoading } = useGetUsersQuery();
   const [removeUser] = useRemoveUserMutation();
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
 
-  if (isLoading) return <p>Loading...</p>;
+  const currentFilter = data?.filter((user) => user.role === null);
+
+  const navigate = useNavigate();
+
+  if (isLoading)
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+        <CircularProgress />
+      </Box>
+    );
+
   if (error) return <p>Error loading data.</p>;
 
   const handleOpen = (event, id) => {
@@ -71,8 +83,11 @@ export const UsersPage = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((user, index) => (
+          {currentFilter?.map((user, index) => (
             <TableRow
+              onClick={() =>
+                navigate(`/admin/users/${user.id}?name=${user.fullName}`)
+              }
               key={user.id}
               sx={{
                 backgroundColor: index % 2 === 0 ? "#f5f5f5" : "#ffffff",
@@ -145,3 +160,10 @@ const StyledTableCell = styled(TableCell)({
   fontSize: 14,
   padding: "10px",
 });
+
+// const LoadingContainer = styled("div")({
+//   display: "flex",
+//   // justifyContent: "center",
+//   // alignItems: "center",
+//   height: "100vh",
+// });

@@ -1,13 +1,14 @@
 import { Box, styled } from "@mui/material";
 import { Icons } from "../../assets";
-import { useGetPopularsApartmentsQuery } from "../../redux/api/houses.service";
+import { useGetPopularsHousesQuery } from "../../redux/api/houses.service";
 
 export const HousesPage = () => {
-  const { data, error, isLoading, refetch } = useGetPopularsApartmentsQuery();
+  const { data, error, isLoading } = useGetPopularsHousesQuery();
 
   if (error) return <p>error data</p>;
   if (isLoading) return <p>Loading...</p>;
-  if (refetch) return <button onClick={() => refetch()}>Обновить</button>;
+
+  const handleRegions = () => {};
 
   return (
     <StyledBox>
@@ -21,7 +22,7 @@ export const HousesPage = () => {
       <StyledCardContent>
         {data.map((property) => (
           <StyledCard key={property.id}>
-            <StyledImage src={property.image} alt={property.name} />
+            <StyledImage src={property.images} alt={property.title} />
             <StyledRating>
               <StyledStarSpan>
                 <Icons.StarColor />
@@ -29,9 +30,9 @@ export const HousesPage = () => {
               {property.rating}
             </StyledRating>
             <StyledBoxContainer>
-              <StyledName>{property.name}</StyledName>
+              <StyledName>{property.title}</StyledName>
               <StyledLocation>
-                <Icons.Location /> {property.location}
+                <Icons.Location /> {property.address}
               </StyledLocation>
               <Styledtogether>
                 <StyledPrice>{property.price}</StyledPrice>
@@ -41,7 +42,9 @@ export const HousesPage = () => {
           </StyledCard>
         ))}
       </StyledCardContent>
-      <ViewAllButton>View all</ViewAllButton>
+      <ViewAllButton onClick={() => handleRegions("Another")}>
+        View all
+      </ViewAllButton>
     </StyledBox>
   );
 };
@@ -63,6 +66,7 @@ const Styledtogether = styled("div")({
 });
 const StyledCardContent = styled("div")({
   display: "flex",
+  gap: "20px",
   marginTop: "60px",
 });
 const StyledPopularHouse = styled("h1")({

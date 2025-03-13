@@ -3,14 +3,20 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
-import { Box, Menu, MenuItem, styled } from "@mui/material";
+import { Box, Menu, MenuItem, styled, Typography } from "@mui/material";
 import { Icons } from "../../../assets";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../../utils/constants/paths";
+import {
+  useAcceptedAnnouncementMutation,
+  useBlockingAnnouncementMutation,
+} from "../../../redux/api/application.service";
 
-export const CardAdmin = ({ cards }) => {
+export const CardAdmin = ({ cards = [] }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [acceptedAnnouncement] = useAcceptedAnnouncementMutation();
+  const [blockingAnnouncement] = useBlockingAnnouncementMutation();
   const navigate = useNavigate();
 
   const open = Boolean(anchorEl);
@@ -30,9 +36,9 @@ export const CardAdmin = ({ cards }) => {
   };
   return (
     <StyleContainer>
-      {cards.map((item) => (
+      {cards?.map((item) => (
         <StyledBox key={item.id} onClick={() => handleNavigate(item.id)}>
-          <StyleAll isNew={item.isNew}>
+          <StyleAll>
             <StyleSwiper
               mousewheel={true}
               navigation={{
@@ -46,7 +52,7 @@ export const CardAdmin = ({ cards }) => {
               }}
               modules={[Navigation, Pagination]}
             >
-              {item.images.map((images, index) => (
+              {item?.images.images.map((images, index) => (
                 <SwiperSlide key={index}>
                   <StyleImg src={images} alt="" />
                 </SwiperSlide>
@@ -65,25 +71,28 @@ export const CardAdmin = ({ cards }) => {
               ></div>
             </StyleSwiper>
 
-            <div>
-              <StylePieces>
-                <p>
-                  ${item.pieces}/<StyleDay>day</StyleDay>
-                </p>
-                <StyledSpanStar>
-                  <Icons.Star />
-                  {item.rating}
-                </StyledSpanStar>
-              </StylePieces>
-              <StyleDiv>
-                <p>{item.title}</p>
-                <div>
-                  <Icons.Location />
-                  <p>{item.gps}</p>
-                </div>
-              </StyleDiv>
-              <StyleguesNum>
-                <div>{item.guests} guests</div>
+            <HousingContent>
+              <StyledTogetherday>
+                <StyledHousingPriceTogether>
+                  <HousingPrice>{item.price} </HousingPrice>
+                  <HousingPriceTwo> / day</HousingPriceTwo>
+                </StyledHousingPriceTogether>
+                <HousingRating>
+                  <StyledStarIcon>
+                    <StarIcon />
+                  </StyledStarIcon>
+                  <Typography variant="body2" sx={{ color: "#FFFFFF" }}>
+                    {item.rating}
+                  </Typography>
+                </HousingRating>
+              </StyledTogetherday>
+              <HousingDescription>{item.title}</HousingDescription>
+              <HousingLocation>
+                <StyledLocation />
+                <StyledHouse>{item.address}</StyledHouse>
+              </HousingLocation>
+              <HousingGuests>
+                {item.maxGuests} guests
                 <StyleMenuItem>
                   <Icons.MIniMenu
                     aria-controls={open ? "fade-menu" : undefined}
@@ -113,21 +122,50 @@ export const CardAdmin = ({ cards }) => {
                       },
                     }}
                     anchorOrigin={{
-                      vertical: "bottom",
+                      vertical: "top",
                       horizontal: "right",
                     }}
                     transformOrigin={{
                       vertical: "bottom",
-                      horizontal: "right",
+                      horizontal: "left",
                     }}
                   >
-                    <MenuItem onClick={handleClose}>Accept</MenuItem>
-                    <MenuItem onClick={handleClose}>Reject</MenuItem>
-                    <MenuItem onClick={handleClose}>Delete</MenuItem>
+                    <MenuItem
+                      onClick={(event) => {
+                        blockingAnnouncement(item.id);
+                        handleClose(event);
+                      }}
+                    >
+                      Accept
+                    </MenuItem>
+                    <MenuItem
+                      onClick={(event) => {
+                        acceptedAnnouncement({
+                          id: item?.id,
+                          value: "reject",
+                          message: "admin rejected your announcement",
+                        });
+                        handleClose(event);
+                      }}
+                    >
+                      Reject
+                    </MenuItem>
+                    <MenuItem
+                      onClick={(event) => {
+                        acceptedAnnouncement({
+                          id: item?.id,
+                          value: "delete",
+                          message: "admin deleted your announcement",
+                        });
+                        handleClose(event);
+                      }}
+                    >
+                      Delete
+                    </MenuItem>
                   </Menu>
                 </StyleMenuItem>
-              </StyleguesNum>
-            </div>
+              </HousingGuests>
+            </HousingContent>
           </StyleAll>
         </StyledBox>
       ))}
@@ -136,6 +174,7 @@ export const CardAdmin = ({ cards }) => {
 };
 
 const StyleMenuItem = styled("div")({
+  paddingLeft: "132px",
   "& svg": {
     cursor: "pointer",
   },
@@ -159,10 +198,13 @@ const StyledBox = styled(Box)({
 });
 
 const StyleImg = styled("img")({
-  borderRadius: "3px",
-  width: "210px",
+  width: "100%",
   height: "136px",
-  objectFit: "cover",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  borderRadius: "3px",
+  marginTop: "22px",
 });
 
 const StyleSwiper = styled(Swiper)({
@@ -204,73 +246,90 @@ const StyleContainer = styled("div")({
   width: "100%",
   flexWrap: "wrap",
 });
-const StylePieces = styled("div")({
+
+const HousingContent = styled(Box)({
+  height: "135px",
+  padding: "7px",
+});
+
+const StyledTogetherday = styled("div")({
   display: "flex",
   justifyContent: "space-between",
-  padding: "0px 19px 0px 19px ",
-  "& p": {
-    fontSize: "18px",
-    fontWeight: 400,
-  },
+  marginBottom: "10px",
 });
-const StyleDay = styled("span")({
-  fontSize: "16px",
-  fontWeight: 400,
+
+const StyledHousingPriceTogether = styled("div")({
+  display: "flex",
+  alignItems: "center",
+});
+
+const HousingPrice = styled(Typography)({
+  fontSize: "18px",
+  color: "#363636",
+});
+
+const HousingPriceTwo = styled("div")({
   color: "#6C6C6C",
+  fontSize: "16px",
+  paddingLeft: "2px",
 });
-const StyledSpanStar = styled("span")({
+
+const HousingRating = styled(Box)({
   display: "flex",
   alignItems: "center",
+  backgroundColor: "#828282",
+  width: "62px",
+  height: "25px",
+  borderRadius: "2px",
   gap: "5px",
-  background: "#828282",
-  color: "#FFFFFF",
-  borderRadius: "3px",
+});
+
+const StyledStarIcon = styled("span")({
+  paddingTop: "0.5px",
+  paddingLeft: "5px",
+});
+
+const StarIcon = styled(Icons.StarColor)({
+  marginLeft: "5px",
+  cursor: "pointer",
+});
+
+const HousingDescription = styled(Typography)({
   fontSize: "14px",
-  fontWeight: 500,
-  padding: "5px",
-
-  "& svg path": {
-    fill: "#F7D212",
-  },
+  marginBottom: "5px",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  color: "#2B2B2B",
+  whiteSpace: "nowrap",
 });
 
-const StyleDiv = styled("div")({
-  paddingTop: "18px",
+const HousingLocation = styled(Typography)({
+  fontSize: "0.9rem",
+  marginBottom: "5px",
+  color: "#828282",
+  overflow: "hidden",
+  paddingRight: "5px",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
   display: "flex",
-  flexDirection: "column",
-  padding: "14px 19px 0px 19px ",
-  gap: "8px",
-  "& div": {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "6px",
-    color: "#828282",
-    fontSize: "14px",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-  },
-  "& p": {
-    fontSize: "14x",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-  },
-});
-
-const StyleguesNum = styled("div")({
-  display: "flex",
-  justifyContent: "space-between",
   alignItems: "center",
-  padding: "13px 19px 12px 19px",
-  "& div": {
-    color: "#939393",
-    fontSize: "14px",
-  },
+});
+
+const StyledLocation = styled(Icons.Location)({
+  cursor: "pointer",
+});
+
+const StyledHouse = styled("span")({
+  marginLeft: "4px",
+});
+
+const HousingGuests = styled(Typography)({
+  fontSize: "0.9rem",
+  color: "#939393",
+  marginBottom: "5px",
+  display: "flex",
   "& svg": {
-    width: "29px",
+    width: "19px",
     height: "27px",
-    color: "background: #C4C4C4",
   },
 });

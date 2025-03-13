@@ -1,5 +1,9 @@
-import { Typography } from "@mui/material";
+import { CardAdmin } from "./admin/CardAdmin";
 
-export const Booking = () => {
-  return <Typography>Booking</Typography>;
+export const Booking = ({ bookingUser = [] }) => {
+  return (
+    <div>
+      <CardAdmin cards={bookingUser} />
+    </div>
+  );
 };

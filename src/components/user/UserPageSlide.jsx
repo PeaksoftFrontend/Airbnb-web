@@ -11,7 +11,7 @@ import { Box, styled } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../utils/constants/paths";
-import { useGetPopularsApartmentsQuery } from "../../redux/api/houses.service";
+import { useGetPopularApartmentQuery } from "../../redux/api/houses.service";
 
 export const UserPageSlide = () => {
   const navigate = useNavigate();
@@ -19,16 +19,19 @@ export const UserPageSlide = () => {
   const [currentSlide, setCurrentSlide] = useState(1);
   const [totalSlides, setTotalSlides] = useState(0);
 
-  const {
-    data = [],
-    error,
-    isLoading,
-    refetch,
-  } = useGetPopularsApartmentsQuery();
-
+  const { data, error, isLoading } = useGetPopularApartmentQuery();
+  const datacurrent = [data];
   if (error) return <p>error data</p>;
   if (isLoading) return <p>Loading...</p>;
-  if (refetch) return <button onClick={() => refetch()}>Обновить</button>;
+
+  // const { data, error, isLoading } = useGetPopularApartmentQuery();
+  // const [data, { error, isLoading }] = useGetPopularApartmentQuery();
+  // console.log(data);
+  // if (!Array.isArray(data)) {
+  //   return <p>No data available</p>; // Handle the case where data is not an array
+  // }
+  if (error) return <p> error data</p>;
+  if (isLoading) return <p>Loading...</p>;
 
   const handleRegions = (region) => {
     navigate(
@@ -54,11 +57,11 @@ export const UserPageSlide = () => {
 
   return (
     <StyleContainer>
-      {data.map((item) => (
+      {datacurrent.map((item) => (
         <StyleBox key={item.id} {...item}>
           <StyleImageGlobal>
             <p>{item.title}</p>
-            <img src={item.url} alt="" />
+            <img src={item.images} alt="" />
           </StyleImageGlobal>
           <div>
             <StyleDescriptionText>
@@ -69,9 +72,9 @@ export const UserPageSlide = () => {
             <StyleInformation>
               <p style={{ display: "flex", gap: "4px" }}>
                 <Icons.Location />
-                {item.gps}
+                {item.address}
               </p>
-              <span>{item.information}</span>
+              <span>{item.description}</span>
             </StyleInformation>
           </div>
           <StyleLines>

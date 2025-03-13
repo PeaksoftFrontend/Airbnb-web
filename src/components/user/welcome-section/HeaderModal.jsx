@@ -17,12 +17,14 @@ import {
   useLoginAdminMutation,
 } from "../../../redux/api/auth.servers";
 import { signInWithGoogle } from "../../../redux/fireBase";
-import { login } from "../../../redux/slices/authSlie";
+import { login } from "../../../redux/slices/authSlice";
 import Cookies from "js-cookie";
 import { PATHS } from "../../../utils/constants/paths";
 
 export const HeaderModal = () => {
   const role = useSelector((state) => state.auth.role);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
@@ -34,9 +36,6 @@ export const HeaderModal = () => {
   const [googleLogin, { isLoading: isGoogleLoading }] =
     useGoogleLoginMutation();
   const [loginAdmin, { isLoading: isAdminLoading }] = useLoginAdminMutation();
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleGoogleLogin = async () => {
     try {
@@ -74,6 +73,7 @@ export const HeaderModal = () => {
     onSubmit: async (values) => {
       try {
         const response = await loginAdmin(values).unwrap();
+        console.log(response);
 
         const userData = {
           role: response.role,
@@ -102,11 +102,15 @@ export const HeaderModal = () => {
     setModalOpen(false);
   };
 
+  const handleNavigate = () => {
+    navigate(`${PATHS.USER.PUBLISH}`);
+  };
+
   return (
     <StyledHeader>
       <StyledIconsLogo />
       <StyledDiv>
-        <StyledLink>leave an ad</StyledLink>
+        <StyledLink onClick={handleNavigate}>leave an ad</StyledLink>
         {role === "GUEST" ? (
           <StyledButton variant="outlined" onClick={handleOpen}>
             join us
@@ -232,7 +236,6 @@ const StyledDiv = styled(Box)({
 });
 
 const StyledLink = styled(Box)({
-  fontFamily: "Inter", // Fixed typo: fontfamily -> fontFamily
   fontSize: "18px",
   fontWeight: "500",
   color: "#FFF",
