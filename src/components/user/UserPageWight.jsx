@@ -6,7 +6,9 @@ import { Pagination } from "swiper/modules";
 import { Icons } from "../../assets";
 import { Box, styled } from "@mui/material";
 import { useState } from "react";
-// import { useGetLatestAnnouncementsQuery } from "../../redux/api/houses.service";
+import { useGetLatestAnnouncementsQuery } from "../../redux/api/houses.service";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../utils/constants/paths";
 
 const POPULAR_REGIONS = [
   {
@@ -36,10 +38,9 @@ export const UserPageWight = () => {
   const swiperRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(1);
   const [totalSlides, setTotalSlides] = useState(0);
-  // const { data, error, isLoading } = useGetLatestAnnouncementsQuery();
-
-  // if (error) return <p>error data</p>;
-  // if (isLoading) return <p>Loading...</p>;
+  const { data } = useGetLatestAnnouncementsQuery();
+  console.log(data);
+  const navigate = useNavigate();
 
   const handlePrev = () => {
     if (swiperRef.current) {
@@ -52,9 +53,10 @@ export const UserPageWight = () => {
       swiperRef.current.slideNext();
     }
   };
+
   const handleRegions = (region) => {
     navigate(
-      `${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}?category=the lastest`
+      `${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}?category=the-lastest`
     );
   };
 

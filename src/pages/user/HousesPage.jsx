@@ -1,14 +1,18 @@
 import { Box, styled } from "@mui/material";
 import { Icons } from "../../assets";
 import { useGetPopularsHousesQuery } from "../../redux/api/houses.service";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../utils/constants/paths";
 
 export const HousesPage = () => {
   const { data, error, isLoading } = useGetPopularsHousesQuery();
-
+  const navigate = useNavigate();
   if (error) return <p>error data</p>;
   if (isLoading) return <p>Loading...</p>;
 
-  const handleRegions = () => {};
+  const handleRegions = (id) => {
+    navigate(`${PATHS.USER.INNER_HOTEL_OF_REGIONS}/Popular/${id}`);
+  };
 
   return (
     <StyledBox>
@@ -21,8 +25,13 @@ export const HousesPage = () => {
       </StyledTextHouse>
       <StyledCardContent>
         {data.map((property) => (
-          <StyledCard key={property.id}>
-            <StyledImage src={property.images} alt={property.title} />
+          <StyledCard
+            key={property.id}
+            onClick={() => handleRegions(property.id)}
+          >
+            <WrapperImage>
+              <StyledImage src={property.images[0]} alt={property.title} />
+            </WrapperImage>
             <StyledRating>
               <StyledStarSpan>
                 <Icons.StarColor />
@@ -35,14 +44,16 @@ export const HousesPage = () => {
                 <Icons.Location /> {property.address}
               </StyledLocation>
               <Styledtogether>
-                <StyledPrice>{property.price}</StyledPrice>
+                <StyledPrice>{property.price} </StyledPrice>
                 <StyledDayPrice> day</StyledDayPrice>
               </Styledtogether>
             </StyledBoxContainer>
           </StyledCard>
         ))}
       </StyledCardContent>
-      <ViewAllButton onClick={() => handleRegions("Another")}>
+      <ViewAllButton
+        onClick={() => navigate(`${PATHS.USER.INNER_HOTEL_OF_REGIONS}/Popular`)}
+      >
         View all
       </ViewAllButton>
     </StyledBox>
@@ -63,6 +74,7 @@ const StyledDayPrice = styled("p")({
 });
 const Styledtogether = styled("div")({
   display: "flex",
+  gap: "5px",
 });
 const StyledCardContent = styled("div")({
   display: "flex",
@@ -100,11 +112,16 @@ const StyledCard = styled("div")(() => ({
 }));
 
 const StyledImage = styled("img")(() => ({
-  width: "400px",
+  width: "350px",
   height: "400px",
   objectFit: "cover",
   gap: "20px",
 }));
+
+const WrapperImage = styled("div")({
+  width: "350px",
+  height: "400px",
+});
 
 const StyledRating = styled("div")(() => ({
   position: "absolute",
