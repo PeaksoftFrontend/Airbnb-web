@@ -12,7 +12,6 @@ import {
 } from "../../../redux/api/auth.servers";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import Cookies from "js-cookie";
 import { login } from "../../../redux/slices/authSlice";
 
 export const AuthModal = ({ modalOpen, setModalOpen }) => {
@@ -38,7 +37,6 @@ export const AuthModal = ({ modalOpen, setModalOpen }) => {
 
       dispatch(login(userData));
 
-      Cookies.set("authUser", JSON.stringify(userData), { expires: 7 });
       setModalOpen(false);
     } catch (error) {
       setValidationError("Error during Google login. " + error);
@@ -57,11 +55,11 @@ export const AuthModal = ({ modalOpen, setModalOpen }) => {
           email: response.email,
           token: response.token,
         };
-        dispatch(login(userData));
-        Cookies.set("authUser", JSON.stringify(userData), { expires: 7 });
+
+        await dispatch(login(userData));
         setValidationError("");
         setAdminOpen(false);
-        navigate("/admin");
+        navigate("/admin", { replace: true });
       } catch (err) {
         setValidationError(
           "Error: " + (err.data?.message || "Authentication failed")

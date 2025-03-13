@@ -116,12 +116,13 @@ const StyledHoverText = styled("div")({
   cursor: "pointer",
   ":hover": {
     backgroundColor: "#F3F3F3",
+    padding: "15px",
   },
 });
 const StyledMenuItem = styled("a")({
   color: "#5D5D5D",
   textDecoration: "none",
-  paddingLeft: "20px",
+  paddingLeft: "35px",
   cursor: "pointer",
 });
 

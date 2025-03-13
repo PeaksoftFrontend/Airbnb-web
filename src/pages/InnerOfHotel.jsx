@@ -55,6 +55,7 @@ export const InnerOfHotel = () => {
   const clearSelections = () => {
     setFilters({
       region: regionId?.toUpperCase() || "",
+      category: "",
       type: "",
       price: "",
       currentPage: 1,
@@ -74,7 +75,7 @@ export const InnerOfHotel = () => {
       return {
         totalPages: 0,
         currentCards: [],
-        options: { region: [], houseType: [], price: [] },
+        options: { region: [], category: [], houseType: [], price: [] },
       };
     }
 
@@ -93,6 +94,7 @@ export const InnerOfHotel = () => {
     const options = {
       region: [...new Set(announcementResponses.map((item) => item.region))],
 
+      category: [...new Set(announcementResponses.map((item) => item.title))],
       houseType: [...new Set(announcementResponses.map((item) => item.title))],
       price: [
         ...new Set(announcementResponses.map((item) => item.price).map(String)),
@@ -127,7 +129,7 @@ export const InnerOfHotel = () => {
                 onChange={(e) => handleFilterChange("region", e.target.value)}
                 placeholder="Sort by region:"
               />
-              {/* <StyleSelect
+              <StyleSelect
                 options={options.category.map((option) => ({
                   value: option,
                   label: option,
@@ -135,7 +137,7 @@ export const InnerOfHotel = () => {
                 value={filters.category || ""}
                 onChange={(e) => handleFilterChange("category", e.target.value)}
                 placeholder="Sort by house type:"
-              /> */}
+              />
               <StyleSelect
                 options={options.houseType.map((option) => ({
                   value: option,
