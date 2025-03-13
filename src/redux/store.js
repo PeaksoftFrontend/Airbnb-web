@@ -5,6 +5,7 @@ import { authApi } from "./api/auth.servers";
 import { authSlice } from "./slices/authSlie";
 import { submitAdApi } from "./api/submitAdd.service";
 import { applicationApi } from "./api/application.service";
+import { profileApi } from "./api/profile.service";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [submitAdApi.reducerPath]: submitAdApi.reducer,
     [applicationApi.reducerPath]: applicationApi.reducer,
+    [profileApi.reducerPath]: profileApi.reducer, // ✅ Добавил profileApi
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -20,6 +22,6 @@ export const store = configureStore({
       authApi.middleware,
       submitAdApi.middleware,
       applicationApi.middleware,
-      submitAdApi.middleware
+      profileApi.middleware // ✅ Добавил middleware
     ),
 });
