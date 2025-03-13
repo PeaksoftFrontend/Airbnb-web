@@ -1,13 +1,10 @@
 import { Box, styled } from "@mui/material";
 import { Breadcrumbs } from "../../components/UI/Breadcrumbs";
 import { InnerHotel } from "../../pages/InnerHotel";
-// import { FeedbackList } from "../../components/UI/FeedbackList";
-// import { Reviews } from "../../components/user/Reviews";
 import { useParams } from "react-router-dom";
 import {
   useAcceptedAnnouncementMutation,
   useAnnouncementDetailQuery,
-  useBlockingAnnouncementMutation,
 } from "../../redux/api/application.service";
 import { useState } from "react";
 import { Modal } from "../../components/UI/Modal";
@@ -16,14 +13,14 @@ import { Button } from "../../components/UI/Button";
 export const ProductDetail = () => {
   const { productId } = useParams();
   const [acceptedAnnouncement] = useAcceptedAnnouncementMutation();
-  const [blockingAnnouncement] = useBlockingAnnouncementMutation();
+
   const { data } = useAnnouncementDetailQuery(productId, { skip: !productId });
   const [isActive, setIsActive] = useState(false);
   const [value, setValue] = useState("");
 
   const path = [
     { id: 1, url: "/admin/users", title: "Users" },
-    { id: 1, url: "/admin/user", title: data?.fullName },
+    { id: 1, url: "/admin/users", title: data?.fullName },
     { id: 2, url: "#", title: data?.title },
   ];
   const [error, setError] = useState(false);
@@ -32,7 +29,10 @@ export const ProductDetail = () => {
     setIsActive(!isActive);
   };
   const handleContainedClick = () => {
-    blockingAnnouncement(productId);
+    acceptedAnnouncement({
+      id: productId,
+      value: "accept",
+    });
   };
 
   const handleRejectSubmit = (e) => {
@@ -90,19 +90,6 @@ export const ProductDetail = () => {
           </ActionWrapper>
         </Form>
       </Modal>
-
-      {/* <div>
-        <Typography variant="h5">FEEDBACK</Typography>
-      </div>
-      <StyledBox>
-        <StyledDiv>
-          <FeedbackList />
-          <Typography variant="h6">Show More</Typography>
-        </StyledDiv>
-        <div>
-          <Reviews />
-        </div>
-      </StyledBox> */}
     </StyledContainer>
   );
 };
@@ -114,18 +101,6 @@ const StyledContainer = styled("div")({
   paddingLeft: "40px",
   marginTop: "46px",
 });
-// const StyledBox = styled(Box)({
-//   display: "flex",
-//   flexDirection: "row",
-//   gap: "120px",
-// });
-
-// const StyledDiv = styled("div")({
-//   display: "flex",
-//   gap: "28px",
-//   flexDirection: "column",
-//   alignItems: "center",
-// });
 
 const Form = styled("form")({
   padding: "30px",

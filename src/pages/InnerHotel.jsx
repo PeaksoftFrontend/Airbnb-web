@@ -8,32 +8,32 @@ export const InnerHotel = ({
   onContainedFunc,
   outlined = "",
   contained = "",
-  data,
+  data = [],
   payment,
 }) => {
   return (
     <StyleContainer>
       <StyleDIv>
         <p>NAME</p>
-        <Sliders images={data?.images} />
+        <Sliders images={data.images} />
       </StyleDIv>
       <StyledText>
         <div>
           <StyleGlobal>
-            <StyleApartaments>{data?.houseType}</StyleApartaments>
-            <StyleGuests>{data?.maxGuests}</StyleGuests>
+            <StyleApartaments>{data.houseType}</StyleApartaments>
+            <StyleGuests>{data.maxGuests}</StyleGuests>
           </StyleGlobal>
           <StyleGPS>
-            <p>{data?.title}</p>
-            <span>{data?.address}</span>
+            <p>{data.title}</p>
+            <span>{data.address}</span>
           </StyleGPS>
           <StyleDiscription>
-            <StyledDescription>{data?.description}</StyledDescription>
+            <StyledDescription>{data.description}</StyledDescription>
             <StyleProfile>
-              <Avatar src={data?.image} alt={data?.userInfo?.userName} />
+              <Avatar src={data.image} alt={data.userInfo?.userName} />
               <StyleEmail>
-                <StyleName>{data?.fullName}</StyleName>
-                <StyleNik>{data?.email}</StyleNik>
+                <StyleName>{data.fullName}</StyleName>
+                <StyleNik>{data.email}</StyleNik>
               </StyleEmail>
             </StyleProfile>
           </StyleDiscription>

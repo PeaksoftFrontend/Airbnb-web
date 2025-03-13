@@ -19,13 +19,13 @@ export const authApi = createApi({
       }),
     }),
     getAnnouncementsFilter: builder.query({
-      query: ({ region, category, houseType, price, currentPage }) => {
+      query: ({ region, houseType, price, currentPage, pageSize }) => {
         const url = `/vendor/announcements-filter?${new URLSearchParams({
           ...(region && { region }),
-          ...(category && { category }),
           ...(houseType && { houseType }),
           ...(price && { price }),
           ...(currentPage && { currentPage }),
+          ...(pageSize && { pageSize }),
         }).toString()}`;
         return url;
       },
