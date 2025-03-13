@@ -4,6 +4,7 @@ export const PATHS = {
   },
   USER: {
     ROOT: "/",
+    PUBLISH: "/publish",
     FAVORITE_USER: "/favorite",
     INNER_HOTEL_OF_REGIONS: "/inner-hotel-of-regions",
     PROFILE_INNER_PAGE_HOTEL: "/inner-hotel-of-regions/:regionId",

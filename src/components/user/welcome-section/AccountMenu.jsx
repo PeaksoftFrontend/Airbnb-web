@@ -8,7 +8,7 @@ import { styled as muiStyled } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
 import { authGoogle } from "../../../redux/fireBase";
-import { logout } from "../../../redux/slices/authSlie";
+import { logout } from "../../../redux/slices/authSlice";
 
 export const AccountMenu = () => {
   const anchorRef = useRef(null);

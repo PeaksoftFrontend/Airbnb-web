@@ -4,7 +4,6 @@ import { Button } from "../../UI/Button";
 import { Input } from "../../UI/Input";
 import { Icons } from "../../../assets";
 import { PATHS } from "../../../utils/constants/paths";
-import { login } from "../../../redux/slices/authSlie";
 import { validationSignIn } from "../../../utils/constants/validation";
 import { useFormik } from "formik";
 import { signInWithGoogle } from "../../../redux/fireBase";
@@ -15,6 +14,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
+import { login } from "../../../redux/slices/authSlice";
+
 export const AuthModal = ({ modalOpen, setModalOpen }) => {
   const [adminOpen, setAdminOpen] = useState(false);
   const [validationError, setValidationError] = useState("");
@@ -26,17 +27,18 @@ export const AuthModal = ({ modalOpen, setModalOpen }) => {
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithGoogle();
-      const user = result.user;
-      const token = await user.getIdToken();
-      const response = await googleLogin({ token }).unwrap();
+      const firebaseToken = await result.user.getIdToken();
 
+      const response = await googleLogin(firebaseToken).unwrap();
       const userData = {
-        role: response || "USER",
-        name: user.displayName,
-        email: user.email,
-        token,
+        token: firebaseToken,
+        email: response.email,
+        role: response.role,
+        name: response.name,
       };
+
       dispatch(login(userData));
+
       Cookies.set("authUser", JSON.stringify(userData), { expires: 7 });
       setModalOpen(false);
     } catch (error) {
