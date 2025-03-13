@@ -3,7 +3,6 @@ import { Fragment, useState } from "react";
 import { Button } from "../../UI/Button";
 import { Input } from "../../UI/Input";
 import { Icons } from "../../../assets";
-import { PATHS } from "../../../utils/constants/paths";
 import { validationSignIn } from "../../../utils/constants/validation";
 import { useFormik } from "formik";
 import { signInWithGoogle } from "../../../redux/fireBase";

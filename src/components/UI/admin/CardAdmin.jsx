@@ -8,15 +8,11 @@ import { Icons } from "../../../assets";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../../utils/constants/paths";
-import {
-  useAcceptedAnnouncementMutation,
-  useBlockingAnnouncementMutation,
-} from "../../../redux/api/application.service";
+import { useAcceptedAnnouncementMutation } from "../../../redux/api/application.service";
 
 export const CardAdmin = ({ cards = [] }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [acceptedAnnouncement] = useAcceptedAnnouncementMutation();
-  const [blockingAnnouncement] = useBlockingAnnouncementMutation();
   const navigate = useNavigate();
 
   const open = Boolean(anchorEl);
@@ -132,7 +128,10 @@ export const CardAdmin = ({ cards = [] }) => {
                   >
                     <MenuItem
                       onClick={(event) => {
-                        blockingAnnouncement(item.id);
+                        acceptedAnnouncement({
+                          id: item.id,
+                          value: "accept",
+                        });
                         handleClose(event);
                       }}
                     >

@@ -4,18 +4,22 @@ import { baseQuery } from "../../api/api-base-query";
 export const usersApi = createApi({
   reducerPath: "userApi",
   baseQuery: baseQuery,
+  tagTypes: "users",
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => "/users",
+      invalidatesTags: ["users"],
     }),
     getUsersDetails: builder.query({
       query: ({ id, value }) => `/users/get/${id}?value=${value}`,
+      invalidatesTags: ["users"],
     }),
     removeUser: builder.mutation({
       query: (id) => ({
         url: `/users/${id}`,
         method: "DELETE",
       }),
+      providesTags: ["users"],
     }),
   }),
 });
