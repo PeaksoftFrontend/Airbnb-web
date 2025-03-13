@@ -3,7 +3,6 @@ import { Fragment, useState } from "react";
 import { Button } from "../../UI/Button";
 import { Input } from "../../UI/Input";
 import { Icons } from "../../../assets";
-import { PATHS } from "../../../utils/constants/paths";
 import { validationSignIn } from "../../../utils/constants/validation";
 import { useFormik } from "formik";
 import { signInWithGoogle } from "../../../redux/fireBase";
@@ -62,7 +61,7 @@ export const AuthModal = ({ modalOpen, setModalOpen }) => {
         Cookies.set("authUser", JSON.stringify(userData), { expires: 7 });
         setValidationError("");
         setAdminOpen(false);
-        navigate(PATHS[response.role]);
+        navigate("/admin");
       } catch (err) {
         setValidationError(
           "Error: " + (err.data?.message || "Authentication failed")
