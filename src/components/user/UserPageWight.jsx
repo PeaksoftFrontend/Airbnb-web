@@ -6,6 +6,7 @@ import { Pagination } from "swiper/modules";
 import { Icons } from "../../assets";
 import { Box, styled } from "@mui/material";
 import { useState } from "react";
+import { useGetLatestAnnouncementsQuery } from "../../redux/api/houses.service";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../utils/constants/paths";
 
@@ -37,7 +38,10 @@ export const UserPageWight = () => {
   const swiperRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(1);
   const [totalSlides, setTotalSlides] = useState(0);
+  const { data } = useGetLatestAnnouncementsQuery();
+  console.log(data);
   const navigate = useNavigate();
+
   const handlePrev = () => {
     if (swiperRef.current) {
       swiperRef.current.slidePrev();
@@ -49,9 +53,10 @@ export const UserPageWight = () => {
       swiperRef.current.slideNext();
     }
   };
+
   const handleRegions = (region) => {
     navigate(
-      `${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}?category=the lastest`
+      `${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}?category=the-lastest`
     );
   };
 
@@ -61,8 +66,8 @@ export const UserPageWight = () => {
 
   return (
     <StyleContainer>
-      {POPULAR_REGIONS.map((item) => (
-        <StyleBox key={item.id} {...item}>
+      {POPULAR_REGIONS.map((item, index) => (
+        <StyleBox key={index} {...item}>
           <StyleImageGlobal>
             <p>{item.title}</p>
             <img src={item.url} alt="" />
