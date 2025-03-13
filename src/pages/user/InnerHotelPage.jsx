@@ -13,7 +13,12 @@ import { Payment } from "../../components/UI/Payment";
 import { Reviews } from "../../components/user/Reviews";
 import { FeedbackList } from "../../components/UI/FeedbackList";
 import { Breadcrumbs } from "../../components/UI/Breadcrumbs";
-import { useGetAnnouncementIdQuery } from "../../redux/api/announcementId.service";
+import {
+  useCreateFeedbackMutation,
+  useGetAnnouncementIdQuery,
+  useRemoveFeedbackMutation,
+  useSubmitFileMutation,
+} from "../../redux/api/announcementId.service";
 import { Button } from "../../components/UI/Button";
 import { Modal } from "../../components/UI/Modal";
 import { useState } from "react";
@@ -24,9 +29,14 @@ export const InnerHotelPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [files, setFiles] = useState([]);
   const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
 
   const { data, error, isLoading } = useGetAnnouncementIdQuery(26);
   console.log(data);
+
+  const [createFeedback] = useCreateFeedbackMutation();
+  const [submitFile] = useSubmitFileMutation();
+  const [deleteFeedback] = useRemoveFeedbackMutation();
 
   const handleStarClick = (index) => {
     setRating(index + 1);
@@ -73,6 +83,22 @@ export const InnerHotelPage = () => {
       "video/*": [],
     },
   });
+
+  const handleSubmitFeedback = async () => {
+    try {
+      const feedbackData = {
+        rating,
+        comment,
+        images: [],
+      };
+
+      await createFeedback(feedbackData).unwrap();
+      console.log("Отзыв успешно отправлен!");
+      setOpenModal(false);
+    } catch (err) {
+      console.error("Ошибка при отправке отзыва:", err);
+    }
+  };
   if (error) return <p>Ошибка в запросе</p>;
   if (isLoading) return <p>Загрузка...</p>;
 
@@ -248,6 +274,8 @@ export const InnerHotelPage = () => {
               multiline
               rows={2.3}
               fullWidth
+              value={comment} // Привязка к состоянию
+              onChange={(e) => setComment(e.target.value)}
             />
           </div>
           <Box
@@ -260,7 +288,11 @@ export const InnerHotelPage = () => {
             >
               CANCEL
             </Button>
-            <Button variant="outlined" sx={{ width: "200px" }}>
+            <Button
+              onClick={handleSubmitFeedback}
+              variant="outlined"
+              sx={{ width: "200px" }}
+            >
               PUBLIC
             </Button>
           </Box>
