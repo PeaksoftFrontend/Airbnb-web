@@ -4,7 +4,6 @@ import { Button } from "../../UI/Button";
 import { Input } from "../../UI/Input";
 import { Icons } from "../../../assets";
 import { PATHS } from "../../../utils/constants/paths";
-import { login } from "../../../redux/slices/authSlie";
 import { validationSignIn } from "../../../utils/constants/validation";
 import { useFormik } from "formik";
 import { signInWithGoogle } from "../../../redux/fireBase";
@@ -15,6 +14,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
+import { login } from "../../../redux/slices/authSlice";
+
 export const AuthModal = ({ modalOpen, setModalOpen }) => {
   const [adminOpen, setAdminOpen] = useState(false);
   const [validationError, setValidationError] = useState("");
