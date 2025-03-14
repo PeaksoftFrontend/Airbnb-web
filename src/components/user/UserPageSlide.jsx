@@ -11,30 +11,7 @@ import { Box, styled } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../utils/constants/paths";
-
-const POPULAR_REGIONS = [
-  {
-    title: "POPULAR APARTAMENTS",
-    url: "https://shorturl.at/3IY2D",
-    text: "Aska Lara Resort & Spa Hotel",
-    description:
-      "The Aska Lara Resort & Spa Hotel, which operates on an all-inclusive system, occupies 2 plots separated by a road. The hotel is located in the Lara district, 500 meters from the sea.",
-    gps: "723510 Osh Muzurbek Alimbekov 9/7",
-    information: "Read more",
-    detail: "View all",
-    images: [
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-    ],
-  },
-];
+import { useGetPopularApartmentQuery } from "../../redux/api/houses.service";
 
 export const UserPageSlide = () => {
   const navigate = useNavigate();
@@ -42,9 +19,17 @@ export const UserPageSlide = () => {
   const [currentSlide, setCurrentSlide] = useState(1);
   const [totalSlides, setTotalSlides] = useState(0);
 
+  const { data, error, isLoading } = useGetPopularApartmentQuery();
+  const datacurrent = [data];
+  if (error) return <p>error data</p>;
+  if (isLoading) return <p>Loading...</p>;
+
+  if (error) return <p> error data</p>;
+  if (isLoading) return <p>Loading...</p>;
+
   const handleRegions = (region) => {
     navigate(
-      `${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}?category=apartment`
+      `${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}?category=apartment&house-type=popular`
     );
   };
 
@@ -66,30 +51,34 @@ export const UserPageSlide = () => {
 
   return (
     <StyleContainer>
-      {POPULAR_REGIONS.map((item) => (
+      {datacurrent.map((item) => (
         <StyleBox key={item.id} {...item}>
           <StyleImageGlobal>
-            <p>{item.title}</p>
-            <img src={item.url} alt="" />
+            <Title>Popular Apartments</Title>
+            <img
+              src={item.images[0]}
+              alt=""
+              onClick={() => handleRegions("Another")}
+            />
           </StyleImageGlobal>
           <div>
             <StyleDescriptionText>
-              <p>{item.text}</p>
+              <p>{item.title}</p>
               <StyleDiscription>{item.description}</StyleDiscription>
             </StyleDescriptionText>
 
             <StyleInformation>
               <p style={{ display: "flex", gap: "4px" }}>
                 <Icons.Location />
-                {item.gps}
+                {item.address}
               </p>
-              <span>{item.information}</span>
+              <span>{item.description}</span>
             </StyleInformation>
           </div>
           <StyleLines>
             <StyleDetailsansImages>
               <StyleMore onClick={() => handleRegions("Another")}>
-                {item.detail}
+                View all
               </StyleMore>
               <StyleImages>
                 <StyleSwiper
@@ -106,6 +95,7 @@ export const UserPageSlide = () => {
                     <SwiperSlide
                       key={images.id}
                       style={{ position: "relative" }}
+                      onClick={() => handleRegions("Another")}
                     >
                       <img src={images} position={{ position: "absolut" }} />
                     </SwiperSlide>
@@ -160,6 +150,13 @@ const CustomPagination = styled("div")({
   },
 });
 
+const Title = styled("h3")({
+  color: "#F7F7F7",
+  fontSize: "20px",
+  fontWeight: "500",
+  textTransform: "uppercase",
+});
+
 const StyleImageGlobal = styled("div")({
   display: "flex",
   flexDirection: "column",
@@ -205,8 +202,8 @@ const StyledIcons = styled("div")({
 
 const StyleDiscription = styled("div")({
   width: "290px",
-  height: "105px",
   fontSize: "16px",
+  marginBottom: "20px",
   fontWeight: 400,
   color: " #F7F7F7",
 });
@@ -235,6 +232,7 @@ const StyleInformation = styled("div")({
   display: "flex",
   flexDirection: "column",
   gap: "17px",
+
   "& p": {
     fontSize: "14px",
     fontWeight: 400,

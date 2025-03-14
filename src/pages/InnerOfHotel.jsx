@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 import { Breadcrumbs } from "../components/UI/Breadcrumbs";
 import { Select } from "../components/UI/Select";
 import { Box, Pagination, styled } from "@mui/material";
@@ -7,104 +7,104 @@ import { CardUser } from "../components/user/CardUser";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useGetAnnouncementsFilterQuery } from "../redux/api/auth.servers";
 
-const main = [
-  { id: 1, url: "/main", title: "Main" },
-  { id: 2, url: "/main", title: "Naryn" },
-];
-
 export const InnerOfHotel = () => {
-  const { region } = useParams();
+  const { regionId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
 
-  const categoryFromURL = params.get("category") || "";
-  const regionFromURL = params.get("region") || "";
-  const typeFromURL = params.get("type") || "";
-  const priceFromURL = params.get("price") || "";
-  const pageFromURL = params.get("page") || 1;
+  const main = useMemo(
+    () => [
+      { id: 1, url: "/", title: "Main" },
+      { id: 2, url: "#", title: regionId },
+    ],
+    [regionId]
+  );
 
   const [filters, setFilters] = useState({
-    region: regionFromURL || region || "",
-    category: categoryFromURL || "",
-    type: typeFromURL || "",
-    price: priceFromURL || "",
-    currentPage: Number(pageFromURL) || 1,
+    region: regionId?.toUpperCase() || "",
+    houseType: params.get("houseType") || "APARTMENT",
+    price: params.get("price") || "",
+    currentPage: Number(params.get("page")) || 1,
+    pageSize: 10,
   });
 
   const { data } = useGetAnnouncementsFilterQuery(filters, {
     refetchOnMountOrArgChange: true,
+    skip: !regionId,
   });
-
-  useEffect(() => {
-    setFilters((prev) => ({
-      ...prev,
-      region: regionFromURL || prev.region,
-      category: categoryFromURL || prev.category,
-      type: typeFromURL || prev.type,
-      price: priceFromURL || prev.price,
-      currentPage: Number(pageFromURL) || prev.currentPage,
-    }));
-  }, [categoryFromURL, regionFromURL, typeFromURL, priceFromURL, pageFromURL]);
 
   const handleFilterChange = (key, value) => {
     setFilters((prev) => {
-      const newFilters = { ...prev, [key]: value };
-      navigate(`?${new URLSearchParams(newFilters).toString()}`);
+      const newFilters = {
+        ...prev,
+        [key]: value,
+        currentPage: key === "currentPage" ? value : 1,
+      };
+      const searchParams = new URLSearchParams();
+
+      Object.entries(newFilters).forEach(([k, v]) => {
+        if (v && k !== "pageSize" && k !== "region") searchParams.append(k, v);
+      });
+
+      navigate(`?${searchParams.toString()}`);
       return newFilters;
     });
   };
 
   const clearSelections = () => {
     setFilters({
-      region: "",
-      category: "",
+      region: regionId?.toUpperCase() || "",
       type: "",
       price: "",
       currentPage: 1,
+      pageSize: 10,
     });
     navigate(`?currentPage=1`);
   };
 
   const deleteText = (key) => {
-    setFilters((prev) => {
-      const newFilters = { ...prev, [key]: "" };
-      navigate(`?${new URLSearchParams(newFilters).toString()}`);
-      return newFilters;
-    });
+    handleFilterChange(key, "");
   };
 
   const cardsPerPage = 16;
-  const totalPages = data
-    ? Math.ceil(data.announcementResponses.length / cardsPerPage)
-    : 0;
-  const currentCards = data
-    ? data.announcementResponses.slice(
-        (filters.currentPage - 1) * cardsPerPage,
-        filters.currentPage * cardsPerPage
-      )
-    : [];
+
+  const { totalPages, currentCards, options } = useMemo(() => {
+    if (!data) {
+      return {
+        totalPages: 0,
+        currentCards: [],
+        options: { region: [], houseType: [], price: [] },
+      };
+    }
+
+    const announcementResponses = data.announcementResponses || [];
+
+    const totalPages =
+      data.totalPages || Math.ceil(announcementResponses.length / cardsPerPage);
+
+    const currentCards = data.totalPages
+      ? announcementResponses
+      : announcementResponses.slice(
+          (filters.currentPage - 1) * cardsPerPage,
+          (filters.currentPage - 1) * cardsPerPage + cardsPerPage
+        );
+
+    const options = {
+      region: [...new Set(announcementResponses.map((item) => item.region))],
+
+      houseType: [...new Set(announcementResponses.map((item) => item.title))],
+      price: [
+        ...new Set(announcementResponses.map((item) => item.price).map(String)),
+      ],
+    };
+
+    return { totalPages, currentCards, options };
+  }, [data, filters.currentPage, cardsPerPage]);
 
   const handlePageChange = (_, value) => {
-    setFilters((prev) => {
-      const newFilters = { ...prev, currentPage: value };
-      navigate(`?${new URLSearchParams(newFilters).toString()}`);
-      return newFilters;
-    });
+    handleFilterChange("currentPage", value);
   };
-
-  const options1 = data
-    ? [...new Set(data.announcementResponses.map((item) => item.region))]
-    : [];
-  const options2 = data
-    ? [...new Set(data.announcementResponses.map((item) => item.category))]
-    : [];
-  const options3 = data
-    ? [...new Set(data.announcementResponses.map((item) => item.type))]
-    : [];
-  const options4 = data
-    ? [...new Set(data.announcementResponses.map((item) => item.price))]
-    : [];
 
   return (
     <div>
@@ -112,51 +112,51 @@ export const InnerOfHotel = () => {
         <Breadcrumbs path={main} />
         <StyleRegionNameandSlect>
           <StyleTitle>
-            {filters.region || region}
-            <span>({data ? data.announcementResponses.length : 0})</span>
+            {filters.region || regionId}
+            <span>({data?.announcementResponses?.length || 0})</span>
           </StyleTitle>
 
           <StyleDiv>
             <StyleSelects>
               <StyleSelect
-                options={options1.map((option) => ({
+                options={options.region.map((option) => ({
                   value: option,
                   label: option,
                 }))}
-                value={filters.region}
+                value={filters.region || ""}
                 onChange={(e) => handleFilterChange("region", e.target.value)}
                 placeholder="Sort by region:"
               />
-              <StyleSelect
-                options={options2.map((option) => ({
+              {/* <StyleSelect
+                options={options.category.map((option) => ({
                   value: option,
                   label: option,
                 }))}
-                value={filters.category}
+                value={filters.category || ""}
                 onChange={(e) => handleFilterChange("category", e.target.value)}
-                placeholder="Sort by category:"
-              />
+                placeholder="Sort by house type:"
+              /> */}
               <StyleSelect
-                options={options3.map((option) => ({
+                options={options.houseType.map((option) => ({
                   value: option,
                   label: option,
                 }))}
-                value={filters.type}
+                value={filters.houseType || ""}
                 onChange={(e) => handleFilterChange("type", e.target.value)}
-                placeholder="Filter by home type:"
+                placeholder="Sort by title:"
               />
               <StyleSelect
-                options={options4.map((option) => ({
+                options={options.price.map((option) => ({
                   value: option,
                   label: option,
                 }))}
-                value={filters.price}
+                value={filters.price || ""}
                 onChange={(e) => handleFilterChange("price", e.target.value)}
-                placeholder="Filter by price:"
+                placeholder="Sort by price:"
               />
             </StyleSelects>
             <StyleOptions>
-              {["region", "category", "type", "price"].map((key) => (
+              {["region", "houseType", "price"].map((key) => (
                 <StyleSelectText key={key} hasText={filters[key] !== ""}>
                   {filters[key] && (
                     <Icons.Remove onClick={() => deleteText(key)} />
