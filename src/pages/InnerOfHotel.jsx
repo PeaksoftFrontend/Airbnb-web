@@ -9,7 +9,7 @@ import { useGetAnnouncementsFilterQuery } from "../redux/api/auth.servers";
 
 const main = [
   { id: 1, url: "/main", title: "Main" },
-  { id: 2, url: "/main", title: "Naryn" },
+  { id: 2, url: "/naryn", title: "Naryn" },
 ];
 
 export const InnerOfHotel = () => {

@@ -1,9 +1,13 @@
 import { Avatar, Box, IconButton, Menu, MenuItem, styled } from "@mui/material";
 import { useState } from "react";
 import { Icons } from "../../assets";
-import { useGetFeedbackQuery } from "../../redux/api/announcementId.service";
+import {
+  useGetFeedbackQuery,
+  useRemoveFeedbackMutation,
+} from "../../redux/api/announcementId.service";
 
 const FeedbackCard = ({
+  id,
   feedbackUserFullName,
   createdAt,
   rating,
@@ -12,9 +16,11 @@ const FeedbackCard = ({
   disLikeCount,
   feedbackUserImage,
   images,
+  refetch,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [removeFeedback] = useRemoveFeedbackMutation(26);
 
   const toggleText = () => {
     setIsExpanded((prev) => !prev);
@@ -26,6 +32,16 @@ const FeedbackCard = ({
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await removeFeedback(id).unwrap(); // .unwrap() чтобы получить ошибку, если есть
+      console.log("Отзыв удален");
+      refetch(); // 🔥 Обновляем список отзывов
+    } catch (error) {
+      console.error("Ошибка при удалении отзыва", error);
+    }
   };
 
   const displayedText = isExpanded
@@ -102,7 +118,7 @@ const FeedbackCard = ({
           }}
         >
           <MenuItem onClick={handleMenuClose}>Edit</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Delete</MenuItem>
+          <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
       </StyleBox>
       <StyledText>
@@ -139,7 +155,7 @@ const FeedbackCard = ({
 };
 
 export const FeedbackList = () => {
-  const { data, error, isLoading } = useGetFeedbackQuery(26);
+  const { data, error, isLoading, refetch } = useGetFeedbackQuery(26);
   console.log(data);
 
   if (error) return <p>error</p>;
@@ -147,8 +163,8 @@ export const FeedbackList = () => {
   if (!data || data.length === 0) return <p>No feedback available</p>;
   return (
     <StyleList>
-      {data.map((feedback, id) => (
-        <FeedbackCard key={id} {...feedback} />
+      {data.map((feedback) => (
+        <FeedbackCard key={feedback.id} {...feedback} refetch={refetch} />
       ))}
     </StyleList>
   );
@@ -240,9 +256,4 @@ const StyleList = styled("div")({
   flexDirection: "column",
   gap: "1rem",
   padding: "1rem",
-});
-
-const StyleAvatar = styled("img")({
-  width: "36px",
-  height: "36px",
 });
