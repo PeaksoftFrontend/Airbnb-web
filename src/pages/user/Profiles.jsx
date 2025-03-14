@@ -7,9 +7,9 @@ import { CombinedSort } from "../../components/user/sort/CombinedSort";
 import { useGetProfileQuery } from "../../redux/api/profile.service";
 
 export const Profiles = () => {
-  const { data, isLoading, error } = useGetProfileQuery();
-
   const [tabValue, setTabValue] = useState(0);
+  const [data, error] = useGetProfileQuery(26);
+  if (error) return <p>error</p>;
 
   const handleChange = (event, newValue) => {
     event.preventDefault();
@@ -28,9 +28,6 @@ export const Profiles = () => {
     { label: "My announcement", content: <CombinedSort />, count: "" },
     { label: "On moderation", content: "Moderation", count: "" },
   ];
-
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <StyledBox>

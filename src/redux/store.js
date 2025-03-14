@@ -14,7 +14,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [submitAdApi.reducerPath]: submitAdApi.reducer,
     [applicationApi.reducerPath]: applicationApi.reducer,
-    [profileApi.reducerPath]: profileApi.reducer, // ✅ Добавил profileApi
+    [profileApi.reducerPath]: profileApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -22,6 +22,6 @@ export const store = configureStore({
       authApi.middleware,
       submitAdApi.middleware,
       applicationApi.middleware,
-      profileApi.middleware // ✅ Добавил middleware
+      profileApi.middleware
     ),
 });
