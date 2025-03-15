@@ -4,13 +4,36 @@ import { Profile } from "../../components/admin/Profile";
 import { TabsPanel } from "../../components/UI/tabs/TabsPanel";
 import { useState } from "react";
 import { CombinedSort } from "../../components/user/sort/CombinedSort";
+import {
+  // useGetFilteredDataQuery,
+  useGetProfileQuery,
+} from "../../redux/api/profile.service";
+import { TestProfileData } from "./TestProfileData";
+
 export const Profiles = () => {
+  // const [filter, setFilter] = useState({
+  //   houseType: "",
+  //   priceRange: [0, 10000],
+  //   status: "",
+  //   rating: [0, 5],
+  // });
   const [tabValue, setTabValue] = useState(0);
+  const { data, error, isLoading } = useGetProfileQuery(26);
+  // const {
+  //   data: filteredData,
+  //   error: filteredError,
+  //   isLoading: filteredLoading,
+  // } = useGetFilteredDataQuery(filter);
+  if (isLoading) {
+    return <div>Загрузка...</div>;
+  }
+  if (error) return <p>error</p>;
 
   const handleChange = (event, newValue) => {
     event.preventDefault();
     setTabValue(newValue);
   };
+
   const path = [
     { id: 1, url: "/user", title: "Main" },
     { id: 1, url: "/advertising_page", title: "Naryn" },
@@ -19,10 +42,35 @@ export const Profiles = () => {
   ];
 
   const tabs = [
-    { label: "Bookings", content: "Booking", count: "" },
-    { label: "My announcement", content: <CombinedSort />, count: "" },
-    { label: "On moderation", content: "Moderation", count: "" },
+    {
+      label: "Bookings",
+      content: <TestProfileData bookings={data.bookings} />,
+      count: data.moderations.length,
+    },
+    {
+      label: "My announcement",
+      content: (
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <CombinedSort />
+          <TestProfileData announcements={data.announcements} />
+        </div>
+      ),
+      count: data.announcements.length,
+    },
+    {
+      label: "On moderation",
+      content: <TestProfileData moderations={data.moderations} />,
+      count: data.moderations.length,
+    },
   ];
+
   return (
     <StyledBox>
       <div>
@@ -31,13 +79,13 @@ export const Profiles = () => {
       <StyledDivContent>
         <Wrapper>
           <Typography variant="h1" fontSize="20px" fontWeight="500">
-            Profile
+            PROFILE
           </Typography>
           <StyledProfileBox>
             <Profile
-              name={"Медер"}
-              fullName={"Медербеков"}
-              email={"mederbekov@gmail.com"}
+              name={data?.name || "Unknown"}
+              fullName={data?.name || "Unknown"}
+              email={data?.contact || "No contact"}
               isAuth={true}
               role={"USER"}
             />
@@ -50,7 +98,13 @@ export const Profiles = () => {
             },
           }}
         >
-          <TabsPanel tabs={tabs} onChange={handleChange} value={tabValue} />
+          <TabsPanel
+            tabs={tabs}
+            onChange={handleChange}
+            value={tabValue}
+            data={data}
+            isAuth={true}
+          />
         </Box>
       </StyledDivContent>
     </StyledBox>
@@ -62,7 +116,7 @@ const StyledBox = styled(Box)({
   gap: "40px",
   flexDirection: "column",
   margin: "46px 40px",
-  height: "51vh",
+  height: "100%",
 });
 
 const StyledDivContent = styled("div")({ display: "flex", gap: "47px" });
