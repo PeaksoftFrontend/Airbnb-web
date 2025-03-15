@@ -26,16 +26,13 @@ import { useDropzone } from "react-dropzone";
 import { useParams } from "react-router-dom";
 
 export const InnerHotelPage = () => {
-  const { params } = useParams();
-  console.log(params);
-
+  const { regionId } = useParams();
   const [openModal, setOpenModal] = useState(false);
   const [files, setFiles] = useState([]);
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
 
   const { data, error, isLoading } = useGetAnnouncementIdQuery(26);
-  console.log(data);
 
   const [createFeedback] = useCreateFeedbackMutation();
 
@@ -48,9 +45,9 @@ export const InnerHotelPage = () => {
   };
 
   const main = [
-    { id: 1, url: "/main", title: "Main" },
-    { id: 2, url: "/naryn", title: "Naryn" },
-    { id: 3, url: "/hotel", title: "Hotel" },
+    { id: 1, url: "/", title: "Main" },
+    { id: 2, url: "/", title: regionId },
+    { id: 3, url: "#", title: "Hotel" },
   ];
 
   const onDrop = (acceptedFiles) => {

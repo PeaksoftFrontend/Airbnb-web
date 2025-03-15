@@ -6,20 +6,12 @@ import { Icons } from "../assets";
 import { CardUser } from "../components/user/CardUser";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useGetAnnouncementsFilterQuery } from "../redux/api/auth.servers";
-<<<<<<< HEAD
-
-const main = [
-  { id: 1, url: "/main", title: "Main" },
-  { id: 2, url: "/naryn", title: "Naryn" },
-];
-=======
 import {
   OPTIONS_HOUSE_TYPE,
   OPTIONS_PRICE,
   OPTIONS_RATING,
   OPTIONS_REGIONS,
 } from "../utils/constants";
->>>>>>> origin
 
 export const InnerOfHotel = () => {
   const { regionId } = useParams();
@@ -162,7 +154,7 @@ export const InnerOfHotel = () => {
         </StyleRegionNameandSlect>
       </StyleHeadElements>
 
-      <CardUser cards={data?.announcementResponses || []} />
+      <CardUser cards={data?.announcementResponses || []} regionId={regionId} />
 
       <StylePogination>
         <Pagination
