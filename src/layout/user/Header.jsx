@@ -5,37 +5,65 @@ import { SearchInput } from "../../components/UI/SearchInput";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AccountMenu } from "../../components/user/welcome-section/AccountMenu";
+import { AuthModal } from "../../components/user/welcome-section/AuthModal";
+import { useState } from "react";
 
 export const Header = () => {
   const navigate = useNavigate();
   const { role } = useSelector((state) => state.auth);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleAdClick = () => {
+    if (role === "GUEST") {
+      setModalOpen(true);
+    } else {
+      navigate("/publish");
+    }
+  };
+
+  const handleHeartClick = () => {
+    if (role === "GUEST") {
+      setModalOpen(true);
+    } else {
+      navigate("/favorite");
+    }
+  };
 
   return (
-    <StyledHeader>
-      <StyledLogo onClick={() => navigate("/")}>
-        <Icons.LogoColor />
-      </StyledLogo>
-      <StyledP>leave an ad</StyledP>
-      <StyledArticle>
-        <StyledCheckbox>
-          <Checkbox />
-        </StyledCheckbox>
-        <p>Search nearby</p>
-      </StyledArticle>
-      <StyledSearchInput>
-        <SearchInput
-          variant="outlined"
-          size="small"
-          type="search"
-          placeholder="Search"
-        />
-      </StyledSearchInput>
-      {role === "GUEST" ? (
-        <StyledButton>JOIN US</StyledButton>
-      ) : (
-        <AccountMenu />
-      )}
-    </StyledHeader>
+    <>
+      <StyledHeader>
+        <StyledLogo onClick={() => navigate("/")}>
+          <Icons.LogoColor />
+        </StyledLogo>
+        <StyledP onClick={handleAdClick}>leave an ad</StyledP>
+        <StyledArticle>
+          <StyledCheckbox>
+            <Checkbox />
+          </StyledCheckbox>
+          <p>Search nearby</p>
+        </StyledArticle>
+        <StyledSearchInput>
+          <SearchInput
+            variant="outlined"
+            size="small"
+            type="search"
+            placeholder="Search"
+          />
+        </StyledSearchInput>
+        <div>
+          <Icons.Heart onClick={handleHeartClick} />
+        </div>
+        {role === "GUEST" ? (
+          <StyledButton onClick={() => setModalOpen(true)}>
+            JOIN US
+          </StyledButton>
+        ) : (
+          <AccountMenu />
+        )}
+      </StyledHeader>
+
+      <AuthModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
+    </>
   );
 };
 
