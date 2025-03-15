@@ -36,7 +36,7 @@ export const AccountMenu = () => {
   };
 
   const handleProfileClick = () => {
-    navigate("/profiles");
+    navigate("/user/profiles");
     handleAvatarClose();
   };
 

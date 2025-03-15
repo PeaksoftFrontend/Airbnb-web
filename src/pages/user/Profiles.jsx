@@ -4,26 +4,16 @@ import { Profile } from "../../components/admin/Profile";
 import { TabsPanel } from "../../components/UI/tabs/TabsPanel";
 import { useState } from "react";
 import { CombinedSort } from "../../components/user/sort/CombinedSort";
-import {
-  // useGetFilteredDataQuery,
-  useGetProfileQuery,
-} from "../../redux/api/profile.service";
+import { useGetProfileQuery } from "../../redux/api/profile.service";
 import { TestProfileData } from "./TestProfileData";
+import { useSelector } from "react-redux";
 
 export const Profiles = () => {
-  // const [filter, setFilter] = useState({
-  //   houseType: "",
-  //   priceRange: [0, 10000],
-  //   status: "",
-  //   rating: [0, 5],
-  // });
   const [tabValue, setTabValue] = useState(0);
-  const { data, error, isLoading } = useGetProfileQuery(26);
-  // const {
-  //   data: filteredData,
-  //   error: filteredError,
-  //   isLoading: filteredLoading,
-  // } = useGetFilteredDataQuery(filter);
+  const id = useSelector((state) => state.auth);
+
+  const { data, error, isLoading } = useGetProfileQuery(id);
+
   if (isLoading) {
     return <div>Загрузка...</div>;
   }
@@ -35,10 +25,8 @@ export const Profiles = () => {
   };
 
   const path = [
-    { id: 1, url: "/user", title: "Main" },
-    { id: 1, url: "/advertising_page", title: "Naryn" },
-    { id: 1, url: "/advertising_page", title: "Hotel" },
-    { id: 2, url: "/advertising_page", title: "Profile" },
+    { id: 1, url: "/", title: "Main" },
+    { id: 2, url: "#", title: "Profile" },
   ];
 
   const tabs = [
