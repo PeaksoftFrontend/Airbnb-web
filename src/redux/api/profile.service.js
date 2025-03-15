@@ -6,8 +6,17 @@ export const profileApi = createApi({
   baseQuery: baseQuery,
   endpoints: (builder) => ({
     getProfile: builder.query({
-      query: (id) => `users/getAnnouncementProfile/${id}`,
+      query: () => `/profile/bookings/my-announcements`,
+    }),
+    getFilteredData: builder.query({
+      query: (filter) => {
+        const { houseType, status, priceRange, rating } = filter;
+        return {
+          url: `/profile/filter`,
+          params: { houseType, status, priceRange, rating },
+        };
+      },
     }),
   }),
 });
-export const { useGetProfileQuery } = profileApi;
+export const { useGetProfileQuery, useGetFilteredDataQuery } = profileApi;

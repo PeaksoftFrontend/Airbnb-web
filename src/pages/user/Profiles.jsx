@@ -4,11 +4,29 @@ import { Profile } from "../../components/admin/Profile";
 import { TabsPanel } from "../../components/UI/tabs/TabsPanel";
 import { useState } from "react";
 import { CombinedSort } from "../../components/user/sort/CombinedSort";
-import { useGetProfileQuery } from "../../redux/api/profile.service";
+import {
+  // useGetFilteredDataQuery,
+  useGetProfileQuery,
+} from "../../redux/api/profile.service";
+import { TestProfileData } from "./TestProfileData";
 
 export const Profiles = () => {
+  // const [filter, setFilter] = useState({
+  //   houseType: "",
+  //   priceRange: [0, 10000],
+  //   status: "",
+  //   rating: [0, 5],
+  // });
   const [tabValue, setTabValue] = useState(0);
-  const [data, error] = useGetProfileQuery(26);
+  const { data, error, isLoading } = useGetProfileQuery(26);
+  // const {
+  //   data: filteredData,
+  //   error: filteredError,
+  //   isLoading: filteredLoading,
+  // } = useGetFilteredDataQuery(filter);
+  if (isLoading) {
+    return <div>Загрузка...</div>;
+  }
   if (error) return <p>error</p>;
 
   const handleChange = (event, newValue) => {
@@ -24,9 +42,33 @@ export const Profiles = () => {
   ];
 
   const tabs = [
-    { label: "Bookings", content: "Booking", count: "" },
-    { label: "My announcement", content: <CombinedSort />, count: "" },
-    { label: "On moderation", content: "Moderation", count: "" },
+    {
+      label: "Bookings",
+      content: <TestProfileData bookings={data.bookings} />,
+      count: data.moderations.length,
+    },
+    {
+      label: "My announcement",
+      content: (
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <CombinedSort />
+          <TestProfileData announcements={data.announcements} />
+        </div>
+      ),
+      count: data.announcements.length,
+    },
+    {
+      label: "On moderation",
+      content: <TestProfileData moderations={data.moderations} />,
+      count: data.moderations.length,
+    },
   ];
 
   return (
@@ -37,7 +79,7 @@ export const Profiles = () => {
       <StyledDivContent>
         <Wrapper>
           <Typography variant="h1" fontSize="20px" fontWeight="500">
-            Profile
+            PROFILE
           </Typography>
           <StyledProfileBox>
             <Profile
@@ -56,35 +98,15 @@ export const Profiles = () => {
             },
           }}
         >
-          <TabsPanel tabs={tabs} onChange={handleChange} value={tabValue} />
+          <TabsPanel
+            tabs={tabs}
+            onChange={handleChange}
+            value={tabValue}
+            data={data}
+            isAuth={true}
+          />
         </Box>
       </StyledDivContent>
-      <h2>Bookings</h2>
-      {data?.bookings?.length ? (
-        data.bookings.map((booking) => (
-          <BookingCard key={booking.announcementId}>
-            <h3>{booking.title}</h3>
-            <p>{booking.description}</p>
-            <p>Price: {booking.price}</p>
-            <p>Region: {booking.region}</p>
-          </BookingCard>
-        ))
-      ) : (
-        <p>No bookings</p>
-      )}
-      <h2>My Announcements</h2>
-      {data?.announcements?.length ? (
-        data.announcements.map((announcement) => (
-          <AnnouncementCard key={announcement.id}>
-            <h3>{announcement.title}</h3>
-            <p>{announcement.description}</p>
-            <p>Price: {announcement.price}</p>
-            <p>Status: {announcement.status}</p>
-          </AnnouncementCard>
-        ))
-      ) : (
-        <p>No announcements</p>
-      )}
     </StyledBox>
   );
 };
@@ -94,7 +116,7 @@ const StyledBox = styled(Box)({
   gap: "40px",
   flexDirection: "column",
   margin: "46px 40px",
-  height: "51vh",
+  height: "100%",
 });
 
 const StyledDivContent = styled("div")({ display: "flex", gap: "47px" });
@@ -109,18 +131,4 @@ const Wrapper = styled("div")({
   display: "flex",
   flexDirection: "column",
   gap: "22px",
-});
-
-const BookingCard = styled("div")({
-  padding: "10px",
-  margin: "10px 0",
-  border: "1px solid #ccc",
-  borderRadius: "8px",
-});
-
-const AnnouncementCard = styled("div")({
-  padding: "10px",
-  margin: "10px 0",
-  border: "1px solid #aaa",
-  borderRadius: "8px",
 });

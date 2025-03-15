@@ -9,12 +9,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
 import { authGoogle } from "../../../redux/fireBase";
 import { logout } from "../../../redux/slices/authSlice";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../../utils/constants/paths";
 
 export const AccountMenu = () => {
   const anchorRef = useRef(null);
   const [avatarOpen, setAvatarOpen] = useState(false);
   const email = useSelector((state) => state.auth.email);
   const isAuthorized = useSelector((state) => state.auth.isAuthorized);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
@@ -61,7 +64,9 @@ export const AccountMenu = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "top" }}
       >
-        <MenuItem onClick={handleAvatarClose}>Профиль</MenuItem>
+        <MenuItem onClick={() => navigate(PATHS.USER.PROFILES_USER)}>
+          Профиль
+        </MenuItem>
         <MenuItem onClick={handleAvatarClose}>Моя учетная запись</MenuItem>
         <Divider />
         <MenuItem onClick={handleAvatarClose}>
