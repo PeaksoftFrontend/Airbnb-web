@@ -14,6 +14,10 @@ export const usersApi = createApi({
       query: ({ id, value }) => `/users/get/${id}?value=${value}`,
       invalidatesTags: ["users"],
     }),
+    getUsersDetailsAnnouncements: builder.query({
+      query: ({ id }) => `/users/get/${id}/announcements`,
+      invalidatesTags: ["users"],
+    }),
     removeUser: builder.mutation({
       query: (id) => ({
         url: `/users/${id}`,
@@ -28,4 +32,5 @@ export const {
   useGetUsersQuery,
   useRemoveUserMutation,
   useGetUsersDetailsQuery,
+  useGetUsersDetailsAnnouncementsQuery,
 } = usersApi;

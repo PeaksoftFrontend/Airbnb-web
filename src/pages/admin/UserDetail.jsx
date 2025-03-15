@@ -7,7 +7,10 @@ import { Button } from "../../components/UI/Button";
 import { Booking } from "../../components/UI/Booking";
 import { MyAnnouncement } from "../../components/UI/MyAnnouncement";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useGetUsersDetailsQuery } from "../../redux/api/users.service";
+import {
+  useGetUsersDetailsAnnouncementsQuery,
+  useGetUsersDetailsQuery,
+} from "../../redux/api/users.service";
 import { useBlockUserMutation } from "../../redux/api/application.service";
 import { NoData } from "../../components/UI/NotData";
 
@@ -17,14 +20,16 @@ export const UserDetail = () => {
   const tab = searchParams.get("value") || "bookings";
   const [tabValue, setTabValue] = useState(tab === "announcements" ? 1 : 0);
   const [showButton, setShowButton] = useState(tab === "announcements");
+
   useEffect(() => {
     setSearchParams({ value: tabValue === 1 ? "announcements" : "bookings" });
   }, [tabValue, setSearchParams]);
+
   const { data } = useGetUsersDetailsQuery({
     id: userId,
     value: tab,
   });
-
+  const { dataCard } = useGetUsersDetailsAnnouncementsQuery();
   const [blockUser] = useBlockUserMutation();
 
   const handleChange = (event, newValue) => {
@@ -42,7 +47,7 @@ export const UserDetail = () => {
     {
       label: "Bookings",
       content: data?.bookingUser?.length ? (
-        <Booking bookingUser={data?.bookingUser} />
+        <Booking bookingUser={data?.bookingUser} dataCard={dataCard} />
       ) : (
         <NoData message="Booking нет данных" />
       ),
@@ -50,12 +55,16 @@ export const UserDetail = () => {
     {
       label: "My announcement",
       content: data?.announcementResponses?.length ? (
-        <MyAnnouncement announcementResponses={data?.announcementResponses} />
+        <MyAnnouncement
+          announcementResponses={data?.announcementResponses}
+          dataCard={dataCard}
+        />
       ) : (
         <NoData message="Announcements нет данных" />
       ),
     },
   ];
+
   return (
     <StyledBox>
       <div>

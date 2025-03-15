@@ -9,6 +9,7 @@ import { signOut } from "firebase/auth";
 import { authGoogle } from "../../../redux/fireBase";
 import { logout } from "../../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const AccountMenu = () => {
   const anchorRef = useRef(null);
@@ -20,11 +21,10 @@ export const AccountMenu = () => {
   const handleLogout = async () => {
     try {
       await signOut(authGoogle);
-
       dispatch(logout());
       navigate("/");
     } catch (error) {
-      error;
+      console.error(error);
     }
   };
 
@@ -34,6 +34,11 @@ export const AccountMenu = () => {
 
   const handleAvatarClose = () => {
     setAvatarOpen(false);
+  };
+
+  const handleProfileClick = () => {
+    navigate("/profiles");
+    handleAvatarClose();
   };
 
   const getInitials = (fullName) => {
@@ -54,9 +59,9 @@ export const AccountMenu = () => {
 
   return (
     <>
-      <StyledAvatarBox>
+      <StyledAvatarBox onClick={handleAvatarOpen}>
         <StyledLetter ref={anchorRef}>{initials}</StyledLetter>
-        <StyledArrowDown onClick={handleAvatarOpen} />
+        <StyledArrowDown />
       </StyledAvatarBox>
       <StyledMenu
         id="account-menu"
@@ -67,6 +72,7 @@ export const AccountMenu = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "top" }}
       >
+        <MenuItem onClick={handleProfileClick}>Профиль</MenuItem>
         <MenuItem onClick={handleProfileClick}>Профиль</MenuItem>
         <MenuItem onClick={handleLogout}>Выход</MenuItem>
       </StyledMenu>

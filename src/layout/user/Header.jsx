@@ -12,8 +12,21 @@ export const Header = () => {
   const navigate = useNavigate();
   const { role } = useSelector((state) => state.auth);
   const [modalOpen, setModalOpen] = useState(false);
+
   const handleAdClick = () => {
-    setModalOpen(true);
+    if (role === "GUEST") {
+      setModalOpen(true);
+    } else {
+      navigate("/user/publish");
+    }
+  };
+
+  const handleHeartClick = () => {
+    if (role === "GUEST") {
+      setModalOpen(true);
+    } else {
+      navigate("/user/favorite");
+    }
   };
 
   return (
@@ -37,6 +50,11 @@ export const Header = () => {
             placeholder="Search"
           />
         </StyledSearchInput>
+        <div>
+          <span style={{ cursor: "pointer" }} onClick={handleHeartClick}>
+            Favorite
+          </span>
+        </div>
         {role === "GUEST" ? (
           <StyledButton onClick={() => setModalOpen(true)}>
             JOIN US

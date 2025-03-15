@@ -42,8 +42,7 @@ export const HeaderModal = () => {
       const result = await signInWithGoogle();
       const user = result.user;
       const token = await user.getIdToken();
-      const params = new URLSearchParams({ token });
-      const response = await googleLogin(params).unwrap();
+      const response = await googleLogin(token).unwrap();
 
       const userData = {
         role: response || "USER",
@@ -73,7 +72,6 @@ export const HeaderModal = () => {
     onSubmit: async (values) => {
       try {
         const response = await loginAdmin(values).unwrap();
-        console.log(response);
 
         const userData = {
           role: response.role,

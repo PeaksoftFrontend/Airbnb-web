@@ -1,6 +1,5 @@
 import { Box, Typography, styled } from "@mui/material";
 import { Icons } from "../../assets";
-import { Footer } from "../../layout/user/Footer";
 import { Button } from "../../components/UI/Button";
 import { useGetFavoritesQuery } from "../../redux/api/auth.servers";
 import { Breadcrumbs } from "../../components/UI/Breadcrumbs";
@@ -73,16 +72,9 @@ export const FavoritePage = () => {
           <Typography>No favorites available</Typography>
         )}
       </MainContainer>
-      <StyledFooter>
-        <Footer />
-      </StyledFooter>
     </div>
   );
 };
-
-const StyledFooter = styled("footer")({
-  marginTop: "286px",
-});
 
 const StyledDivIcon = styled("div")({
   paddingTop: "0.5px",
@@ -102,6 +94,7 @@ const StyledDiv = styled("div")({
 });
 const MainContainer = styled("main")({
   margin: "40px 100px 50px 100px",
+  minHeight: "80vh",
 });
 const HousingPrice = styled(Typography)({
   display: "flex",

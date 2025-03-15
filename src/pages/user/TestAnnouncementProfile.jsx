@@ -1,24 +1,17 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { Navigation, Pagination } from "swiper/modules";
-import { Box, styled, Typography } from "@mui/material";
-import { Icons } from "../../assets";
-import { Button } from "../UI/Button";
 import { useState } from "react";
+import { Button } from "../../components/UI/Button";
 import { useFavoriteMutation } from "../../redux/api/auth.servers";
 import { useSelector } from "react-redux";
-import { AuthModal } from "./welcome-section/AuthModal";
-import { useNavigate } from "react-router-dom";
+import { Box, styled, Typography } from "@mui/material";
+import { Icons } from "../../assets";
+import { AuthModal } from "../../components/user/welcome-section/AuthModal";
 
-export const CardUser = ({ cards, regionId }) => {
+export const TestAnnouncementsProfile = ({ announcements }) => {
   const [favorites, setFavorites] = useState({});
 
   const [favoriteMutation] = useFavoriteMutation();
   const [modalOpen, setModalOpen] = useState(false);
   const { role } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
 
   const handleFavorite = async (id) => {
     if (role !== "USER") {
@@ -38,27 +31,24 @@ export const CardUser = ({ cards, regionId }) => {
 
   return (
     <StyleContainer>
-      {cards.map((item) => (
-        <Box key={item.id}>
+      {announcements?.map((item) => (
+        <Box
+          key={item.id}
+          sx={{
+            width: "260px",
+          }}
+        >
           <StyleAll>
-            <StyleSwiper
-              mousewheel={true}
-              navigation={true}
-              keyboard={true}
-              pagination={{ clickable: true }}
-              modules={[Navigation, Pagination]}
-            >
-              {item?.images?.images.map((images, index) => (
-                <SwiperSlide key={index}>
-                  <StyleImg src={images} alt="" />
-                </SwiperSlide>
-              ))}
-            </StyleSwiper>
-            <div
-              onClick={() =>
-                navigate(`/user/inner-hotel-of-regions/${regionId}/${item.id}`)
-              }
-            >
+            {/* {item.images.map((item) => ( */}
+            <img
+              src={item.images[0]}
+              style={{
+                width: "260px",
+                height: "168px",
+              }}
+            />
+            {/* ))} */}
+            <div>
               <StylePieces>
                 <Styledprise>
                   <StyledPtag> ${item.price}/</StyledPtag>
@@ -108,42 +98,15 @@ const StyleAll = styled("div")({
   gap: "19px",
 });
 
-const StyleImg = styled("img")({
-  width: "295px",
-  height: "191px",
-  objectFit: "cover",
-});
 const StyledTypography = styled(Typography)({
   fontWeight: "400",
   fontSize: "16px",
   color: "#2B2B2B",
 });
 
-const StyleSwiper = styled(Swiper)({
-  width: "295px",
-  "& .swiper-button-prev": {
-    background: "#DD8A08",
-    borderRadius: "50%",
-    width: "35px",
-    height: "35px",
-  },
-  "& .swiper-button-next": {
-    background: "#DD8A08",
-    borderRadius: "50%",
-    width: "35px",
-    height: "35px",
-  },
-  "& .swiper-button-prev::after, & .swiper-button-next::after": {
-    fontSize: "16px",
-    color: "#fff",
-  },
-  "& .swiper-pagination": {},
-  "& .swiper-pagination-bullet": { background: "#F7F7F7" },
-  "& .swiper-pagination-bullet-active": { background: "#FFBE58" },
-});
-
 const StyleContainer = styled("div")({
   display: "flex",
+  width: "100%",
   gap: "15px",
   flexWrap: "wrap",
   padding: "0 19px",

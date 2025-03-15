@@ -1,7 +1,20 @@
 import { Avatar, Box, styled, Tooltip, Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/slices/authSlice";
+import { signOut } from "firebase/auth";
+import { authGoogle } from "../../redux/fireBase";
 
 export const Profile = ({ name, email, avatar, isAuth, role }) => {
-  const handleLogout = () => {};
+  const dispatch = useDispatch();
+  const handleLogout = async () => {
+    try {
+      await signOut(authGoogle);
+
+      dispatch(logout());
+    } catch (error) {
+      error;
+    }
+  };
 
   return (
     <StyledBox>
@@ -27,7 +40,13 @@ export const Profile = ({ name, email, avatar, isAuth, role }) => {
           </StyledRow>
         </StyledText>
         {isAuth ? (
-          <Typography onClick={handleLogout} color="red">
+          <Typography
+            onClick={handleLogout}
+            sx={{
+              color: "red",
+              cursor: "pointer",
+            }}
+          >
             Log out
           </Typography>
         ) : null}

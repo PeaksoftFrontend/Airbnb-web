@@ -1,7 +1,14 @@
-import { AppBar, Badge, Box, styled, Tab, Tabs } from "@mui/material";
+import { AppBar, Box, styled, Tab, Tabs } from "@mui/material";
 import { TabPanel } from "./TabPanel";
 
-export const TabsPanel = ({ tabs, value, onChange, isAuth, ...props }) => {
+export const TabsPanel = ({
+  tabs,
+  value,
+  onChange,
+  isAuth,
+  data,
+  ...props
+}) => {
   return (
     <StyledBox>
       <StyledAppBar>
@@ -12,9 +19,7 @@ export const TabsPanel = ({ tabs, value, onChange, isAuth, ...props }) => {
               label={
                 <StyledSpan isActive={value === index}>
                   {tab.label}
-                  {isAuth && tab.count > 0 && (
-                    <Badge badgeContent={tab.count} color="secondary" />
-                  )}
+                  {isAuth && tab.count > 0 && <span>({tab.count})</span>}
                 </StyledSpan>
               }
             />
@@ -67,6 +72,9 @@ const StyledSpan = styled("span")((props) => ({
   fontSize: "18px",
   textTransform: "capitalize",
   cursor: "pointer",
+  display: "flex",
+  gap: "5px",
+  alignItems: "center",
 }));
 const StyledTabs = styled(Tabs)(({ theme }) => ({
   position: "relative",
@@ -101,3 +109,16 @@ const StyledTab = styled(Tab)({
     marginRight: "0px",
   },
 });
+// const BookingCard = styled("div")({
+//   padding: "10px",
+//   margin: "10px 0",
+//   border: "1px solid #ccc",
+//   borderRadius: "8px",
+// });
+
+// const AnnouncementCard = styled("div")({
+//   padding: "10px",
+//   margin: "10px 0",
+//   border: "1px solid #aaa",
+//   borderRadius: "8px",
+// });

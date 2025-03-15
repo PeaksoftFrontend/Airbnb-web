@@ -24,9 +24,6 @@ export const UserPageSlide = () => {
   if (error) return <p>error data</p>;
   if (isLoading) return <p>Loading...</p>;
 
-  if (error) return <p> error data</p>;
-  if (isLoading) return <p>Loading...</p>;
-
   const handleRegions = (region) => {
     navigate(
       `${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}?category=apartment&house-type=popular`
@@ -72,7 +69,6 @@ export const UserPageSlide = () => {
                 <Icons.Location />
                 {item.address}
               </p>
-              <span>{item.description}</span>
             </StyleInformation>
           </div>
           <StyleLines>
@@ -91,12 +87,8 @@ export const UserPageSlide = () => {
                   spaceBetween={3}
                   modules={[Pagination]}
                 >
-                  {item.images.map((images) => (
-                    <SwiperSlide
-                      key={images.id}
-                      style={{ position: "relative" }}
-                      onClick={() => handleRegions("Another")}
-                    >
+                  {item.images.map((images, i) => (
+                    <SwiperSlide key={i} style={{ position: "relative" }}>
                       <img src={images} position={{ position: "absolut" }} />
                     </SwiperSlide>
                   ))}

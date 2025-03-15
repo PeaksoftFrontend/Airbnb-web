@@ -25,7 +25,9 @@ export const AuthModal = ({ modalOpen, setModalOpen }) => {
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithGoogle();
-      const firebaseToken = await result.user.getIdToken();
+      let firebaseToken = await result.user.getIdToken();
+
+      firebaseToken = firebaseToken.replace(/^token=/, "");
 
       const response = await googleLogin(firebaseToken).unwrap();
       const userData = {
