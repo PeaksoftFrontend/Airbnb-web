@@ -32,5 +32,5 @@ export const {
   useGetUsersQuery,
   useRemoveUserMutation,
   useGetUsersDetailsQuery,
-  usegetUsersDetailsAnnouncementsQuery,
+  useGetUsersDetailsAnnouncementsQuery,
 } = usersApi;

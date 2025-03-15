@@ -10,37 +10,15 @@ import { useGetLatestAnnouncementsQuery } from "../../redux/api/houses.service";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../utils/constants/paths";
 
-const POPULAR_REGIONS = [
-  {
-    title: "THE LASTEST",
-    url: "https://shorturl.at/3IY2D",
-    text: "Aska Lara Resort & Spa Hotel",
-    description:
-      "The Aska Lara Resort & Spa Hotel, which operates on an all-inclusive system, occupies 2 plots separated by a road. The hotel is located in the Lara district, 500 meters from the sea.",
-    gps: "723510 Osh Muzurbek Alimbekov 9/7",
-    information: "Read more",
-    detail: "View all",
-    images: [
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-      "https://shorturl.at/3IY2D",
-    ],
-  },
-];
-
 export const UserPageWight = () => {
   const swiperRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(1);
   const [totalSlides, setTotalSlides] = useState(0);
-  const { data } = useGetLatestAnnouncementsQuery();
-  console.log(data);
+  const { data, error, isLoading } = useGetLatestAnnouncementsQuery();
   const navigate = useNavigate();
+
+  if (error) return <p>error data</p>;
+  if (isLoading) return <p>Loading...</p>;
 
   const handlePrev = () => {
     if (swiperRef.current) {
@@ -66,83 +44,81 @@ export const UserPageWight = () => {
 
   return (
     <StyleContainer>
-      {POPULAR_REGIONS.map((item, index) => (
-        <StyleBox key={index} {...item}>
-          <StyleImageGlobal>
-            <p>{item.title}</p>
-            <img src={item.url} alt="" />
-          </StyleImageGlobal>
-          <div>
-            <StyleDescriptionText>
-              <p>{item.text}</p>
-              <StyleDiscription>{item.description}</StyleDiscription>
-            </StyleDescriptionText>
+      <StyleBox {...data}>
+        <StyleImageGlobal>
+          <p>{data.title}</p>
+          <img src={data.images[0]} alt="" />
+        </StyleImageGlobal>
+        <div>
+          <StyleDescriptionText>
+            <p>{data.text}</p>
+            <StyleDiscription>{data.description}</StyleDiscription>
+          </StyleDescriptionText>
 
-            <StyleInformation>
-              <p style={{ display: "flex", gap: "4px" }}>
-                <Icons.Location />
-                {item.gps}
-              </p>
-              <span>{item.information}</span>
-            </StyleInformation>
-          </div>
-          <StyleLines>
-            <StyleDetailsansImages>
-              <StyleMore onClick={() => handleRegions("Another")}>
-                {item.detail}
-              </StyleMore>
-              <StyleImages>
-                <StyleSwiper
-                  onSwiper={(swiper) => {
-                    swiperRef.current = swiper;
-                    setTotalSlides(swiper.slides.length);
-                  }}
-                  onSlideChange={handleSlideChange}
-                  slidesPerView={3}
-                  spaceBetween={3}
-                  modules={[Pagination]}
-                >
-                  {item.images.map((images, index) => (
-                    <SwiperSlide key={index} style={{ position: "relative" }}>
-                      <img src={images} position={{ position: "absolut" }} />
-                    </SwiperSlide>
-                  ))}
-                </StyleSwiper>
-              </StyleImages>
-            </StyleDetailsansImages>
-            <StyledIcons>
-              <div>
-                <Icons.RightBlack
-                  style={{
-                    cursor: "pointer",
-                    width: "23px",
-                    height: "23px",
-                    border: "none",
-                  }}
-                  onClick={handlePrev}
-                />
-              </div>
+          <StyleInformation>
+            <p style={{ display: "flex", gap: "4px" }}>
+              <Icons.Location />
+              {data.gps}
+            </p>
+            <span>{data.information}</span>
+          </StyleInformation>
+        </div>
+        <StyleLines>
+          <StyleDetailsansImages>
+            <StyleMore onClick={() => handleRegions("Another")}>
+              {data.detail}
+            </StyleMore>
+            <StyleImages>
+              <StyleSwiper
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                  setTotalSlides(swiper.slides.length);
+                }}
+                onSlideChange={handleSlideChange}
+                slidesPerView={3}
+                spaceBetween={3}
+                modules={[Pagination]}
+              >
+                {data.images.map((images, index) => (
+                  <SwiperSlide key={index} style={{ position: "relative" }}>
+                    <img src={images} position={{ position: "absolut" }} />
+                  </SwiperSlide>
+                ))}
+              </StyleSwiper>
+            </StyleImages>
+          </StyleDetailsansImages>
+          <StyledIcons>
+            <div>
+              <Icons.RightBlack
+                style={{
+                  cursor: "pointer",
+                  width: "23px",
+                  height: "23px",
+                  border: "none",
+                }}
+                onClick={handlePrev}
+              />
+            </div>
 
-              <CustomPagination>
-                <span>{String(currentSlide).padStart(2, "0")}</span>/
-                <span>{String(totalSlides).padStart(2, "0")}</span>
-              </CustomPagination>
+            <CustomPagination>
+              <span>{String(currentSlide).padStart(2, "0")}</span>/
+              <span>{String(totalSlides).padStart(2, "0")}</span>
+            </CustomPagination>
 
-              <div>
-                <Icons.LeftBlack
-                  style={{
-                    cursor: "pointer",
-                    width: "23px",
-                    height: "23px",
-                    border: "none",
-                  }}
-                  onClick={handleNext}
-                />
-              </div>
-            </StyledIcons>
-          </StyleLines>
-        </StyleBox>
-      ))}
+            <div>
+              <Icons.LeftBlack
+                style={{
+                  cursor: "pointer",
+                  width: "23px",
+                  height: "23px",
+                  border: "none",
+                }}
+                onClick={handleNext}
+              />
+            </div>
+          </StyledIcons>
+        </StyleLines>
+      </StyleBox>
     </StyleContainer>
   );
 };

@@ -17,7 +17,7 @@ export const Header = () => {
     if (role === "GUEST") {
       setModalOpen(true);
     } else {
-      navigate("/publish");
+      navigate("/user/publish");
     }
   };
 
@@ -25,7 +25,7 @@ export const Header = () => {
     if (role === "GUEST") {
       setModalOpen(true);
     } else {
-      navigate("/favorite");
+      navigate("/user/favorite");
     }
   };
 
@@ -51,7 +51,9 @@ export const Header = () => {
           />
         </StyledSearchInput>
         <div>
-          <Icons.Heart onClick={handleHeartClick} />
+          <span style={{ cursor: "pointer" }} onClick={handleHeartClick}>
+            Favorite
+          </span>
         </div>
         {role === "GUEST" ? (
           <StyledButton onClick={() => setModalOpen(true)}>

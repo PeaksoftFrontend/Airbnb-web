@@ -8,7 +8,7 @@ import { Booking } from "../../components/UI/Booking";
 import { MyAnnouncement } from "../../components/UI/MyAnnouncement";
 import { useParams, useSearchParams } from "react-router-dom";
 import {
-  usegetUsersDetailsAnnouncementsQuery,
+  useGetUsersDetailsAnnouncementsQuery,
   useGetUsersDetailsQuery,
 } from "../../redux/api/users.service";
 import { useBlockUserMutation } from "../../redux/api/application.service";
@@ -29,7 +29,7 @@ export const UserDetail = () => {
     id: userId,
     value: tab,
   });
-  const { dataCard } = usegetUsersDetailsAnnouncementsQuery();
+  const { dataCard } = useGetUsersDetailsAnnouncementsQuery();
   const [blockUser] = useBlockUserMutation();
 
   const handleChange = (event, newValue) => {

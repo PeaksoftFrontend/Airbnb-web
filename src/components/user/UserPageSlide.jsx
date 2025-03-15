@@ -24,9 +24,6 @@ export const UserPageSlide = () => {
   if (error) return <p>error data</p>;
   if (isLoading) return <p>Loading...</p>;
 
-  if (error) return <p> error data</p>;
-  if (isLoading) return <p>Loading...</p>;
-
   const handleRegions = (region) => {
     navigate(
       `${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}?category=apartment&house-type=popular`
@@ -72,7 +69,6 @@ export const UserPageSlide = () => {
                 <Icons.Location />
                 {item.address}
               </p>
-              <span>{item.description}</span>
             </StyleInformation>
           </div>
           <StyleLines>

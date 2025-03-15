@@ -7,7 +7,11 @@ export const UserLayout = () => {
   return (
     <div>
       {pathname === "/" ? null : <Header />}
-      <main>
+      <main
+        style={{
+          minHeight: "70vh",
+        }}
+      >
         <Outlet />
       </main>
       <Footer />
