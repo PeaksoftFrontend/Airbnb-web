@@ -6,6 +6,12 @@ import { Icons } from "../assets";
 import { CardUser } from "../components/user/CardUser";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useGetAnnouncementsFilterQuery } from "../redux/api/auth.servers";
+import {
+  OPTIONS_HOUSE_TYPE,
+  OPTIONS_PRICE,
+  OPTIONS_RATING,
+  OPTIONS_REGIONS,
+} from "../utils/constants";
 
 export const InnerOfHotel = () => {
   const { regionId } = useParams();
@@ -23,6 +29,7 @@ export const InnerOfHotel = () => {
 
   const [filters, setFilters] = useState({
     region: regionId?.toUpperCase() || "",
+    rating: params.get("rating") || "",
     houseType: params.get("houseType") || "APARTMENT",
     price: params.get("price") || "",
     currentPage: Number(params.get("page")) || 1,
@@ -31,8 +38,16 @@ export const InnerOfHotel = () => {
 
   const { data } = useGetAnnouncementsFilterQuery(filters, {
     refetchOnMountOrArgChange: true,
-    skip: !regionId,
   });
+
+  const totalPages = useMemo(() => {
+    if (!data?.announcementResponses?.length) return 0;
+    return (
+      Math.ceil(data.announcementResponses.length / filters.pageSize) ||
+      data?.pageSize ||
+      1
+    );
+  }, [data, filters.pageSize]);
 
   const handleFilterChange = (key, value) => {
     setFilters((prev) => {
@@ -47,15 +62,26 @@ export const InnerOfHotel = () => {
         if (v && k !== "pageSize" && k !== "region") searchParams.append(k, v);
       });
 
-      navigate(`?${searchParams.toString()}`);
+      if (key === "region" && value) {
+        const regionForUrl = OPTIONS_REGIONS.find(
+          (item) => item.value === value
+        );
+        navigate(
+          `/inner-hotel-of-regions/${regionForUrl.label}?${searchParams.toString()}`,
+          { replace: true }
+        );
+      } else {
+        navigate(`?${searchParams.toString()}`);
+      }
+
       return newFilters;
     });
   };
-
   const clearSelections = () => {
     setFilters({
       region: regionId?.toUpperCase() || "",
-      type: "",
+      rating: "",
+      houseType: "APARTMENT",
       price: "",
       currentPage: 1,
       pageSize: 10,
@@ -67,47 +93,12 @@ export const InnerOfHotel = () => {
     handleFilterChange(key, "");
   };
 
-  const cardsPerPage = 16;
-
-  const { totalPages, currentCards, options } = useMemo(() => {
-    if (!data) {
-      return {
-        totalPages: 0,
-        currentCards: [],
-        options: { region: [], houseType: [], price: [] },
-      };
-    }
-
-    const announcementResponses = data.announcementResponses || [];
-
-    const totalPages =
-      data.totalPages || Math.ceil(announcementResponses.length / cardsPerPage);
-
-    const currentCards = data.totalPages
-      ? announcementResponses
-      : announcementResponses.slice(
-          (filters.currentPage - 1) * cardsPerPage,
-          (filters.currentPage - 1) * cardsPerPage + cardsPerPage
-        );
-
-    const options = {
-      region: [...new Set(announcementResponses.map((item) => item.region))],
-
-      houseType: [...new Set(announcementResponses.map((item) => item.title))],
-      price: [
-        ...new Set(announcementResponses.map((item) => item.price).map(String)),
-      ],
-    };
-
-    return { totalPages, currentCards, options };
-  }, [data, filters.currentPage, cardsPerPage]);
-
   const handlePageChange = (_, value) => {
     handleFilterChange("currentPage", value);
   };
 
   return (
-    <div>
+    <div style={{ marginLeft: "80px" }}>
       <StyleHeadElements>
         <Breadcrumbs path={main} />
         <StyleRegionNameandSlect>
@@ -119,44 +110,37 @@ export const InnerOfHotel = () => {
           <StyleDiv>
             <StyleSelects>
               <StyleSelect
-                options={options.region.map((option) => ({
-                  value: option,
-                  label: option,
-                }))}
+                options={OPTIONS_REGIONS}
                 value={filters.region || ""}
                 onChange={(e) => handleFilterChange("region", e.target.value)}
                 placeholder="Sort by region:"
               />
-              {/* <StyleSelect
-                options={options.category.map((option) => ({
-                  value: option,
-                  label: option,
-                }))}
-                value={filters.category || ""}
-                onChange={(e) => handleFilterChange("category", e.target.value)}
-                placeholder="Sort by house type:"
-              /> */}
               <StyleSelect
-                options={options.houseType.map((option) => ({
-                  value: option,
-                  label: option,
-                }))}
+                options={OPTIONS_RATING}
+                value={filters.rating || ""}
+                onChange={(e) => handleFilterChange("rating", e.target.value)}
+                placeholder="Sort by rating:"
+              />
+              <StyleSelect
+                options={OPTIONS_HOUSE_TYPE}
                 value={filters.houseType || ""}
-                onChange={(e) => handleFilterChange("type", e.target.value)}
+                onChange={(e) =>
+                  handleFilterChange(
+                    "houseType",
+                    e.target.value ? e.target.value : "APARTMENT"
+                  )
+                }
                 placeholder="Sort by title:"
               />
               <StyleSelect
-                options={options.price.map((option) => ({
-                  value: option,
-                  label: option,
-                }))}
+                options={OPTIONS_PRICE}
                 value={filters.price || ""}
                 onChange={(e) => handleFilterChange("price", e.target.value)}
                 placeholder="Sort by price:"
               />
             </StyleSelects>
             <StyleOptions>
-              {["region", "houseType", "price"].map((key) => (
+              {["region", "rating", "houseType", "price"].map((key) => (
                 <StyleSelectText key={key} hasText={filters[key] !== ""}>
                   {filters[key] && (
                     <Icons.Remove onClick={() => deleteText(key)} />
@@ -170,7 +154,7 @@ export const InnerOfHotel = () => {
         </StyleRegionNameandSlect>
       </StyleHeadElements>
 
-      <CardUser cards={currentCards} />
+      <CardUser cards={data?.announcementResponses || []} regionId={regionId} />
 
       <StylePogination>
         <Pagination
@@ -199,7 +183,10 @@ const StyleDiv = styled("div")({
 
 const StyleOptions = styled("div")({ display: "flex", gap: "10px" });
 
-const StyleRegionNameandSlect = styled("div")({ display: "flex", gap: "10px" });
+const StyleRegionNameandSlect = styled("div")({
+  display: "flex",
+  gap: "10px",
+});
 
 const StyleSelectText = styled("p")(({ hasText }) => ({
   background: hasText ? "#F3F3F3" : "transparent",
@@ -255,5 +242,6 @@ const StyleTitle = styled("p")({
   fontSize: "20px",
   fontWeight: 500,
   color: "#000000",
+  marginTop: "10px",
   "& span": { color: "#646464", fontSize: "18px", fontWeight: 400 },
 });

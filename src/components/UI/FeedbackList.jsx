@@ -1,56 +1,52 @@
-import { Box, styled } from "@mui/material";
+import { Avatar, Box, IconButton, Menu, MenuItem, styled } from "@mui/material";
 import { useState } from "react";
 import { Icons } from "../../assets";
-
-const feedbacks = [
-  {
-    avatar: "https://shorturl.at/1jDff",
-    userName: "Anna Annova",
-    date: "28.04.22",
-    rating: 5,
-    text: `Great location, really pleasant and clean rooms, but the thing that makes this such a good place to stay are the staff. All of the people are incredibly helpful and generous with their time and advice. We travelled with two six year olds and lots of luggage and despite the stairs up to the elevator this was one of the nicest places we stayed in the four weeks.`,
-    likes: 4,
-    dislikes: 2,
-    comments: 2,
-    images: [
-      "https://shorturl.at/6fOE9",
-      "https://shorturl.at/D4L3j",
-      "https://shorturl.at/6fOE9",
-    ],
-  },
-  {
-    avatar: "https://shorturl.at/1jDff",
-    userName: "Anna Annova",
-    date: "28.04.22",
-    rating: 5,
-    text: `Great location, really pleasant and clean rooms, but the thing that makes this such a good place to stay are the staff. All of the people are incredibly helpful and generous with their time and advice. We travelled with two six year olds and lots of luggage and despite the stairs up to the elevator this was one of the nicest places we stayed in the four weeks.`,
-    likes: 4,
-    dislikes: 2,
-    images: [
-      "https://shorturl.at/6fOE9",
-      "https://shorturl.at/D4L3j",
-      "https://shorturl.at/6fOE9",
-    ],
-  },
-];
+import {
+  useGetFeedbackQuery,
+  useRemoveFeedbackMutation,
+} from "../../redux/api/announcementId.service";
 
 const FeedbackCard = ({
-  userName,
-  date,
+  id,
+  feedbackUserFullName,
+  createdAt,
   rating,
-  text,
-  likes,
-  dislikes,
-  avatar,
+  comment = "",
+  likeCount,
+  disLikeCount,
+  feedbackUserImage,
   images,
+  refetch,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [removeFeedback] = useRemoveFeedbackMutation(26);
 
   const toggleText = () => {
     setIsExpanded((prev) => !prev);
   };
 
-  const displayedText = isExpanded ? text : `${text.substring(0, 100)}...`;
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await removeFeedback(id).unwrap(); // .unwrap() чтобы получить ошибку, если есть
+      console.log("Отзыв удален");
+      refetch(); // 🔥 Обновляем список отзывов
+    } catch (error) {
+      console.error("Ошибка при удалении отзыва", error);
+    }
+  };
+
+  const displayedText = isExpanded
+    ? comment
+    : `${comment.substring(0, 100)}...`;
 
   const renderStars = (rating) => {
     const stars = [];
@@ -80,15 +76,54 @@ const FeedbackCard = ({
     <StyledCard>
       <StyleBox>
         <StyleUserInfo>
-          <StyleAvatar src={avatar} alt={`${userName}'s avatar`} />
-          <StyleSpan>{userName}</StyleSpan>
+          <Avatar
+            src={
+              feedbackUserImage && feedbackUserImage !== "link"
+                ? feedbackUserImage
+                : undefined
+            }
+            alt={feedbackUserFullName}
+            sx={{
+              width: 36,
+              height: 36,
+              backgroundColor:
+                !feedbackUserImage || feedbackUserImage === "link"
+                  ? "#C4C4C4"
+                  : "transparent",
+              color: "white",
+              fontSize: "16px",
+              fontWeight: "bold",
+            }}
+          >
+            {(!feedbackUserImage || feedbackUserImage === "link") &&
+              feedbackUserFullName?.charAt(0).toUpperCase()}
+          </Avatar>
+          <StyleSpan>{feedbackUserFullName}</StyleSpan>
           <StyleRating>{renderStars(rating)}</StyleRating>
         </StyleUserInfo>
-        <Icons.Menufeadback />
+        <IconButton>
+          <Icons.Menufeadback onClick={handleMenuClick} />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <MenuItem onClick={handleMenuClose}>Edit</MenuItem>
+          <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        </Menu>
       </StyleBox>
       <StyledText>
         {displayedText}
-        {text.length > 100 && (
+        {comment.length > 100 && (
           <StyleToggleText onClick={toggleText}>
             {isExpanded ? "See Less" : " See More"}
           </StyleToggleText>
@@ -102,15 +137,15 @@ const FeedbackCard = ({
       </StyleDivImage>
 
       <StyleFooter>
-        <StyleDate>{date}</StyleDate>
+        <StyleDate>{createdAt}</StyleDate>
         <div>
           <StyleLikes>
             <div>
-              <Icons.Like /> {likes}
+              <Icons.Like /> {likeCount}
             </div>
 
             <div>
-              <Icons.DisLike /> {dislikes}
+              <Icons.DisLike /> {disLikeCount}
             </div>
           </StyleLikes>
         </div>
@@ -120,10 +155,16 @@ const FeedbackCard = ({
 };
 
 export const FeedbackList = () => {
+  const { data, error, isLoading, refetch } = useGetFeedbackQuery(26);
+  console.log(data);
+
+  if (error) return <p>error</p>;
+  if (isLoading) return <p>Loading...</p>;
+  if (!data || data.length === 0) return <p>No feedback available</p>;
   return (
     <StyleList>
-      {feedbacks.map((feedback, id) => (
-        <FeedbackCard key={id} {...feedback} />
+      {data.map((feedback) => (
+        <FeedbackCard key={feedback.id} {...feedback} refetch={refetch} />
       ))}
     </StyleList>
   );
@@ -215,9 +256,4 @@ const StyleList = styled("div")({
   flexDirection: "column",
   gap: "1rem",
   padding: "1rem",
-});
-
-const StyleAvatar = styled("img")({
-  width: "28px",
-  height: "28px",
 });

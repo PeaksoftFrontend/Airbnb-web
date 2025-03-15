@@ -53,20 +53,6 @@ export const StyledSearch = styled(SearchInput)({
   width: "725px",
   border: "none",
   height: "42px",
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "#ccc",
-    },
-    "&:hover fieldset": {
-      borderColor: "#aaa",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "#646464",
-    },
-  },
-  "& .MuiInputBase-input": {
-    color: "#646464",
-  },
 });
 export const StyledHeaderWrapper = styled(Box)({
   padding: "28px 100px ",

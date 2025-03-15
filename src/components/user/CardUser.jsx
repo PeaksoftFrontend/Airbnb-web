@@ -10,13 +10,15 @@ import { useState } from "react";
 import { useFavoriteMutation } from "../../redux/api/auth.servers";
 import { useSelector } from "react-redux";
 import { AuthModal } from "./welcome-section/AuthModal";
+import { useNavigate } from "react-router-dom";
 
-export const CardUser = ({ cards }) => {
+export const CardUser = ({ cards, regionId }) => {
   const [favorites, setFavorites] = useState({});
 
   const [favoriteMutation] = useFavoriteMutation();
   const [modalOpen, setModalOpen] = useState(false);
   const { role } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const handleFavorite = async (id) => {
     if (role !== "USER") {
@@ -52,7 +54,11 @@ export const CardUser = ({ cards }) => {
                 </SwiperSlide>
               ))}
             </StyleSwiper>
-            <div>
+            <div
+              onClick={() =>
+                navigate(`/user/inner-hotel-of-regions/${regionId}/${item.id}`)
+              }
+            >
               <StylePieces>
                 <Styledprise>
                   <StyledPtag> ${item.price}/</StyledPtag>

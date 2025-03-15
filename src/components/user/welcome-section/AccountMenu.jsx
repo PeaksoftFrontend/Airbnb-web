@@ -1,6 +1,5 @@
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Divider from "@mui/material/Divider";
 import { useRef, useState } from "react";
 import { Box, styled } from "@mui/material";
 import { Icons } from "../../../assets";
@@ -10,23 +9,21 @@ import { signOut } from "firebase/auth";
 import { authGoogle } from "../../../redux/fireBase";
 import { logout } from "../../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import { PATHS } from "../../../utils/constants/paths";
 
 export const AccountMenu = () => {
   const anchorRef = useRef(null);
   const [avatarOpen, setAvatarOpen] = useState(false);
   const email = useSelector((state) => state.auth.email);
   const isAuthorized = useSelector((state) => state.auth.isAuthorized);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await signOut(authGoogle);
-
       dispatch(logout());
     } catch (error) {
-      error;
+      console.error(error);
     }
   };
 
@@ -36,6 +33,11 @@ export const AccountMenu = () => {
 
   const handleAvatarClose = () => {
     setAvatarOpen(false);
+  };
+
+  const handleProfileClick = () => {
+    navigate("/profiles");
+    handleAvatarClose();
   };
 
   const getInitials = (fullName) => {
@@ -64,15 +66,7 @@ export const AccountMenu = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "top" }}
       >
-        <MenuItem onClick={() => navigate(PATHS.USER.PROFILES_USER)}>
-          Профиль
-        </MenuItem>
-        <MenuItem onClick={handleAvatarClose}>Моя учетная запись</MenuItem>
-        <Divider />
-        <MenuItem onClick={handleAvatarClose}>
-          Добавить еще одну учетную запись
-        </MenuItem>
-        <MenuItem onClick={handleAvatarClose}>Настройки</MenuItem>
+        <MenuItem onClick={handleProfileClick}>Профиль</MenuItem>
         <MenuItem onClick={handleLogout}>Выход</MenuItem>
       </StyledMenu>
     </>

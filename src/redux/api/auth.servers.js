@@ -19,9 +19,10 @@ export const authApi = createApi({
       }),
     }),
     getAnnouncementsFilter: builder.query({
-      query: ({ region, houseType, price, currentPage, pageSize }) => {
+      query: ({ region, houseType, rating, price, currentPage, pageSize }) => {
         const url = `/vendor/announcements-filter?${new URLSearchParams({
           ...(region && { region }),
+          ...(rating && { rating }),
           ...(houseType && { houseType }),
           ...(price && { price }),
           ...(currentPage && { currentPage }),
@@ -36,7 +37,6 @@ export const authApi = createApi({
           pageSize: response.pageSize || 16,
         };
       },
-      providesTags: ["announcement"],
     }),
     favorite: builder.mutation({
       query: (announcementId) => ({
