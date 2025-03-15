@@ -1,15 +1,13 @@
 export const PATHS = {
-  GUEST: {
-    ROOT: "/",
-  },
   USER: {
     ROOT: "/",
-    PUBLISH: "/publish",
-    FAVORITE_USER: "/favorite",
-    INNER_HOTEL_OF_REGIONS: "/inner-hotel-of-regions",
-    PROFILE_INNER_PAGE_HOTEL: "/inner-hotel-of-regions/:regionId",
-    MY_ANNOUNCEMENT: "/my-announcement",
-    PROFILES_USER: "/profiles",
+    PUBLISH: "/user/publish",
+    FAVORITE_USER: "/user/favorite",
+    INNER_HOTEL_OF_REGIONS: "/user/inner-hotel-of-regions",
+    PROFILE_INNER_PAGE_HOTEL: "/user/inner-hotel-of-regions/:regionId",
+    NOT_FOUND_OF_HOTEL: "/user/not-found",
+    MY_ANNOUNCEMENT: "/user/my-announcement",
+    PROFILES_USER: "/user/profiles",
   },
   ADMIN: {
     ROOT: "/admin",

@@ -6,40 +6,32 @@ import {
   Typography,
 } from "@mui/material";
 import { Icons } from "../../assets";
-
-const STAR_RATING = [
-  {
-    star: 5,
-    percentage: 50,
-  },
-  {
-    star: 4,
-    percentage: 15,
-  },
-  {
-    star: 3,
-    percentage: 70,
-  },
-  {
-    star: 2,
-    percentage: 0,
-  },
-  {
-    star: 1,
-    percentage: 0,
-  },
-];
+import { useGetRatingQuery } from "../../redux/api/announcementId.service";
 
 export const Reviews = () => {
+  const { data, error, isLoading } = useGetRatingQuery(26);
+  console.log(data);
+
+  if (error) return <p>Ошибка</p>;
+  if (isLoading) return <p>Загрузка...</p>;
+
+  const ratingData = [
+    { star: 5, percentage: data?.five || 0 },
+    { star: 4, percentage: data?.four || 0 },
+    { star: 3, percentage: data?.three || 0 },
+    { star: 2, percentage: data?.two || 0 },
+    { star: 1, percentage: data?.one || 0 },
+  ];
+
   return (
     <StyleConteiner>
       <StyleStar>
-        4.4
+        {data?.averageRating || "N/A"}
         <Icons.Star />
       </StyleStar>
       <StyleLiner>
-        {STAR_RATING.map((item) => (
-          <StyleCardStar key={item.star} {...item}>
+        {ratingData.map((item) => (
+          <StyleCardStar key={item.star}>
             <StyleStarNum>{item.star}</StyleStarNum>
             <StyledLinerProgresParent>
               <StyleLinearProgress

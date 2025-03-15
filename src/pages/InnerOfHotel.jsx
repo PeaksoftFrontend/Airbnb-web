@@ -154,7 +154,7 @@ export const InnerOfHotel = () => {
         </StyleRegionNameandSlect>
       </StyleHeadElements>
 
-      <CardUser cards={data?.announcementResponses || []} />
+      <CardUser cards={data?.announcementResponses || []} regionId={regionId} />
 
       <StylePogination>
         <Pagination

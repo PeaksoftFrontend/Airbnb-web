@@ -6,6 +6,7 @@ import { authApi } from "./api/auth.servers";
 import { submitAdApi } from "./api/submitAdd.service";
 import { applicationApi } from "./api/application.service";
 import { adminIdApi } from "./api/adminId.sevice";
+import { announcementIdApi } from "./api/announcementId.service";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [submitAdApi.reducerPath]: submitAdApi.reducer,
     [applicationApi.reducerPath]: applicationApi.reducer,
+    [announcementIdApi.reducerPath]: announcementIdApi.reducer,
     [adminIdApi.reducerPath]: adminIdApi.reducer,
     [housesApi.reducerPath]: housesApi.reducer,
   },
@@ -23,6 +25,7 @@ export const store = configureStore({
       usersApi.middleware,
       authApi.middleware,
       applicationApi.middleware,
+      announcementIdApi.middleware,
       adminIdApi.middleware,
       submitAdApi.middleware,
       applicationApi.middleware,

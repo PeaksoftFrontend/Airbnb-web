@@ -4,24 +4,25 @@ import { NotFoundPage } from "../../pages/user/NotFoundPage";
 import { MyAnnouncement } from "../../pages/user/MyAnnouncement";
 import { Profiles } from "../../pages/user/Profiles";
 import { InnerHotelPage } from "../../pages/user/InnerHotelPage";
-import { LandingPAge } from "../../pages/user/LandingPAge";
 import { PrivateAuthRouteByRole } from "../private/PrivateAuthByRole";
 import { InnerOfHotel } from "../../pages/InnerOfHotel";
 import { FavoritePage } from "../../pages/user/FavoritePage";
 import { Publish } from "../../components/user/puplish/Publish";
+import { LandingPAge } from "../../pages/user/LandingPAge";
 
 export const UserRoutes = (role) => {
   return [
     {
-      index: true,
+      path: PATHS.USER.ROOT,
       element: (
         <PrivateAuthRouteByRole
           RouteComponent={<LandingPAge />}
           role={role}
           roles={["USER", "GUEST"]}
-          fallBackPath={PATHS.GUEST.ROOT}
+          fallBackPath={PATHS.USER.ROOT}
         />
       ),
+      index: true,
     },
     {
       path: PATHS.USER.MY_ANNOUNCEMENT,
@@ -30,7 +31,7 @@ export const UserRoutes = (role) => {
           RouteComponent={<MyAnnouncement />}
           role={role}
           roles={["USER", "GUEST"]}
-          fallBackPath={PATHS.GUEST.ROOT}
+          fallBackPath={PATHS.USER.ROOT}
         />
       ),
     },
@@ -41,7 +42,7 @@ export const UserRoutes = (role) => {
           RouteComponent={<NotFoundPage />}
           role={role}
           roles={["USER", "GUEST"]}
-          fallBackPath={PATHS.GUEST.ROOT}
+          fallBackPath={PATHS.USER.ROOT}
         />
       ),
     },
@@ -49,11 +50,7 @@ export const UserRoutes = (role) => {
       path: PATHS.USER.INNER_HOTEL_OF_REGIONS,
       element: (
         <PrivateAuthRouteByRole
-          RouteComponent={
-            <h1>
-              <Outlet />
-            </h1>
-          }
+          RouteComponent={<Outlet />}
           role={role}
           roles={["GUEST", "USER"]}
           fallBackPath={PATHS.USER.ROOT}
@@ -62,27 +59,13 @@ export const UserRoutes = (role) => {
       children: [
         {
           path: ":regionId",
-          element: (
-            <PrivateAuthRouteByRole
-              RouteComponent={<InnerOfHotel />}
-              role={role}
-              roles={["GUEST", "USER"]}
-              fallBackPath={PATHS.USER.ROOT}
-            />
-          ),
+          element: <InnerOfHotel />,
+        },
+        {
+          path: ":regionId/:hotelId",
+          element: <InnerHotelPage />,
         },
       ],
-    },
-    {
-      path: "/user/inner-hotel-of-regions/:regionId/:hotelId",
-      element: (
-        <PrivateAuthRouteByRole
-          RouteComponent={<InnerHotelPage />}
-          role={role}
-          roles={["GUEST", "USER"]}
-          fallBackPath={PATHS.USER.ROOT}
-        />
-      ),
     },
     {
       path: PATHS.USER.PROFILES_USER,
