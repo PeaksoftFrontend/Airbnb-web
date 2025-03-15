@@ -69,7 +69,6 @@ export const Header = () => {
 
       <StyleEnd>
         <StyledArrow ref={dropdownRef} onClick={toggleText}>
-          {" "}
           <StyledDiv>
             Administrator
             <StyledIconsArrow>

@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 import { Breadcrumbs } from "../../components/UI/Breadcrumbs";
 import { InnerHotel } from "../../pages/InnerHotel";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   useAcceptedAnnouncementMutation,
   useAnnouncementDetailQuery,
@@ -12,36 +12,39 @@ import { Button } from "../../components/UI/Button";
 
 export const ProductDetail = () => {
   const { productId } = useParams();
+  const navigate = useNavigate();
   const [acceptedAnnouncement] = useAcceptedAnnouncementMutation();
 
   const { data } = useAnnouncementDetailQuery(productId, { skip: !productId });
   const [isActive, setIsActive] = useState(false);
   const [value, setValue] = useState("");
+  const [error, setError] = useState(false);
 
   const path = [
     { id: 1, url: "/admin/users", title: "Users" },
     { id: 1, url: "/admin/users", title: data?.fullName },
     { id: 2, url: "#", title: data?.title },
   ];
-  const [error, setError] = useState(false);
 
   const handleOutlinedClick = () => {
     setIsActive(!isActive);
   };
-  const handleContainedClick = () => {
-    acceptedAnnouncement({
+
+  const handleContainedClick = async () => {
+    await acceptedAnnouncement({
       id: productId,
       value: "accept",
     });
+    navigate("/admin/application");
   };
 
-  const handleRejectSubmit = (e) => {
+  const handleRejectSubmit = async (e) => {
     e.preventDefault();
     if (!value.trim()) {
       setError(true);
       return;
     }
-    acceptedAnnouncement({
+    await acceptedAnnouncement({
       id: productId,
       message: value,
       value: "reject",
@@ -49,6 +52,7 @@ export const ProductDetail = () => {
     setValue("");
     setIsActive(false);
     setError(false);
+    navigate("/admin/application");
   };
 
   return (
@@ -72,7 +76,7 @@ export const ProductDetail = () => {
           <StyledInput
             error={error}
             value={value}
-            placeholder="Write the reason for your rejection "
+            placeholder="Write the reason for your rejection"
             onChange={(e) => setValue(e.target.value)}
           />
           <ActionWrapper>
