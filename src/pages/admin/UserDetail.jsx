@@ -2,25 +2,30 @@ import { Box, styled } from "@mui/material";
 import { Breadcrumbs } from "../../components/UI/Breadcrumbs";
 import { Profile } from "../../components/admin/Profile";
 import { TabsPanel } from "../../components/UI/tabs/TabsPanel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../../components/UI/Button";
 import { Booking } from "../../components/UI/Booking";
 import { MyAnnouncement } from "../../components/UI/MyAnnouncement";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useGetUsersDetailsQuery } from "../../redux/api/users.service";
 import { useBlockUserMutation } from "../../redux/api/application.service";
+import { NoData } from "../../components/UI/NotData";
 
 export const UserDetail = () => {
   const { userId } = useParams();
-  const [searchParams] = useSearchParams();
-  const { data = null } = useGetUsersDetailsQuery({
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tab = searchParams.get("value") || "bookings";
+  const [tabValue, setTabValue] = useState(tab === "announcements" ? 1 : 0);
+  const [showButton, setShowButton] = useState(tab === "announcements");
+  useEffect(() => {
+    setSearchParams({ value: tabValue === 1 ? "announcements" : "bookings" });
+  }, [tabValue, setSearchParams]);
+  const { data } = useGetUsersDetailsQuery({
     id: userId,
-    value: searchParams.get("name"),
+    value: tab,
   });
-  const [blockUser] = useBlockUserMutation();
 
-  const [tabValue, setTabValue] = useState(0);
-  const [showButton, setShowButton] = useState(false);
+  const [blockUser] = useBlockUserMutation();
 
   const handleChange = (event, newValue) => {
     event.preventDefault();
@@ -34,11 +39,20 @@ export const UserDetail = () => {
   ];
 
   const tabs = [
-    { label: "Bookings", content: <Booking bookingUser={data?.bookingUser} /> },
+    {
+      label: "Bookings",
+      content: data?.bookingUser?.length ? (
+        <Booking bookingUser={data?.bookingUser} />
+      ) : (
+        <NoData message="Booking нет данных" />
+      ),
+    },
     {
       label: "My announcement",
-      content: (
+      content: data?.announcementResponses?.length ? (
         <MyAnnouncement announcementResponses={data?.announcementResponses} />
+      ) : (
+        <NoData message="Announcements нет данных" />
       ),
     },
   ];

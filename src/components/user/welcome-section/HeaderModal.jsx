@@ -17,7 +17,7 @@ import {
   useLoginAdminMutation,
 } from "../../../redux/api/auth.servers";
 import { signInWithGoogle } from "../../../redux/fireBase";
-import { login } from "../../../redux/slices/authSlie";
+import { login } from "../../../redux/slices/authSlice";
 import Cookies from "js-cookie";
 import { PATHS } from "../../../utils/constants/paths";
 
@@ -103,7 +103,11 @@ export const HeaderModal = () => {
   };
 
   const handleNavigate = () => {
-    navigate(`${PATHS.USER.PUBLISH}`);
+    if (role === "USER") {
+      navigate(`${PATHS.USER.PUBLISH}`);
+    } else {
+      setModalOpen(true);
+    }
   };
 
   return (
@@ -239,6 +243,7 @@ const StyledLink = styled(Box)({
   fontSize: "18px",
   fontWeight: "500",
   color: "#FFF",
+  cursor: "pointer",
 });
 
 const StyledButton = styled(Button)({

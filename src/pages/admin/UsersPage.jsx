@@ -11,6 +11,7 @@ import {
   Button,
   Popper,
   Box,
+  CircularProgress,
 } from "@mui/material";
 import { Icons } from "../../assets";
 import {
@@ -29,7 +30,13 @@ export const UsersPage = () => {
 
   const navigate = useNavigate();
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading)
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+        <CircularProgress />
+      </Box>
+    );
+
   if (error) return <p>Error loading data.</p>;
 
   const handleOpen = (event, id) => {
@@ -99,7 +106,10 @@ export const UsersPage = () => {
               <StyledTableCell>{user.announcements}</StyledTableCell>
               <StyledTableCell>
                 <Icons.Korzina
-                  onClick={(e) => handleOpen(e, user.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleOpen(e, user.id);
+                  }}
                   style={{ cursor: "pointer" }}
                 />
               </StyledTableCell>
@@ -116,28 +126,44 @@ export const UsersPage = () => {
       >
         <Box
           sx={{
-            width: 250,
-            height: 100,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
             p: 2,
             bgcolor: "background.paper",
-            borderRadius: 2,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 2,
             boxShadow: 3,
+            borderRadius: 2,
           }}
         >
-          <Button onClick={handleClose} variant="contained" color="success">
-            Cancel
-          </Button>
-          <Button
-            onClick={() => handleDeleteItem(deleteId)}
-            variant="contained"
-            color="error"
+          <h5
+            style={{
+              fontSize: "18px",
+              fontWeight: "500",
+            }}
           >
-            Delete
-          </Button>
+            Вы точно хотите удалить?
+          </h5>
+          <div
+            style={{
+              width: 250,
+              height: 100,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "20px",
+            }}
+          >
+            <Button onClick={handleClose} variant="contained" color="success">
+              Cancel
+            </Button>
+            <Button
+              onClick={() => handleDeleteItem(deleteId)}
+              variant="contained"
+              color="error"
+            >
+              Delete
+            </Button>
+          </div>
         </Box>
       </Popper>
     </StyleTableContainer>
@@ -153,3 +179,10 @@ const StyledTableCell = styled(TableCell)({
   fontSize: 14,
   padding: "10px",
 });
+
+// const LoadingContainer = styled("div")({
+//   display: "flex",
+//   // justifyContent: "center",
+//   // alignItems: "center",
+//   height: "100vh",
+// });

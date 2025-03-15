@@ -19,13 +19,14 @@ export const authApi = createApi({
       }),
     }),
     getAnnouncementsFilter: builder.query({
-      query: ({ region, category, houseType, price, currentPage }) => {
+      query: ({ region, houseType, rating, price, currentPage, pageSize }) => {
         const url = `/vendor/announcements-filter?${new URLSearchParams({
           ...(region && { region }),
-          ...(category && { category }),
+          ...(rating && { rating }),
           ...(houseType && { houseType }),
           ...(price && { price }),
           ...(currentPage && { currentPage }),
+          ...(pageSize && { pageSize }),
         }).toString()}`;
         return url;
       },
@@ -36,7 +37,6 @@ export const authApi = createApi({
           pageSize: response.pageSize || 16,
         };
       },
-      providesTags: ["announcement"],
     }),
     favorite: builder.mutation({
       query: (announcementId) => ({

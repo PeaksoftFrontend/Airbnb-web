@@ -1,43 +1,19 @@
 import { Box, styled } from "@mui/material";
 import { Icons } from "../../assets";
+import { useGetPopularsHousesQuery } from "../../redux/api/houses.service";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../utils/constants/paths";
 
-const properties = [
-  {
-    id: 1,
-    name: "Asman guest house",
-    location: "723510 Osh Muzurbek Alimbekov 9/7",
-    price: "$26 / ",
-    rating: 3.4,
-    image:
-      "https://s3-alpha-sig.figma.com/img/0262/e146/c386a7b3971406286b2dce8e892dd438?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=nbO9LvHYUp40XREh30X9V8Csj7DICptFkeeS4G05Y-VUuErq~u9cJvbNQQwdFDrjE5oAbMcGi4pFUqMJqUffodVj9nHvwgE5Jhum4VXAB3QHQALlC8zwf1PASWMmRUvn6Al5Msfwx7q691PF-wNgSxrOhRTiNAvaIxozH3gFiHAue3FcTqEyziBnSLLE5AornLo3vMdyqHdM1WZm44OSLddrSta8d5ywo8EbUeMqp~i5UtW3ekhQqHfmlbH8pkdy67R8pthgqwOABUBWyNWfRJXquhRrINIEiMQMK8n5M4b-bSPRXhcc3oxfFuZYsZUW~GSKbhb20PaTYNhngaCW5Q__",
-  },
-  {
-    id: 2,
-    name: "Asman guest house",
-    location: "723510 Osh Muzurbek Alimbekov 9/7",
-    price: "$26 / ",
-    rating: 3.4,
-    image:
-      "https://s3-alpha-sig.figma.com/img/65f5/d71f/91bfdf24c0f08f6cab79a581bccfb36b?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=mr7dF12yMs3syRpLhH~j035z8W~TYSH2K6TyYux3bwIqUOMOD8z0wBgHWaXtHsVk97e3Qd1fUIFY6kUeFyw48bZaok18oIlTJzzud~9bfbbqHf0Qd30VsDKKmBT2SZ5xUEZ3GiMOuEMW6w39JHboFmATpWbQyts5awJRrhLoZktSgT-RhAonoozZ8eVCLdOFk3OSWilRWTSwvQIfJm1BpXcB-knjhOQEtLnkaB85j2kkPc3Wcbpf0WiR2hsj7St7t8LRQQpsairaQVz7gW06MFEInNzD3N9wRmcfocDuC1QizYMe0r-1QrEHRPCmub32XI7jkXhxsPH9RWGZZOUg7Q__",
-  },
-  {
-    id: 3,
-    name: "Asman guest house",
-    location: "723510 Osh Muzurbek Alimbekov 9/7",
-    price: "$26 / ",
-    rating: 3.4,
-    image:
-      "https://s3-alpha-sig.figma.com/img/5f4a/e1c4/3a16ceafbb60eebec045632a920ef12e?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=of1j3vpjuVUSzUad0ZIidtjazmpTM4BzesGmfpqYoaNczKwubvf~ShSm0EaC5ci2oedeGbQpPfhBe8LwZ~1Mt47~sNhnZ02ojQBWgf7ZPnBgxnNMmzjYaq5MXr~IfKHvnGhfumUO3I01Li5DnyT92wSqebKo1m9DfBG8hHZBLVX54JLSt-n~LqXQClH~DDvCs8eqBodaBD4sQvjxfXxTVG54urO-Jbqf1-tUoQ97HmywYSBRDWcsDQJKdbZQ65uQT8aZSobvjsYWbCpSEuqdpyhu1RtdnWHCETvLZeFeOC6mC~m0JqquKjRVtQrDdX2iirGxxgZhgOPoJ5U0qRXpjQ__",
-  },
-];
-
 export const HousesPage = () => {
+  const { data, error, isLoading } = useGetPopularsHousesQuery();
   const navigate = useNavigate();
-  const handleRegions = (region) => {
-    navigate(`${PATHS.USER.INNER_HOTEL_OF_REGIONS}/${region}?category=house`);
+  if (error) return <p>error data</p>;
+  if (isLoading) return <p>Loading...</p>;
+
+  const handleRegions = (id) => {
+    navigate(`${PATHS.USER.INNER_HOTEL_OF_REGIONS}/Popular/${id}`);
   };
+
   return (
     <StyledBox>
       <StyledPopularHouse variant="h4" fontWeight="bold" gutterBottom>
@@ -48,9 +24,14 @@ export const HousesPage = () => {
         last minute locations.
       </StyledTextHouse>
       <StyledCardContent>
-        {properties.map((property) => (
-          <StyledCard key={property.id}>
-            <StyledImage src={property.image} alt={property.name} />
+        {data.map((property) => (
+          <StyledCard
+            key={property.id}
+            onClick={() => handleRegions(property.id)}
+          >
+            <WrapperImage>
+              <StyledImage src={property.images[0]} alt={property.title} />
+            </WrapperImage>
             <StyledRating>
               <StyledStarSpan>
                 <Icons.StarColor />
@@ -58,19 +39,21 @@ export const HousesPage = () => {
               {property.rating}
             </StyledRating>
             <StyledBoxContainer>
-              <StyledName>{property.name}</StyledName>
+              <StyledName>{property.title}</StyledName>
               <StyledLocation>
-                <Icons.Location /> {property.location}
+                <Icons.Location /> {property.address}
               </StyledLocation>
               <Styledtogether>
-                <StyledPrice>{property.price}</StyledPrice>
+                <StyledPrice>{property.price} </StyledPrice>
                 <StyledDayPrice> day</StyledDayPrice>
               </Styledtogether>
             </StyledBoxContainer>
           </StyledCard>
         ))}
       </StyledCardContent>
-      <ViewAllButton onClick={() => handleRegions("Another")}>
+      <ViewAllButton
+        onClick={() => navigate(`${PATHS.USER.INNER_HOTEL_OF_REGIONS}/Popular`)}
+      >
         View all
       </ViewAllButton>
     </StyledBox>
@@ -91,9 +74,11 @@ const StyledDayPrice = styled("p")({
 });
 const Styledtogether = styled("div")({
   display: "flex",
+  gap: "5px",
 });
 const StyledCardContent = styled("div")({
   display: "flex",
+  gap: "20px",
   marginTop: "60px",
 });
 const StyledPopularHouse = styled("h1")({
@@ -127,11 +112,16 @@ const StyledCard = styled("div")(() => ({
 }));
 
 const StyledImage = styled("img")(() => ({
-  width: "400px",
+  width: "350px",
   height: "400px",
   objectFit: "cover",
   gap: "20px",
 }));
+
+const WrapperImage = styled("div")({
+  width: "350px",
+  height: "400px",
+});
 
 const StyledRating = styled("div")(() => ({
   position: "absolute",
