@@ -7,39 +7,39 @@ import { Container, styled } from "@mui/material";
 import { Icons } from "../../assets";
 import { Button } from "../UI/Button";
 
-export const Data = [
-  {
-    id: 1,
-    images: ["https://shorturl.at/RWBEI"],
-    pieces: 26,
-    rating: 3.4,
-    title: "Beautiful and picturesque 2 sto...",
-    gps: "12 Morris Ave, Toronto, ON, CA,",
-    guests: 2,
-    checkIn: "02.02.22",
-    checkOut: "02.02.22",
-  },
-  {
-    id: 2,
-    images: [
-      "https://shorturl.at/sFdTT",
-      "https://shorturl.at/RWBEI",
-      "https://shorturl.at/SFypy",
-    ],
-    pieces: 26,
-    rating: 3.4,
-    title: "Beautiful and picturesque 2 sto...",
-    gps: "12 Morris Ave, Toronto, ON, CA,",
-    guests: 2,
-    checkIn: "02.02.22",
-    checkOut: "02.02.22",
-  },
-];
+// export const Data = [
+//   {
+//     id: 1,
+//     images: ["https://shorturl.at/RWBEI"],
+//     pieces: 26,
+//     rating: 3.4,
+//     title: "Beautiful and picturesque 2 sto...",
+//     gps: "12 Morris Ave, Toronto, ON, CA,",
+//     guests: 2,
+//     checkIn: "02.02.22",
+//     checkOut: "02.02.22",
+//   },
+//   {
+//     id: 2,
+//     images: [
+//       "https://shorturl.at/sFdTT",
+//       "https://shorturl.at/RWBEI",
+//       "https://shorturl.at/SFypy",
+//     ],
+//     pieces: 26,
+//     rating: 3.4,
+//     title: "Beautiful and picturesque 2 sto...",
+//     gps: "12 Morris Ave, Toronto, ON, CA,",
+//     guests: 2,
+//     checkIn: "02.02.22",
+//     checkOut: "02.02.22",
+//   },
+// ];
 
-export const CardUserProfile = () => {
+export const CardUserProfile = ({ bookings }) => {
   return (
     <StyleContainerProfile>
-      {Data.map((item) => (
+      {bookings?.map((item) => (
         <div key={item.id} {...item}>
           <StyleAllProfile>
             <StyleSwiperProfile
@@ -81,7 +81,7 @@ export const CardUserProfile = () => {
                   {item.checkIn}
                 </span>
                 <span>
-                  <StyleChecOut>Check ou</StyleChecOut>
+                  <StyleChecOut>Check out</StyleChecOut>
                   {item.checkOut}
                 </span>
               </StyleData>

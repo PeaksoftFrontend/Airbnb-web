@@ -53,9 +53,9 @@ export const AccountMenu = () => {
 
   return (
     <>
-      <StyledAvatarBox>
+      <StyledAvatarBox onClick={handleAvatarOpen}>
         <StyledLetter ref={anchorRef}>{initials}</StyledLetter>
-        <StyledArrowDown onClick={handleAvatarOpen} />
+        <StyledArrowDown />
       </StyledAvatarBox>
       <StyledMenu
         id="account-menu"
