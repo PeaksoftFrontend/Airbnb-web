@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 import { Breadcrumbs } from "../../components/UI/Breadcrumbs";
 import { InnerHotel } from "../../pages/InnerHotel";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   useAcceptedAnnouncementMutation,
   useAnnouncementDetailQuery,
@@ -14,7 +14,7 @@ export const ProductDetail = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const [acceptedAnnouncement] = useAcceptedAnnouncementMutation();
-
+  const navigate = useNavigate();
   const { data } = useAnnouncementDetailQuery(productId, { skip: !productId });
   const [isActive, setIsActive] = useState(false);
   const [value, setValue] = useState("");
@@ -35,7 +35,7 @@ export const ProductDetail = () => {
       id: productId,
       value: "accept",
     });
-    navigate("/admin/application");
+    navigate("/application");
   };
 
   const handleRejectSubmit = async (e) => {
@@ -52,7 +52,7 @@ export const ProductDetail = () => {
     setValue("");
     setIsActive(false);
     setError(false);
-    navigate("/admin/application");
+    navigate("/application");
   };
 
   return (

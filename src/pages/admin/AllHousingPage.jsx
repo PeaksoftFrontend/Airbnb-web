@@ -46,14 +46,16 @@ const Filter = ({ label, options, type, state, setState }) => {
           readOnly
           startAdornment={
             <LabelValueWrapper>
-              <Typography sx={{ marginRight: "5px", color: "#888" }}>
+              <Typography
+                sx={{ marginRight: "10px", color: "#888", fontSize: "14px" }}
+              >
                 {label}
               </Typography>
             </LabelValueWrapper>
           }
           endAdornment={
-            <ValueWrapper>
-              <Typography sx={{ marginRight: "28px" }}>
+            <ValueWrapper sx={{ display: "flex" }}>
+              <Typography sx={{ marginRight: "35px" }}>
                 {displayValue}
               </Typography>
               <CustomArrow />
@@ -246,7 +248,6 @@ export const AllHousingPage = () => {
 const FilterContainer = styled(Box)(({ theme }) => ({
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit, minmax(271px, auto))",
-  justifyContent: "space-between",
   alignItems: "center",
   paddingBottom: theme.spacing(1),
   margin: "40px",
@@ -260,7 +261,7 @@ const StyledAllHousingH1 = styled("h1")({
 });
 
 const StyledInputs = styled("span")({
-  marginLeft: "21px",
+  marginLeft: "11px",
 });
 
 const StyledOutlinedInput = styled(OutlinedInput)({

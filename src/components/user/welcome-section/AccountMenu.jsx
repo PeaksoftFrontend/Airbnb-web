@@ -9,6 +9,7 @@ import { signOut } from "firebase/auth";
 import { authGoogle } from "../../../redux/fireBase";
 import { logout } from "../../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const AccountMenu = () => {
   const anchorRef = useRef(null);
@@ -17,11 +18,11 @@ export const AccountMenu = () => {
   const isAuthorized = useSelector((state) => state.auth.isAuthorized);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const handleLogout = async () => {
     try {
       await signOut(authGoogle);
       dispatch(logout());
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
@@ -51,6 +52,11 @@ export const AccountMenu = () => {
 
   const initials = isAuthorized && email ? getInitials(email) : "A";
 
+  const handleProfileClick = () => {
+    navigate("/profiles");
+    handleAvatarClose();
+  };
+
   return (
     <>
       <StyledAvatarBox onClick={handleAvatarOpen}>
@@ -66,6 +72,7 @@ export const AccountMenu = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "top" }}
       >
+        <MenuItem onClick={handleProfileClick}>Профиль</MenuItem>
         <MenuItem onClick={handleProfileClick}>Профиль</MenuItem>
         <MenuItem onClick={handleLogout}>Выход</MenuItem>
       </StyledMenu>
