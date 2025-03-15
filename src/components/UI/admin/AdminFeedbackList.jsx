@@ -1,13 +1,9 @@
 import { Avatar, Box, IconButton, Menu, MenuItem, styled } from "@mui/material";
 import { useState } from "react";
-import { Icons } from "../../assets";
-import {
-  useGetFeedbackQuery,
-  useRemoveFeedbackMutation,
-} from "../../redux/api/announcementId.service";
+import { useFeedbackQuery } from "../../../redux/api/adminId.sevice";
+import { Icons } from "../../../assets";
 
 const FeedbackCard = ({
-  id,
   feedbackUserFullName,
   createdAt,
   rating,
@@ -16,11 +12,9 @@ const FeedbackCard = ({
   disLikeCount,
   feedbackUserImage,
   images,
-  refetch,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [removeFeedback] = useRemoveFeedbackMutation(26);
 
   const toggleText = () => {
     setIsExpanded((prev) => !prev);
@@ -32,16 +26,6 @@ const FeedbackCard = ({
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleDelete = async () => {
-    try {
-      await removeFeedback(id).unwrap(); // .unwrap() чтобы получить ошибку, если есть
-      console.log("Отзыв удален");
-      refetch(); // 🔥 Обновляем список отзывов
-    } catch (error) {
-      console.error("Ошибка при удалении отзыва", error);
-    }
   };
 
   const displayedText = isExpanded
@@ -101,8 +85,8 @@ const FeedbackCard = ({
           <StyleSpan>{feedbackUserFullName}</StyleSpan>
           <StyleRating>{renderStars(rating)}</StyleRating>
         </StyleUserInfo>
-        <IconButton>
-          <Icons.Menufeadback onClick={handleMenuClick} />
+        <IconButton onClick={handleMenuClick}>
+          <Icons.Menufeadback />
         </IconButton>
         <Menu
           anchorEl={anchorEl}
@@ -118,7 +102,7 @@ const FeedbackCard = ({
           }}
         >
           <MenuItem onClick={handleMenuClose}>Edit</MenuItem>
-          <MenuItem onClick={handleDelete}>Delete</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Delete</MenuItem>
         </Menu>
       </StyleBox>
       <StyledText>
@@ -154,17 +138,15 @@ const FeedbackCard = ({
   );
 };
 
-export const FeedbackList = () => {
-  const { data, error, isLoading, refetch } = useGetFeedbackQuery(26);
-  console.log(data);
-
+export const AdminFeedbackList = () => {
+  const { data, error, isLoading } = useFeedbackQuery(26);
   if (error) return <p>error</p>;
   if (isLoading) return <p>Loading...</p>;
   if (!data || data.length === 0) return <p>No feedback available</p>;
   return (
     <StyleList>
-      {data.map((feedback) => (
-        <FeedbackCard key={feedback.id} {...feedback} refetch={refetch} />
+      {data.map((feedback, id) => (
+        <FeedbackCard key={id} {...feedback} />
       ))}
     </StyleList>
   );

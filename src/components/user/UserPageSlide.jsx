@@ -91,12 +91,8 @@ export const UserPageSlide = () => {
                   spaceBetween={3}
                   modules={[Pagination]}
                 >
-                  {item.images.map((images) => (
-                    <SwiperSlide
-                      key={images.id}
-                      style={{ position: "relative" }}
-                      onClick={() => handleRegions("Another")}
-                    >
+                  {item.images.map((images, i) => (
+                    <SwiperSlide key={i} style={{ position: "relative" }}>
                       <img src={images} position={{ position: "absolut" }} />
                     </SwiperSlide>
                   ))}

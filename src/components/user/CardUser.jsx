@@ -16,10 +16,10 @@ export const CardUser = ({ cards }) => {
 
   const [favoriteMutation] = useFavoriteMutation();
   const [modalOpen, setModalOpen] = useState(false);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const { role } = useSelector((state) => state.auth);
 
   const handleFavorite = async (id) => {
-    if (!isAuthenticated) {
+    if (role !== "USER") {
       setModalOpen(true);
       return;
     }
@@ -37,7 +37,7 @@ export const CardUser = ({ cards }) => {
   return (
     <StyleContainer>
       {cards.map((item) => (
-        <Box key={item.id} {...item}>
+        <Box key={item.id}>
           <StyleAll>
             <StyleSwiper
               mousewheel={true}
@@ -46,7 +46,7 @@ export const CardUser = ({ cards }) => {
               pagination={{ clickable: true }}
               modules={[Navigation, Pagination]}
             >
-              {item.images.map((images, index) => (
+              {item?.images?.images.map((images, index) => (
                 <SwiperSlide key={index}>
                   <StyleImg src={images} alt="" />
                 </SwiperSlide>
@@ -55,7 +55,7 @@ export const CardUser = ({ cards }) => {
             <div>
               <StylePieces>
                 <Styledprise>
-                  <StyledPtag> ${item.pieces}/</StyledPtag>
+                  <StyledPtag> ${item.price}/</StyledPtag>
                   <StyleDay>day</StyleDay>
                 </Styledprise>
                 <StyledSpanStar>
@@ -67,11 +67,11 @@ export const CardUser = ({ cards }) => {
                 <StyledTypography>{item.title}</StyledTypography>
                 <div>
                   <Icons.Location />
-                  {item.gps}
+                  {item.address}
                 </div>
               </StyleDiv>
               <StyleguesNum>
-                <div>{item.guests} guests</div>
+                <div>{item.maxGuests} guests</div>
                 <StyledButton variant="outlined">BOOK</StyledButton>
                 <StyleFordButton onClick={() => handleFavorite(item.id)}>
                   {favorites[item.id] ? (
@@ -164,6 +164,10 @@ const StyledSpanStar = styled("span")({
   padding: "5px",
 
   "& svg path": { fill: "#F7D212" },
+  "& svg": {
+    width: "18px",
+    height: "18px",
+  },
 });
 
 const StyledPtag = styled("p")({

@@ -1,38 +1,59 @@
 import { styled } from "@mui/material";
 import { Icons } from "../../assets";
-export const Footer = () => (
-  <FooterContainer>
-    <FooterContent>
-      <FooterLeft>
-        <FooterLink href="#" first>
-          Regions
-        </FooterLink>
-        <FooterLink href="#" second>
-          leave an ad
-        </FooterLink>
-      </FooterLeft>
-      <FooterCenter>
-        <div>
-          <StyledLogo>
-            <Icons.Logo />
-          </StyledLogo>
-        </div>
-        <FooterText>© Copyright PeakSoft. All Rights Reserved</FooterText>
-      </FooterCenter>
-      <IconGroup>
-        <IconWrapper>
-          <Icons.Instagram />
-        </IconWrapper>
-        <IconWrapper>
-          <Icons.Telegram />
-        </IconWrapper>
-        <IconWrapper>
-          <Icons.Telephone />
-        </IconWrapper>
-      </IconGroup>
-    </FooterContent>
-  </FooterContainer>
-);
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { PATHS } from "../../utils/constants/paths";
+import { useState } from "react";
+import { AuthModal } from "../../components/user/welcome-section/AuthModal";
+export const Footer = () => {
+  const { role } = useSelector((state) => state.auth);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    if (role === "USER") {
+      navigate(`${PATHS.USER.PUBLISH}`);
+    } else {
+      setModalOpen(true);
+    }
+  };
+  return (
+    <FooterContainer>
+      <FooterContent>
+        <FooterLeft>
+          <FooterLink onClick={handleNavigate} first>
+            Regions
+          </FooterLink>
+          <FooterLink onClick={handleNavigate} second>
+            leave an ad
+          </FooterLink>
+        </FooterLeft>
+        <FooterCenter>
+          <div>
+            <StyledLogo>
+              <Icons.Logo />
+            </StyledLogo>
+          </div>
+          <FooterText>© Copyright PeakSoft. All Rights Reserved</FooterText>
+        </FooterCenter>
+        <IconGroup>
+          <IconWrapper>
+            <Icons.Instagram />
+          </IconWrapper>
+          <IconWrapper>
+            <Icons.Telegram />
+          </IconWrapper>
+          <IconWrapper>
+            <Icons.Telephone />
+          </IconWrapper>
+        </IconGroup>
+      </FooterContent>
+
+      <AuthModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
+    </FooterContainer>
+  );
+};
 
 const FooterContainer = styled("footer")({
   backgroundColor: "#013220",
@@ -62,10 +83,11 @@ const FooterLeft = styled("div")({
   gap: "16px",
 });
 
-const FooterLink = styled("a")(({ first, second }) => ({
+const FooterLink = styled("p")(({ first, second }) => ({
   color: first ? "#FFFFFF" : second ? "#FFBE58" : "white",
   textDecoration: "none",
   fontWeight: "normal",
+  cursor: "pointer",
 }));
 
 const FooterCenter = styled("div")({

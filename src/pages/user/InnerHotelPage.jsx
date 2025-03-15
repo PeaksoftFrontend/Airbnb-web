@@ -4,6 +4,7 @@ import {
   Box,
   Container,
   IconButton,
+  Rating,
   styled,
   TextField,
   Tooltip,
@@ -16,31 +17,27 @@ import { Breadcrumbs } from "../../components/UI/Breadcrumbs";
 import {
   useCreateFeedbackMutation,
   useGetAnnouncementIdQuery,
-  useRemoveFeedbackMutation,
-  useSubmitFileMutation,
 } from "../../redux/api/announcementId.service";
 import { Button } from "../../components/UI/Button";
 import { Modal } from "../../components/UI/Modal";
 import { useState } from "react";
 import { Icons } from "../../assets";
 import { useDropzone } from "react-dropzone";
+import { useParams } from "react-router-dom";
 
 export const InnerHotelPage = () => {
+  const { params } = useParams();
+  console.log(params);
+
   const [openModal, setOpenModal] = useState(false);
   const [files, setFiles] = useState([]);
-  const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [rating, setRating] = useState(0);
 
   const { data, error, isLoading } = useGetAnnouncementIdQuery(26);
   console.log(data);
 
   const [createFeedback] = useCreateFeedbackMutation();
-  const [submitFile] = useSubmitFileMutation();
-  const [deleteFeedback] = useRemoveFeedbackMutation();
-
-  const handleStarClick = (index) => {
-    setRating(index + 1);
-  };
 
   const handleOpenModal = () => {
     console.log("Modal Opened:", openModal);
@@ -99,6 +96,10 @@ export const InnerHotelPage = () => {
       console.error("Ошибка при отправке отзыва:", err);
     }
   };
+  const removeFile = (fileToRemove) => {
+    setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToRemove));
+  };
+
   if (error) return <p>Ошибка в запросе</p>;
   if (isLoading) return <p>Загрузка...</p>;
 
@@ -125,7 +126,7 @@ export const InnerHotelPage = () => {
               <StyleGuests>{data?.maxGuests}</StyleGuests>
             </StyleGlobal>
             <StyleGPS>
-              <p>Name of hotel</p>
+              <p>{data?.title}</p>
               <span>{data?.address}</span>
             </StyleGPS>
             <StyleDiscription>
@@ -179,10 +180,11 @@ export const InnerHotelPage = () => {
         <Box
           sx={{
             width: "720px",
-            height: "463px",
-            padding: "20px",
+            height: "auto",
+            padding: "15px",
             display: "flex",
             flexDirection: "column",
+            justifyContent: "space-between",
           }}
         >
           <Typography
@@ -233,6 +235,44 @@ export const InnerHotelPage = () => {
               </Typography>
             </div>
           </Box>
+          <Box sx={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+            {files.map((file, index) => (
+              <Box
+                key={index}
+                sx={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "2px",
+                  overflow: "hidden",
+                  position: "relative",
+                  border: "1px solid #ccc",
+                  marginTop: "5px",
+                }}
+              >
+                <img
+                  src={URL.createObjectURL(file)}
+                  alt={`uploaded-${index}`}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+                <IconButton
+                  onClick={() => removeFile(file)}
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    background: "rgba(255,255,255,0.8)",
+                    padding: "2px",
+                  }}
+                >
+                  <Cancellation />
+                </IconButton>
+              </Box>
+            ))}
+          </Box>
           <StyledStar>
             <Typography
               sx={{
@@ -244,19 +284,15 @@ export const InnerHotelPage = () => {
             >
               Rate
             </Typography>
-            <div>
-              {[...Array(5)].map((_, index) => (
-                <IconButton
-                  key={index}
-                  onClick={() => handleStarClick(index)}
-                  sx={{
-                    color: index < rating ? "#FFD700" : "#828282",
-                  }}
-                >
-                  <Icons.Star />
-                </IconButton>
-              ))}
-            </div>
+            <StyledRating
+              name="simple-controlled"
+              value={rating}
+              onChange={(event, newValue) => {
+                setRating(newValue);
+              }}
+              precision={0.5}
+              emptyIcon={<StyledStarIcon />}
+            />
           </StyledStar>
           <div>
             <Typography
@@ -274,7 +310,7 @@ export const InnerHotelPage = () => {
               multiline
               rows={2.3}
               fullWidth
-              value={comment} // Привязка к состоянию
+              value={comment}
               onChange={(e) => setComment(e.target.value)}
             />
           </div>
@@ -302,6 +338,31 @@ export const InnerHotelPage = () => {
   );
 };
 
+const Cancellation = styled(Icons.Cancellation)({
+  cursor: "pointer",
+  color: "red",
+  fontSize: "24px",
+});
+
+const StyledRating = styled(Rating)(() => ({
+  "& .MuiRating-icon": {
+    fontSize: "30px",
+  },
+  "& .MuiRating-iconFilled": {
+    color: "#F7D212",
+  },
+  "& .MuiRating-iconEmpty": {
+    color: "gray",
+  },
+  "& .MuiRating-iconButton:hover .MuiRating-iconFilled, & .MuiRating-iconButton:focus .MuiRating-iconFilled":
+    {
+      color: "#F7D212",
+    },
+}));
+
+const StyledStarIcon = styled(Icons.Star)`
+  font-size: 30px;
+`;
 const StyleNamecrums = styled("div")({
   display: "flex",
   flexDirection: "column",
