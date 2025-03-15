@@ -31,7 +31,7 @@ export const applicationApi = createApi({
       invalidatesTags: ["announcement"],
     }),
     announcementDetail: builder.query({
-      query: (id) => `/admin/getByIdAnnouncements?announcementId=${id}`,
+      query: (id) => `/admin/applicationById?applicationId=${id}`,
     }),
     blockingAnnouncement: builder.mutation({
       query: (id) => ({

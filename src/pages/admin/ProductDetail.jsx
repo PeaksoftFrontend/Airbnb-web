@@ -15,14 +15,17 @@ export const ProductDetail = () => {
   const navigate = useNavigate();
   const [acceptedAnnouncement] = useAcceptedAnnouncementMutation();
 
-  const { data } = useAnnouncementDetailQuery(productId, { skip: !productId });
+  const { data: details } = useAnnouncementDetailQuery(productId, {
+    skip: !productId,
+  });
+  const data = details ? details[0] : {};
   const [isActive, setIsActive] = useState(false);
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
 
   const path = [
     { id: 1, url: "/admin/users", title: "Users" },
-    { id: 1, url: "/admin/users", title: data?.fullName },
+    { id: 1, url: "/admin/users", title: data?.user?.fullName },
     { id: 2, url: "#", title: data?.title },
   ];
 

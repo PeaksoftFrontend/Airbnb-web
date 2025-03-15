@@ -15,25 +15,25 @@ export const InnerHotel = ({
     <StyleContainer>
       <StyleDIv>
         <p>NAME</p>
-        <Sliders images={data.images} />
+        <Sliders images={data?.images?.images || []} />
       </StyleDIv>
       <StyledText>
         <div>
           <StyleGlobal>
-            <StyleApartaments>{data.houseType}</StyleApartaments>
-            <StyleGuests>{data.maxGuests}</StyleGuests>
+            <StyleApartaments>{data?.houseType}</StyleApartaments>
+            <StyleGuests>{data?.maxGuests} guests</StyleGuests>
           </StyleGlobal>
           <StyleGPS>
-            <p>{data.title}</p>
-            <span>{data.address}</span>
+            <p>{data?.title}</p>
+            <span>{data?.address}</span>
           </StyleGPS>
           <StyleDiscription>
-            <StyledDescription>{data.description}</StyledDescription>
+            <StyledDescription>{data?.description}</StyledDescription>
             <StyleProfile>
-              <Avatar src={data.image} alt={data.userInfo?.userName} />
+              <Avatar src={data?.user?.image} alt={data?.user?.fullName} />
               <StyleEmail>
-                <StyleName>{data.fullName}</StyleName>
-                <StyleNik>{data.email}</StyleNik>
+                <StyleName>{data?.user?.fullName}</StyleName>
+                <StyleNik>{data?.user?.email}</StyleNik>
               </StyleEmail>
             </StyleProfile>
           </StyleDiscription>
@@ -41,7 +41,7 @@ export const InnerHotel = ({
         {payment ? (
           <StyleBox>
             <Styled26day>
-              $26/ <span>day</span>
+              ${data?.price || 26}/ <span>day</span>
             </Styled26day>
             <StyleBottom></StyleBottom>
             <StyledDates>
