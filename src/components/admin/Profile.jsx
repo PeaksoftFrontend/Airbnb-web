@@ -4,7 +4,7 @@ import { logout } from "../../redux/slices/authSlice";
 import { signOut } from "firebase/auth";
 import { authGoogle } from "../../redux/fireBase";
 
-export const Profile = ({ name, email, avatar, isAuth, role }) => {
+export const Profile = ({ email, name, avatar, isAuth, role }) => {
   const dispatch = useDispatch();
   const handleLogout = async () => {
     try {
